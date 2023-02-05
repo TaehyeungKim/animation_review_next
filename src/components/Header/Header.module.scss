@@ -1,0 +1,71 @@
+@import  '../../utils/toremfunc.scss';
+
+
+.nav {
+    position: fixed;
+    top: 0;
+    left:0;
+    height: toRem(80);
+    width: 100%;
+    display: flex;
+
+    > div {
+        position: relative;
+    }
+
+    .logo {
+        img {
+            height: inherit;
+        }
+    }
+
+    .title {
+
+    }
+    
+    .search {
+        input {
+            height: 40%;
+            width: toRem(200);
+            border-radius: toRem(10);
+			
+			&:focus-within {
+				outline: none;
+				border-color: skyblue;
+                width: toRem(400);
+			}
+        }
+
+        .search_icon {
+            position: absolute;
+            width: toRem(30);
+            right: toRem(10);
+        }
+    }
+
+    .icon {
+        flex-basis: toRem(40);
+        cursor: pointer;
+    }
+}
+
+@media(min-width: 768px) {
+    .nav {
+        flex-direction: row;
+
+        > div {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin: 0 toRem(10);
+        }
+
+        input {
+            transition: width 0.5s ease-in-out;
+        }
+
+        .title {
+            flex-grow: 1;
+        }
+    }
+}
