@@ -1,13 +1,18 @@
 @import  '../../utils/toremfunc.scss';
+@import '../../fonts/Font-Face.module.scss';
 
 
 .nav {
     position: fixed;
     top: 0;
     left:0;
-    height: toRem(80);
+    height: toRem($headerH);
     width: 100%;
     display: flex;
+    font-family: '--nav-main-font';
+    font-weight: 500;
+    z-index: 10;
+    background-color: white;
 
     > div {
         position: relative;

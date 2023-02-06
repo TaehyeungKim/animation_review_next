@@ -1,0 +1,9 @@
+@import '../../utils/toremfunc.scss';
+
+.contents {
+    position: relative;
+    width: 100%;
+    max-width: toRem($Mainpage_content_maxwidth);
+    margin: toRem($headerH) auto 0;
+    height: 150vh;
+}

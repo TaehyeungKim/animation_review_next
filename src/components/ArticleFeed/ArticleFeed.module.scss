@@ -1,0 +1,9 @@
+@import '../../utils/toremfunc.scss';
+
+.article_feed {
+    position: relative;
+    display: inline-block;
+    width: toRem(300);
+    aspect-ratio: 1.5;
+    border: 2px solid green;
+}
