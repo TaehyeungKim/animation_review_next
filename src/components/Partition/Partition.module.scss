@@ -1,5 +1,15 @@
+@import '../../utils/toremfunc.scss';
+@import '../../fonts/Font-Face.module.scss';
+
 .partition {
+    padding: toRem(10);
     width: 100%;
+	
+	.partition_title {
+		font-family: '--partition-main-font';
+        font-size: toRem(40);
+        margin-bottom: toRem(20);
+	}
 
     .article_container {
         display: flex;

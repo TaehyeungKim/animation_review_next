@@ -4,7 +4,7 @@ import logo from '../../../images/logo192.png'
 
 const imageLoader = async(reset:(resource: any)=>void) => {
     try {
-        const resource = await fetch('https://api.unsplash.com/photos/random?client_id=9GxiSwj0LRM2ik3I5IfIcgyOVljvN1xwgnK2yjqSJ1s&count=1', {
+        const resource = await fetch('https://api.unsplash.com/photos/random?client_id=i9YT7Qm54DRMylqFNcbaQNIomsUgVyuTibgsPYr9EL4&count=1', {
             method: 'GET',
         })
         const res = await resource.json();

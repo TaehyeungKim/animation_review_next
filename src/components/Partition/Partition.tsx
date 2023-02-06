@@ -8,7 +8,7 @@ interface PartitionProps {
 function Partition({title}:PartitionProps) {
     return(
         <section className={styles.partition}>
-            <h3>{title}</h3>
+            <h3 className={styles.partition_title}>{title}</h3>
             <div className={styles.article_container}>
                 <ArticleFeed/>
             </div>

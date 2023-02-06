@@ -1,5 +1,11 @@
 @font-face {
     font-family: '--nav-main-font';
-    src: "./NotoSans-Medium.ttf";
+    src: "./Noto_Sans/NotoSans-Medium.ttf";
     font-weight: 500;
+}
+
+@font-face {
+    font-family: '--partition-main-font';
+    src: './Antons/Anton-Regular.ttf';
+    font-weight: regular;
 }

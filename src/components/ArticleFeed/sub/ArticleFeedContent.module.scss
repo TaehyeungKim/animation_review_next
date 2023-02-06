@@ -7,9 +7,13 @@
         margin: toRem(10) 0;
         text-align: center;
     }
-    span {
-        display: inline-block;
-        margin: 0 toRem(10); 
-        text-align:end;
+
+    .likewatch_container {
+        display: flex;
+        flex-direction: row-reverse;
+        span {
+            display: inline-block;
+            margin: 0 toRem(10); 
+        }
     }
-}
+    }
