@@ -1,0 +1,15 @@
+@import '../../../utils/toremfunc.scss';
+
+.feed_content {
+    width: 100%;    
+
+    .title {
+        margin: toRem(10) 0;
+        text-align: center;
+    }
+    span {
+        display: inline-block;
+        margin: 0 toRem(10); 
+        text-align:end;
+    }
+}
