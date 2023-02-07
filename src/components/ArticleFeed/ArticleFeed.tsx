@@ -4,15 +4,15 @@ import ArticleFeedImage from './sub/ArticleFeedImage'
 import ArticleFeedContent from './sub/ArticleFeedContent'
 
 interface ArticleFeedProps {
-    data: JSON
+    data: any
 }
 
 function ArticleFeed({data}: ArticleFeedProps) {
     return(
         <article className={styles.article_feed}>
             <ArticleFeedHeader/>
-            <ArticleFeedImage/>
-            <ArticleFeedContent title={'테스트용 게시글'} like={50000} watch={120000} />
+            <ArticleFeedImage url={data.thumbnailUrl}/>
+            <ArticleFeedContent title={data.title} like={50000} watch={120000} />
         </article>
     )
 }

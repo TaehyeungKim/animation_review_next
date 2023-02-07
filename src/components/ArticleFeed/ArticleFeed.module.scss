@@ -4,4 +4,9 @@
     position: relative;
     display: inline-block;
     width: toRem(400);
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+
+    margin: 0 toRem(10);
 }

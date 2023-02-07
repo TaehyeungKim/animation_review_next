@@ -6,6 +6,8 @@
     .title {
         margin: toRem(10) 0;
         text-align: center;
+        vertical-align:top;
+        min-height: toRem(50);
     }
 
     .likewatch_container {

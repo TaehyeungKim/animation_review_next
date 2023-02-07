@@ -11,3 +11,7 @@ h4, h3 {
     margin-inline-end: 0px;
     font-size: initial;
 }
+
+button {
+    all: unset;
+}

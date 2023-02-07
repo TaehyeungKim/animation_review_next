@@ -2,8 +2,27 @@
 @import '../../fonts/Font-Face.module.scss';
 
 .partition {
+    position: relative;
     padding: toRem(10);
     width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .article_scroll {
+        position: absolute;
+        width: toRem(40);
+        box-sizing: border-box;
+        z-index: 5;
+    }
+
+    #left {
+        left: toRem(10);
+    }
+    #right {
+        right: toRem(10);
+    }
+}
 	
 	.partition_title {
 		font-family: '--partition-main-font';
@@ -12,9 +31,15 @@
 	}
 
     .article_container {
+        position: relative;
         display: flex;
         flex-direction: row;
         align-items: center;
+        flex-wrap: nowrap;
+}
+
+@for $i from 0 through 10 {
+    #scroll_level_#{$i} {
+        transform: translateX(-100px)
     }
-    
 }
