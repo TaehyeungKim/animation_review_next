@@ -28,21 +28,39 @@ function Partition({title}:PartitionProps) {
     }
 
     const scrollIndex = useRef<number>(0)
+
+    const scrollMethod = (arg: number, container: HTMLElement, partition: HTMLElement) => {
+        if((container.offsetWidth - partition.offsetWidth) / 400 > scrollIndex.current+arg) {
+            container.removeAttribute('style')
+            container.classList.remove(`${styles[`scroll_level_${scrollIndex.current}`]}`)
+            container.classList.add(`${styles[`scroll_level_${scrollIndex.current + arg}`]}`)
+            scrollIndex.current = scrollIndex.current + arg
+            console.log((container.offsetWidth - partition.offsetWidth) / 400, scrollIndex.current)
+        }
+         else {
+            container.setAttribute('style', `transform: translateX(${-(container.offsetWidth - partition.offsetWidth)}px)`)
+        }
+
+    } 
+
     
 
     useEffect(()=>{
         loadArticles(title, 0, 5, settingResources)
+        
     },[])
     return(
-        <section className={styles.partition}>
+        <section className={styles.partition} id={'partition'}>
             <button className={styles.article_scroll} id={styles.left} onClick={
                 ()=>{
-                    document.getElementById('container')?.setAttribute('id', `${styles[`scroll_level_${scrollIndex.current + 1}`]}`)
-                    scrollIndex.current =+ 1}
+                    scrollMethod(-1, document.getElementById('container')!, document.getElementById('partition')!)
+                    }
             }>
                 {leftArrow()}
             </button>
-            <button className={styles.article_scroll} id={styles.right}>
+            <button className={styles.article_scroll} id={styles.right} onClick={
+                ()=>{scrollMethod(1, document.getElementById('container')!, document.getElementById('partition')!)}
+            }>
                     {rightArrow()}
             </button>
             <h3 className={styles.partition_title}>{title}</h3>
