@@ -13,9 +13,14 @@
     font-weight: 500;
     z-index: 10;
     background-color: white;
+    flex-direction: row;
 
     > div {
         position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin: 0 toRem(10);
     }
 
     .logo {
@@ -33,6 +38,7 @@
             height: 40%;
             width: toRem(200);
             border-radius: toRem(10);
+            transition: width 0.5s ease-in-out;
 			
 			&:focus-within {
 				outline: none;
@@ -48,29 +54,13 @@
         }
     }
 
+    .title {
+        flex-grow: 1;
+    }
+
     .icon {
         flex-basis: toRem(40);
         cursor: pointer;
     }
 }
 
-@media(min-width: 768px) {
-    .nav {
-        flex-direction: row;
-
-        > div {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            margin: 0 toRem(10);
-        }
-
-        input {
-            transition: width 0.5s ease-in-out;
-        }
-
-        .title {
-            flex-grow: 1;
-        }
-    }
-}

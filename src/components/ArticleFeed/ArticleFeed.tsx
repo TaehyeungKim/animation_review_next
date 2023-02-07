@@ -3,7 +3,11 @@ import ArticleFeedHeader from './sub/ArticleFeedHeader'
 import ArticleFeedImage from './sub/ArticleFeedImage'
 import ArticleFeedContent from './sub/ArticleFeedContent'
 
-function ArticleFeed() {
+interface ArticleFeedProps {
+    data: JSON
+}
+
+function ArticleFeed({data}: ArticleFeedProps) {
     return(
         <article className={styles.article_feed}>
             <ArticleFeedHeader/>

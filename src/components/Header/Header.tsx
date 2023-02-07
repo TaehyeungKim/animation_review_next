@@ -1,7 +1,7 @@
 import styles from './Header.module.scss'
 import logo from '../../images/logo192.png'
 import search_icon from '../../icons/search.svg'
-import {notification, setting} from '../../icons/icons'
+import {notification, setting, list} from '../../icons/icons'
 
 
 
@@ -28,7 +28,7 @@ function Header() {
                 {notification()}
             </div>
             <div className={styles.icon} id={'setting'}>
-                {setting()}
+                {list()}
             </div>
         </nav>
     )
