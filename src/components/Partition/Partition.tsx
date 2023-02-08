@@ -29,17 +29,36 @@ function Partition({title}:PartitionProps) {
 
     const scrollIndex = useRef<number>(0)
 
-    const scrollMethod = (arg: number, container: HTMLElement, partition: HTMLElement) => {
-        if((container.offsetWidth - partition.offsetWidth) / 400 > scrollIndex.current+arg) {
-            container.removeAttribute('style')
-            container.classList.remove(`${styles[`scroll_level_${scrollIndex.current}`]}`)
-            container.classList.add(`${styles[`scroll_level_${scrollIndex.current + arg}`]}`)
-            scrollIndex.current = scrollIndex.current + arg
-            console.log((container.offsetWidth - partition.offsetWidth) / 400, scrollIndex.current)
+    const scrollMethod = (arg: number, index:React.MutableRefObject<number>, partition: HTMLElement, container:HTMLElement, dif: number) => {
+        const calcScrollLength = (arg: number, index:number, dif: number, exceed: number) => {
+            if(((index + arg)*dif < exceed) && ((index+arg)*dif > 0)) {
+                switch(arg){
+                    case 1:
+                        return (index+arg)*dif
+                    default:
+                        return exceed - ((Math.ceil(exceed/dif) - index)-arg)*dif 
+                }
+                        
+            }
+            else {
+                if((index+arg)*dif <= 0) return 0
+                else if((index+arg)*dif > exceed) return exceed
+            }
         }
-         else {
-            container.setAttribute('style', `transform: translateX(${-(container.offsetWidth - partition.offsetWidth)}px)`)
+        const exceed = container.offsetWidth - partition.offsetWidth
+        container.setAttribute('style', `transform: translateX(-${calcScrollLength(arg, index.current, dif, exceed)}px)`)
+        if(calcScrollLength(arg, index.current, dif, exceed) !== calcScrollLength(arg, index.current-arg, dif, exceed)) {
+            index.current = index.current + arg
         }
+
+        index.current !== 0 ? 
+            document.getElementById(`left_button_${title}`)?.setAttribute('style', 'display: block') 
+            : 
+            document.getElementById(`left_button_${title}`)?.removeAttribute('style')
+        index.current === Math.ceil(exceed/dif) ?  
+            document.getElementById(`right_button_${title}`)?.setAttribute('style', 'display: none') 
+            :
+            document.getElementById(`right_button_${title}`)?.removeAttribute('style')
 
     } 
 
@@ -50,21 +69,23 @@ function Partition({title}:PartitionProps) {
         
     },[])
     return(
-        <section className={styles.partition} id={'partition'}>
-            <button className={styles.article_scroll} id={styles.left} onClick={
+        <section className={styles.partition} id={`partition_${title}`}>
+            <button className={`${styles.article_scroll} ` + styles.left} id={`left_button_${title}`} onClick={
                 ()=>{
-                    scrollMethod(-1, document.getElementById('container')!, document.getElementById('partition')!)
+                    scrollMethod(-1, scrollIndex, document.getElementById(`partition_${title}`)!, document.getElementById(`container_${title}`)!, 400)
                     }
             }>
                 {leftArrow()}
             </button>
-            <button className={styles.article_scroll} id={styles.right} onClick={
-                ()=>{scrollMethod(1, document.getElementById('container')!, document.getElementById('partition')!)}
-            }>
+            <button className={`${styles.article_scroll} `+ styles.right} id={`right_button_${title}`} onClick={
+                ()=>{
+                    scrollMethod(1, scrollIndex, document.getElementById(`partition_${title}`)!, document.getElementById(`container_${title}`)!, 400)
+                    }
+            } >
                     {rightArrow()}
             </button>
             <h3 className={styles.partition_title}>{title}</h3>
-            <div className={styles.article_container} id={'container'}>
+            <div className={styles.article_container} id={`container_${title}`}>
                 {resources.length > 0 ? resources.map((data:any)=>{
                     return (<ArticleFeed data={data}/>)
                 }): null}

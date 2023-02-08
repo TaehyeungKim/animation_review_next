@@ -1,4 +1,5 @@
 @import '../../../utils/toremfunc.scss';
+@import '../../../fonts/Font-Face.module.scss';
 
 .header {
     width: 100%;
@@ -13,6 +14,7 @@
         display: flex;
         align-items: center;
         flex-grow: 1;
+        font-family: '--main-font-kr', '--main-font'; 
 
         .profile_image {
             background-image: url('../../../images/logo192.png');

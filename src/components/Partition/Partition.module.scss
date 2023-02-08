@@ -10,6 +10,7 @@
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
+    
     .article_scroll {
         position: absolute;
         width: toRem(40);
@@ -17,16 +18,18 @@
         z-index: 5;
     }
 
-    #left {
+    .left {
         left: toRem(10);
+        display: none;
     }
-    #right {
+    .right {
         right: toRem(10);
     }
 }
 	
 	.partition_title {
-		font-family: '--partition-main-font';
+		font-family: '--main-font-kr', '--main-font';
+        font-weight: 600;
         font-size: toRem(40);
         margin-bottom: toRem(20);
 	}

@@ -1,4 +1,5 @@
 import styles from './ArticleFeedContent.module.scss'
+import {like as likeIcon, view}  from '../../../icons/icons'
 
 interface ArticleFeedContent {
     title: string,
@@ -11,8 +12,8 @@ function ArticleFeedContent({title, like, watch}:ArticleFeedContent) {
         <section className={styles.feed_content}>
             <h3 className={styles.title}>{title}</h3>
             <div className = {styles.likewatch_container}>
-                <span>좋아요: {like}</span>
-                <span>조회수: {watch}</span>
+                <span>{likeIcon()} {like}</span>
+                <span>{view()} {watch}</span>
             </div>
         </section>
     )

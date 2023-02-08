@@ -8,6 +8,8 @@ function MainPage() {
         <Header/>
         <div className={styles.contents}>
             <Partition title={'Best!'}/>
+            <Partition title={'추천 게시물'}/>
+            <Partition title={'가장 HOT'}/>
         </div>
         </>
     )
