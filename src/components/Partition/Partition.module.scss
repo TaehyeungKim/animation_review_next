@@ -3,19 +3,24 @@
 
 .partition {
     position: relative;
-    padding: toRem(10);
     width: 100%;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
+    margin: toRem(60) 0;
     
     .article_scroll {
         position: absolute;
         width: toRem(40);
         box-sizing: border-box;
         z-index: 5;
+        opacity: 0.4;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 
     .left {
@@ -32,6 +37,7 @@
         font-weight: 600;
         font-size: toRem(40);
         margin-bottom: toRem(20);
+        padding-left: toRem(50);
 	}
 
     .article_container {
@@ -43,6 +49,7 @@
         transition: transform 0.4s ease-in-out;
         box-sizing: border-box;
         width: fit-content;
+        padding: toRem(10);
 }
 
 @for $i from 0 through 10 {

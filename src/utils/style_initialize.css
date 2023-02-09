@@ -12,6 +12,11 @@ h4, h3 {
     font-size: initial;
 }
 
-button {
+button, a {
     all: unset;
+}
+
+body {
+    margin: 0;
+    padding: 0;
 }
