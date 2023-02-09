@@ -30,32 +30,22 @@ function Partition({title}:PartitionProps) {
     const scrollIndex = useRef<number>(0)
 
     const scrollMethod = (arg: number, index:React.MutableRefObject<number>, partition: HTMLElement, container:HTMLElement, dif: number) => {
-        const calcScrollLength = (arg: number, index:number, dif: number, exceed: number) => {
-            if(((index + arg)*dif < exceed) && ((index+arg)*dif > 0)) {
-                switch(arg){
-                    case 1:
-                        return (index+arg)*dif
-                    default:
-                        return exceed - ((Math.ceil(exceed/dif) - index)-arg)*dif 
-                }
-                        
-            }
+        const calcScrollIndex = (arg: number, index:React.MutableRefObject<number>, dif: number, exceed: number) => {
+            if(((index.current + arg)*dif < exceed) && ((index.current+arg)*dif > 0)) index.current = index.current + arg
             else {
-                if((index+arg)*dif <= 0) return 0
-                else if((index+arg)*dif > exceed) return exceed
+                if((index.current+arg)*dif <= 0) index.current = 0
+                else if((index.current+arg)*dif >= exceed) index.current = index.current + (exceed - index.current*dif)/dif
             }
+            return index.current
         }
         const exceed = container.offsetWidth - partition.offsetWidth
-        container.setAttribute('style', `transform: translateX(-${calcScrollLength(arg, index.current, dif, exceed)}px)`)
-        if(calcScrollLength(arg, index.current, dif, exceed) !== calcScrollLength(arg, index.current-arg, dif, exceed)) {
-            index.current = index.current + arg
-        }
+        container.setAttribute('style', `transform: translateX(-${dif * calcScrollIndex(arg, index, dif, exceed)}px)`)
 
         index.current !== 0 ? 
             document.getElementById(`left_button_${title}`)?.setAttribute('style', 'display: block') 
             : 
             document.getElementById(`left_button_${title}`)?.removeAttribute('style')
-        index.current === Math.ceil(exceed/dif) ?  
+        index.current === exceed/dif ?  
             document.getElementById(`right_button_${title}`)?.setAttribute('style', 'display: none') 
             :
             document.getElementById(`right_button_${title}`)?.removeAttribute('style')
