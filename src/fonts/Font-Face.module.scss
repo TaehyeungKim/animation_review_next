@@ -1,7 +1,13 @@
 @font-face {
     font-family: '--main-font';
+    src: url("./Noto_Sans/NotoSans-Light.ttf");
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: '--main-font';
     src: url("./Noto_Sans/NotoSans-Medium.ttf");
-    font-weight: 500;
+    font-weight: 400;
 }
 
 @font-face {
@@ -11,9 +17,21 @@
 }
 
 @font-face {
+    font-family: '--main-font';
+    src: url('./Noto_Sans/NotoSans-Bold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
     font-family: '--main-font-kr';
     src: url('./Noto_Sans_KR/NotoSansKR-Bold.otf');
     font-weight: 600;
+}
+
+@font-face {
+    font-family: '--main-font';
+    src: url('./Noto_Sans/NotoSans-ExtraBold.ttf');
+    font-weight: 900;
 }
 
 @font-face {
@@ -26,7 +44,7 @@
 
 @font-face {
     font-family: '--partition-main-font';
-    src: './Antons/Anton-Regular.ttf';
-    font-weight: regular;
+    src: url('./Antons/Anton-Regular.ttf');
+    font-weight: 400;
 }
 

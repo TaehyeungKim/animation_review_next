@@ -10,6 +10,7 @@ function PostIntro({title, photoURL}:PostIntroProps) {
         <section className = {styles.post_intro} style={{backgroundImage : `url(${photoURL})`}}>
             <div className={styles['post_intro--background']}></div>
             <h2 className= {styles['post_intro--title']}>{title}</h2>
+            <h5 className= {styles['post_intro--userid']}><span>by</span>&nbsp;taehyeungkim98</h5>
         </section>
     )
 }
