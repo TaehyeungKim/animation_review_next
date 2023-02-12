@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './PostCommentBar.module.scss'
 import styles_upper from './PostCommentBarUpper.module.scss';
 import styles_below from './PostCommentBarBelow.module.scss';
@@ -27,12 +27,20 @@ interface CommentBarBelowProps {
 }
 
 function CommentBarBelow({visible}:CommentBarBelowProps) {
+
+    const container = useRef<HTMLDivElement>(null);
+
+    useEffect(()=>{
+    
+        !visible ? container?.current?.classList.add(styles_below.hide) : container?.current?.classList.remove(styles_below.hide)
+        
+    },[visible])
     return(
-        <div className={styles_below['bar_down']}>
+        <div className={styles_below['bar_down']} ref={container}>
             <div className={styles_below['bar_down--profile']}>
                 <figure className={styles_below['profile']}></figure>
             </div>
-            <div className={styles_below['bar_down--comment']} style={visible ? undefined : {height: 0}}>
+            <div className={styles_below['bar_down--comment']}>
                 <textarea placeholder={"댓글을 입력해주세요"}></textarea>
             </div>
             <button className={styles_below['bar_down--submit']}>
@@ -47,7 +55,7 @@ function PostCommentBar() {
     const [barVisible, setBarVisible] = useState<boolean>(true);
 
     const toggleBar = (visible:boolean) => {
-        setBarVisible(visible)
+        setBarVisible(!visible)
     }
     
     return (
