@@ -12,8 +12,14 @@ h4, h3, p {
     font-size: initial;
 }
 
+textarea {
+    all: unset;
+}
+
 button, a {
     all: unset;
+    padding: 0;
+    border: none;
 }
 
 body {

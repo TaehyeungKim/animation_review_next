@@ -1,0 +1,67 @@
+@import '../../../../utils/toremfunc.scss';
+@import '../../../../fonts/Font-Face.module.scss';
+
+.bar_down {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    align-items: center;
+
+    .bar_down--profile {
+        flex-basis: toRem(50);
+        aspect-ratio: 1;
+        position: relative;
+        .profile {
+             width: 100%;
+             height: 100%;
+             background: url('../../../../images/logo192.png');
+             background-position: center;
+             background-repeat: no-repeat;
+             background-size: cover;
+             border-radius: 50%;
+        }
+        margin-right: toRem(4);
+    }
+
+    .bar_down--comment {
+        flex-grow: 1;
+        $h: 40;
+        height: toRem($h);
+        margin: 0 toRem(4);
+        textarea {
+            width: 100%;
+            height: 100%;
+            resize: none;
+            font-family: '--main-font-kr';
+            font-size: toRem($h * 0.4);
+            border-radius:  toRem($h/2);
+            line-height: toRem($h);
+            border: 2px solid rgb(163, 213, 233);
+            transition: border 0.5s ease-in-out;
+            display: inline-block;
+            box-sizing: content-box;
+            &:focus-within {
+                outline: none;
+                border: 2px solid rgb(41, 179, 233);
+                &::placeholder {
+                    color: transparent;
+                }
+            }
+            
+            &::placeholder {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                display: inline-block;
+            }
+
+        }
+
+    }
+    .bar_down--submit {
+        flex-basis: toRem(45);
+        aspect-ratio: 1;
+        position: relative;
+        margin-left: toRem(4);
+    }
+}
