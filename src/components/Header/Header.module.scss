@@ -22,7 +22,9 @@
         display: flex;
         align-items: center;
         margin: 0 toRem(10);
+        cursor: pointer;
     }
+
 
     .logo {
         img {
@@ -30,9 +32,6 @@
         }
     }
 
-    .title {
-
-    }
     
     .search {
         input {
