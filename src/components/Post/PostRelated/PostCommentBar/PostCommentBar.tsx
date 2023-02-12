@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './PostCommentBar.module.scss'
 import styles_upper from './PostCommentBarUpper.module.scss';
 import styles_below from './PostCommentBarBelow.module.scss';
-import {likeplus, share, exclamation, toggledown, toggleup, write} from '../../../../icons/icons'
+import ProfilePictureComponent from '../../../Global/ProfilePictureComponent';
+import {likeplus, share, exclamation, toggledown, toggleup, write, toggleon, toggleoff} from '../../../../icons/icons'
 
 interface CommentBarUpperProps {
     toggleBar: (arg:boolean)=>void,
@@ -17,7 +18,7 @@ function CommentBarUpper({toggleBar, visible}:CommentBarUpperProps) {
             <button className={styles_upper.exclamation}>{exclamation()}</button>
             <button className={styles_upper.hideshowtoggle} onClick={()=>{
                 toggleBar(visible)
-            }}>{visible ? toggledown() : toggleup()}</button>            
+            }}>{visible ? toggleon() : toggleoff()}</button>            
         </div>
     )
 }
@@ -38,7 +39,7 @@ function CommentBarBelow({visible}:CommentBarBelowProps) {
     return(
         <div className={styles_below['bar_down']} ref={container}>
             <div className={styles_below['bar_down--profile']}>
-                <figure className={styles_below['profile']}></figure>
+                <ProfilePictureComponent/>
             </div>
             <div className={styles_below['bar_down--comment']}>
                 <textarea placeholder={"댓글을 입력해주세요"}></textarea>

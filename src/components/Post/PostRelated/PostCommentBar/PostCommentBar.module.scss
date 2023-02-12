@@ -2,7 +2,7 @@
 @import '../../../../fonts/Font-Face.module.scss';
 
 .bar {
-    position: fixed;
+    position: sticky;
     bottom: 0;
     width:100%;
     max-width: toRem($page_content_maxwidth);

@@ -1,0 +1,16 @@
+@import '../../../../utils/toremfunc.scss';
+@import '../../../../fonts/Font-Face.module.scss';
+
+.list {
+    width: 100%;
+    height: 100vh;
+
+    .list_container {
+        display: block;
+        width: 100%;
+        border: 2px solid black;
+        .list_container--comment {
+            
+        }
+    }
+}

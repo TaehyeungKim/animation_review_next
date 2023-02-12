@@ -1,5 +1,6 @@
 import styles from './ArticleFeedHeader.module.scss';
 import logo from '../../../images/logo192.png'
+import ProfilePictureComponent from '../../Global/ProfilePictureComponent';
 
 interface BadgeContainerProps {
     badge: Array<any>;
@@ -19,7 +20,9 @@ function ArticleFeedHeader() {
     return(
         <header className={styles.header}>
             <div className={styles.user}>
-                <figure className={styles.profile_image}></figure>
+                <div className={styles['user_profileContainer']}>
+                    <ProfilePictureComponent/>
+                </div>
                 <h4 className={styles.username}>taehyeungkim98</h4>
             </div>
             <BadgeContainer badge = {[{src: logo}]}/>
