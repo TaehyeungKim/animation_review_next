@@ -3,15 +3,14 @@
 .content {
     width: 100%;
     padding: toRem(10) toRem(20);
+    box-sizing: border-box;
 
     .content_wrapper {
         position: relative;
-        border: 2px solid black;
         .content_paragraph {
             line-height: 1.5;
             overflow-wrap:break-word;
             margin: toRem(10) 0;
-            border: 2px solid black;
         }
     }
 }
