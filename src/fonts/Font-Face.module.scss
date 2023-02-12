@@ -5,6 +5,13 @@
 }
 
 @font-face {
+    font-family: '--main-font-kr';
+    src: url("./Noto_Sans_KR/NotoSansKR-Light.otf");
+    font-weight: 200;
+}
+
+
+@font-face {
     font-family: '--main-font';
     src: url("./Noto_Sans/NotoSans-Medium.ttf");
     font-weight: 400;
