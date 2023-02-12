@@ -8,59 +8,67 @@
     left:0;
     height: toRem($headerH);
     width: 100%;
-    display: flex;
     font-family: '--main-font';
     font-weight: 500;
     z-index: 10;
     background-color: white;
-    flex-direction: row;
+    
     box-shadow: 1px 1px 3.5px 3.5px #E3E3E3;
 
-    > div {
-        position: relative;
+    .nav_container {
         height: 100%;
+        width: 100%;
+        max-width: toRem($page_content_maxwidth);
         display: flex;
-        align-items: center;
-        margin: 0 toRem(10);
-        cursor: pointer;
-    }
-
-
-    .logo {
-        img {
-            height: inherit;
+        flex-direction: row;
+        margin: 0 auto;
+        > div {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin: 0 toRem(10);
         }
-    }
-
     
-    .search {
-        input {
-            height: 40%;
-            width: toRem(200);
-            border-radius: toRem(10);
-            transition: width 0.5s ease-in-out;
-			
-			&:focus-within {
-				outline: none;
-				border-color: skyblue;
-                width: toRem(400);
-			}
+    
+        .logo {
+            img {
+                height: inherit;
+            }
         }
-
-        .search_icon {
-            position: absolute;
-            width: toRem(30);
-            right: toRem(10);
+    
+        
+        .search {
+            cursor: pointer;
+            input {
+                height: 40%;
+                width: toRem(200);
+                border-radius: toRem(10);
+                transition: width 0.5s ease-in-out;
+                
+                &:focus-within {
+                    outline: none;
+                    border-color: skyblue;
+                    width: toRem(400);
+                }
+            }
+    
+            .search_icon {
+                position: absolute;
+                width: toRem(30);
+                right: toRem(10);
+            }
         }
-    }
-
-    .title {
-        flex-grow: 1;
-    }
-
-    .icon {
-        flex-basis: toRem(40);
-        cursor: pointer;
+    
+        .title {
+            flex-grow: 1;
+            h3 {cursor: pointer;}
+        }
+    
+        .icon {
+            flex-basis: toRem(40);
+            cursor: pointer;
+        }
     }
 }
 

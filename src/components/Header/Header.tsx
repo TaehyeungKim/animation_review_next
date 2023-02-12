@@ -12,27 +12,30 @@ function Header() {
 
     return (
         <nav className={styles.nav}>
-            <div className={styles.logo} onClick={()=>navigate('/main')}>
-                <img src={logo}/>
-            </div>
-            <div className={styles.title} onClick={()=>navigate('/main')}>
-                <h3>Aniview</h3>
-            </div>
-
-            <div className={styles.search}>
-                <input placeholder="검색어를 입력하세요"></input>
-                <div className={styles.search_icon}>
-                    <img src={search_icon}/>
+            <div className = {styles.nav_container}>
+                <div className={styles.logo} onClick={()=>navigate('/main')}>
+                    <img src={logo}/>
                 </div>
-            </div>
-            <div className={styles.username}>
-                <h4>taehyeungkim98</h4>
-            </div>
-            <div className={styles.icon} id={'icon-notification'}>
-                {notification()}
-            </div>
-            <div className={styles.icon} id={'setting'}>
-                {list()}
+                <div className={styles.title} onClick={()=>navigate('/main')}>
+                    <h3>Aniview</h3>
+                </div>
+
+                <div className={styles.search}>
+                    <input placeholder="검색어를 입력하세요"></input>
+                    <div className={styles.search_icon}>
+                        <img src={search_icon}/>
+                    </div>
+                </div>
+                <div className={styles.username}>
+                    <h4>taehyeungkim98</h4>
+                </div>
+                <div className={styles.icon} id={'icon-notification'}>
+                    {notification()}
+                </div>
+                <div className={styles.icon} id={'setting'}>
+                    {list()}
+                </div>
+
             </div>
         </nav>
     )
