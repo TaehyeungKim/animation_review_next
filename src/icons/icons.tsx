@@ -144,6 +144,21 @@ const trash = () => {
 	)
 }
 
+const centeralign = () => {
+	return(
+	<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox= "0 0 48 48">
+		<path d="M6 42v-3h36v3Zm8.2-8.25v-3h19.65v3ZM6 25.5v-3h36v3Zm8.2-8.25v-3h19.65v3ZM6 9V6h36v3Z"/>
+	</svg>)
+}
+
+const leftalign = () => {
+	return (
+	<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox= "0 0 48 48">
+			<path d="M6 42v-3h36v3Zm0-8.25v-3h23.6v3Zm0-8.25v-3h36v3Zm0-8.25v-3h23.6v3ZM6 9V6h36v3Z"/>
+	</svg>
+	)
+}
+
 
 export {
   notification, 
@@ -163,4 +178,6 @@ export {
   toggleoff,
   moreDot,
   imageAdd,
-  trash}
+  trash,
+  centeralign,
+  leftalign}

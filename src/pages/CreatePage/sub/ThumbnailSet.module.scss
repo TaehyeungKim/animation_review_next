@@ -9,6 +9,8 @@
 	background-repeat: no-repeat;
 	display:flex;
 	flex-wrap: row nowrap;
+	box-sizing: border-box;
+	border: 2px solid #EBEBEB;
 	
 	.thumbnail_optionbar {
 		position: absolute;
@@ -20,7 +22,7 @@
 		background-color: rgba(255,255,255,0.3);
 		align-self: center;
 		
-		.thumbnail_optionbar--imageAdd, .thumbnail_optionbar--imageDelete {
+		.thumbnail_optionbar--imageAdd, .thumbnail_optionbar--imageDelete, .thumbnail_optionbar--alignment {
 			width: toRem(35);
 			aspect-ratio: 1;
 			cursor: pointer;
