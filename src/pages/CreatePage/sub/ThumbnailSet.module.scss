@@ -4,18 +4,25 @@
 	position: relative;
 	height: toRem($intro-thumbnailH);
 	width: 100%;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	display:flex;
+	flex-wrap: row nowrap;
 	
 	.thumbnail_optionbar {
-		height: 100%;
+		height: fit-content;
 		width: fit-content;
 		padding: toRem(15);
 		box-sizing: border-box;
 		margin-left: auto;
+		background-color: rgba(255,255,255,0.3);
 		
-		.thumbnail_optionbar--imageAdd {
+		.thumbnail_optionbar--imageAdd, .thumbnail_optionbar--imageDelete {
 			width: toRem(35);
 			aspect-ratio: 1;
 			cursor: pointer;
+			display: block;
 		}
 	}
 }
