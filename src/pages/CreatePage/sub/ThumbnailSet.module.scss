@@ -1,0 +1,21 @@
+@import '../../../utils/toremfunc.scss';
+
+.thumbnail {
+	position: relative;
+	height: toRem($intro-thumbnailH);
+	width: 100%;
+	
+	.thumbnail_optionbar {
+		height: 100%;
+		width: fit-content;
+		padding: toRem(15);
+		box-sizing: border-box;
+		margin-left: auto;
+		
+		.thumbnail_optionbar--imageAdd {
+			width: toRem(35);
+			aspect-ratio: 1;
+			cursor: pointer;
+		}
+	}
+}

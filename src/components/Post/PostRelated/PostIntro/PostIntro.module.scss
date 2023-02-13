@@ -2,7 +2,7 @@
 
 .post_intro {
     width: 100%;
-    height: toRem(500);
+    height: toRem($intro-thumbnailH);
     background-position: center;
     background-size:cover;
     background-repeat: no-repeat;
