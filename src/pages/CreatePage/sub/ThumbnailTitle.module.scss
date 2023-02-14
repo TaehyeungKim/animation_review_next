@@ -1,0 +1,39 @@
+@import '../../../utils/toremfunc.scss';
+@import '../../../fonts/Font-Face.module.scss';
+
+.title {
+	justify-content: center;
+	align-self: flex-end;
+	padding: toRem(10);
+	margin: 0 0 toRem(10) toRem(10);
+	
+	.title--main, .title--sub {
+		font-family: '--main-font-kr',  '--main-font';
+		&:focus-within {
+			outline: none;
+		}
+	}
+	
+	.title--main {
+		font-weight: 400;
+		font-size: toRem(40);
+		
+		&::before {
+			content:"제목을 입력하세요"
+		}
+	}
+	
+	.title--sub {
+		font-weight: 200;
+		font-size: toRem(25);
+		&::before {
+			content:"부제목을 입력하세요"
+		}
+	}
+	
+	.title--focused {
+		&::before {
+			content: "" !important;
+		}
+	}
+}
