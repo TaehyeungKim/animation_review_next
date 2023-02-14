@@ -1,6 +1,7 @@
 import styles from './CreatePage.module.scss'
 import Header from '../../components/Header/Header';
 import ThumbnailSet from './sub/ThumbnailSet';
+import WriteContent from './sub/WriteContent'
 
 function CreatePage() {
 	return(
@@ -8,6 +9,7 @@ function CreatePage() {
 		<Header/>
 		<div className={styles.contents}>
 			<ThumbnailSet/>
+			<WriteContent/>
 		</div>
 		</>
 	)

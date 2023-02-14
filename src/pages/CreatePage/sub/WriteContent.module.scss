@@ -1,0 +1,21 @@
+@import '../../../utils/toremfunc.scss';
+@import '../../../fonts/Font-Face.module.scss';
+
+.write {
+    width: 70%;
+    height: 150vh;
+    min-width: toRem(700);
+    position: relative;
+    margin: 0 auto 0;
+    &:focus-within {
+        outline: none;
+    }
+
+    .line{
+        line-height: toRem(30);
+        letter-spacing: toRem(3);
+        &:focus-within {
+            outline: none;
+        }
+    }
+}
