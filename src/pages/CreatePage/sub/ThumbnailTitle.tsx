@@ -33,11 +33,14 @@ function ThumbnailTitleElement({style, tag}:ThumbnailTitleElementProps) {
 	
 }
 
+interface ThumbnailTitleProps {
+	align: string
+}
 
 
-function ThumbnailTitle() {
+function ThumbnailTitle({align}: ThumbnailTitleProps) {
 	return(
-		<div className = {styles_title.title}>
+		<div className = {`${styles_title.title} ${styles_title[align]}`}>
 			<ThumbnailTitleElement style={styles_title['title--main']} tag={'h1'}/>
 			<ThumbnailTitleElement style={styles_title['title--sub']} tag={'h3'}/>
 		</div>

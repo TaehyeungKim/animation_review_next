@@ -39,7 +39,7 @@ function ThumbnailSet() {
 	
 	return(
 		<section className={styles.thumbnail} style={thumbnail ? {backgroundImage: `url(${thumbnail})`} : undefined}>
-			<ThumbnailTitle/>
+			<ThumbnailTitle align={titleAlignOrder[titleAlignIndex].dir}/>
 			<aside className = {styles.thumbnail_optionbar}>
 				<ButtonComponent className={styles['thumbnail_optionbar--imageAdd']} children={imageAdd()} event={[['onClick', ()=>{
 						imageInp.current?.click();}]]}/>
