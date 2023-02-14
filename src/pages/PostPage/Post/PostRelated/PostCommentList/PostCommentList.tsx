@@ -1,6 +1,7 @@
 import styles from './PostCommentList.module.scss'
 import ProfilePictureComponent from '../../../../../components/Global/ProfilePictureComponent'
 import { moreDot } from '../../../../../icons/icons'
+import ButtonComponent from '../../../../../components/Global/ButtonComponent'
 
 function PostComment() {
     return(
@@ -17,9 +18,7 @@ function PostComment() {
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
             </div>
-            <div className={styles['comment--more']}>
-                {moreDot()}
-            </div>
+            <ButtonComponent className={styles['comment--more']} children={moreDot()}/>
         </li>
     )
 }

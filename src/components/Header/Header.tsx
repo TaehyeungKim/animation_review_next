@@ -3,6 +3,7 @@ import styles from './Header.module.scss'
 import logo from '../../images/logo192.png'
 import search_icon from '../../icons/search.svg'
 import {notification, setting, list} from '../../icons/icons'
+import ButtonComponent from '../Global/ButtonComponent'
 
 
 
@@ -29,13 +30,8 @@ function Header() {
                 <div className={styles.username}>
                     <h4>taehyeungkim98</h4>
                 </div>
-                <div className={styles.icon} id={'icon-notification'}>
-                    {notification()}
-                </div>
-                <div className={styles.icon} id={'setting'}>
-                    {list()}
-                </div>
-
+                <ButtonComponent className={styles.icon} children={notification()} id={'icon-notification'}/>
+                <ButtonComponent className={styles.icon} children={list()} id={'setting'}/>
             </div>
         </nav>
     )

@@ -1,19 +1,29 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
-import {JsxElement} from 'typescript'
+import styles from './ButtonComponent.module.scss';
 
-interface ButtonComponenetProps {
+
+interface ButtonComponentProps {
     className: string,
-    image: ()=>JsxElement
-
+    children: JSX.Element,
+    event?: Array<Array<any>>
+    id?: string
 }
 
-function ButtonComponent({className, image}:ButtonComponenetProps) {
+function ButtonComponent({className, children, event, id}:ButtonComponentProps) {
 
-    const element = React.createElement('button', {
-        className: className,
-        children: image()
-    })
+     const props = {className: `${className} ${styles.basic}`, children: children, id: id}
+     if(event) {
+        event.forEach((m:Array<any>)=>{
+            Object.defineProperty(props, m[0], {
+                value: m[1],
+                enumerable: true,
+                configurable: true,
+                writable: true
+            })
+        })
+     }
+
+    const element = React.createElement('button', props)
     return(
         element
     )

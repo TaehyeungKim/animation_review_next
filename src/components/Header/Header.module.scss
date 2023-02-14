@@ -68,7 +68,8 @@
     
         .icon {
             flex-basis: toRem(40);
-            cursor: pointer;
+            width: toRem(40);
+            margin: toRem(8);
         }
     }
 }

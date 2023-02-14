@@ -2,6 +2,7 @@ import {useState, useRef} from 'react';
 import styles from './ThumbnailSet.module.scss';
 import {imageAdd, trash, leftalign, centeralign} from '../../../icons/icons';
 import ThumbnailTitle from './ThumbnailTitle'; 
+import ButtonComponent from '../../../components/Global/ButtonComponent';
 
 
 function ThumbnailSet() {
@@ -27,18 +28,15 @@ function ThumbnailSet() {
 		<section className={styles.thumbnail} style={thumbnail ? {backgroundImage: `url(${thumbnail})`} : undefined}>
 			<ThumbnailTitle/>
 			<aside className = {styles.thumbnail_optionbar}>
-				<button className={styles['thumbnail_optionbar--imageAdd']} onClick={()=>{
-						imageInp.current?.click();
-					}}>{imageAdd()}</button>
+				<ButtonComponent className={styles['thumbnail_optionbar--imageAdd']} children={imageAdd()} event={[['onClick', ()=>{
+						imageInp.current?.click();}]]}/>
 				<input type="file" accept="image/*" hidden ref={imageInp} onChange = {(e:any)=>{
 						updateThumbnail(e);
 					}}/>
-				<button className = {styles['thumbnail_optionbar--imageDelete']} onClick = {()=>{
+				<ButtonComponent className={styles['thumbnail_optionbar--imageDelete']} children={trash()} event={[['onClick', ()=>{
 						deleteThumbnail();
-					}}>{trash()}</button>
-				<button className = {styles['thumbnail_optionbar--alignment']}>
-				{titleAlign === 'left' ? leftalign() : centeralign()}
-				</button>
+					}]]}/>
+				<ButtonComponent className={styles['thumbnail_optionbar--alignment']} children={titleAlign === 'left' ? leftalign() : centeralign()}/>
 			</aside>
 		</section>
 	)

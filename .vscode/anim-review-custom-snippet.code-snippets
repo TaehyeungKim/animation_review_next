@@ -21,6 +21,11 @@
 			"${1}",
 			"}"
 		]
+	},
+
+	"ButtonComponent": {
+		"prefix": "bc",
+		"body": "<ButtonComponent className={${1}} children={${2}} ${3}/>"
 	}
 
 	// Place your animation_review workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 

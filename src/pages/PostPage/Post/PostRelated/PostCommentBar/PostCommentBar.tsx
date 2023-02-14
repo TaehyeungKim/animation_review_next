@@ -4,6 +4,8 @@ import styles_upper from './PostCommentBarUpper.module.scss';
 import styles_below from './PostCommentBarBelow.module.scss';
 import ProfilePictureComponent from '../../../../../components/Global/ProfilePictureComponent';
 import {likeplus, share, exclamation, write, toggleon, toggleoff} from '../../../../../icons/icons'
+import ButtonComponent from '../../../../../components/Global/ButtonComponent'
+
 
 interface CommentBarUpperProps {
     toggleBar: (arg:boolean)=>void,
@@ -13,12 +15,10 @@ interface CommentBarUpperProps {
 function CommentBarUpper({toggleBar, visible}:CommentBarUpperProps) {
     return(
         <div className={styles_upper['bar_upper']}>
-            <button className={styles_upper.like}>{likeplus()}</button>
-            <button className={styles_upper.share}>{share()}</button>
-            <button className={styles_upper.exclamation}>{exclamation()}</button>
-            <button className={styles_upper.hideshowtoggle} onClick={()=>{
-                toggleBar(visible)
-            }}>{visible ? toggleon() : toggleoff()}</button>            
+            <ButtonComponent className={styles_upper.like} children={likeplus()}/>
+            <ButtonComponent className={styles_upper.like} children={share()}/>
+            <ButtonComponent className={styles_upper.exclamation} children={exclamation()}/>
+            <ButtonComponent className={styles_upper.hideshowtoggle} children={visible ? toggleon() : toggleoff()} event={[['onClick', ()=>{toggleBar(visible)}]]}/>      
         </div>
     )
 }
@@ -44,9 +44,7 @@ function CommentBarBelow({visible}:CommentBarBelowProps) {
             <div className={styles_below['bar_down--comment']}>
                 <textarea placeholder={"댓글을 입력해주세요"}></textarea>
             </div>
-            <button className={styles_below['bar_down--submit']}>
-                {write()}
-            </button>
+            <ButtonComponent className={styles_below['bar_down--submit']} children={write()}/>
         </div>
     )
 }
