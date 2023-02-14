@@ -1,0 +1,49 @@
+@import '../../../../../utils/toremfunc.scss';
+@import '../../../../../fonts/Font-Face.module.scss';
+
+.list {
+    width: 100%;
+
+    .list_container {
+        display: block;
+        width: 100%;
+        font-family: '--main-font-kr', '--main-font';
+        font-weight: 200;
+
+        .list_container--comment {
+            display:flex;
+            align-items: center;
+            flex-flow: row nowrap;
+            padding: toRem(20);
+            border-bottom: toRem(2) solid rgba(163, 163, 163, 0.3);
+            &:last-child {
+                border-bottom: none;
+            }
+            &:hover {
+                background-color: rgba(163, 163, 163, 0.3);
+                cursor: pointer;
+            }
+            .comment--profile {
+                width: toRem(35);
+                aspect-ratio: 1;
+                margin: 0 toRem(20)
+            }
+            .comment--content {
+                flex-grow: 1;
+                .content--info {
+                    font-size: toRem(15);
+                    .info--username {
+                        margin-right: toRem(30);
+                        font-style: italic;
+                    }
+                    .info--date {
+                        font-size: toRem(12);
+                    }
+                }
+            }
+            .comment--more {
+                width: toRem(30);
+            }
+        }
+    }
+}
