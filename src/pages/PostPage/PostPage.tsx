@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import Header from '../../components/Header/Header';
-import Post from '../../components/Post/Post';
+import Post from './Post/Post';
 import styles from './PostPage.module.scss';
 
 function PostPage() {
