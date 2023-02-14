@@ -159,6 +159,14 @@ const leftalign = () => {
 	)
 }
 
+const rightalign = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg"  width="100%" viewBox = "0 0 48 48">
+      <path d="M6 42v-3h36v3Zm12.45-8.25v-3H42v3ZM6 25.5v-3h36v3Zm12.45-8.25v-3H42v3ZM6 9V6h36v3Z"/>
+    </svg>
+  )
+}
+
 
 export {
   notification, 
@@ -180,4 +188,5 @@ export {
   imageAdd,
   trash,
   centeralign,
-  leftalign}
+  leftalign,
+  rightalign}
