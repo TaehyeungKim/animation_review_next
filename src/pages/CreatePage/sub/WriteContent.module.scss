@@ -4,18 +4,35 @@
 .write {
     width: 70%;
     height: 150vh;
-    min-width: toRem(700);
     position: relative;
     margin: 0 auto 0;
+    padding: toRem(20);
+    box-sizing: border-box;
     &:focus-within {
         outline: none;
     }
 
     .line{
-        line-height: toRem(30);
-        letter-spacing: toRem(3);
-        &:focus-within {
-            outline: none;
+        line-height: toRem(20);
+        height: fit-content;
+        position: relative;
+        padding: 0;
+        word-break: break-word;
+        font-family: '--main-font-kr', '--main-font';
+        &:first-child:before {
+            content:"내용을 입력해주세요";
+            opacity: 0.3;
+        }
+    }
+
+    .line--focused {
+        &::before {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: inline-block;
         }
     }
 }
