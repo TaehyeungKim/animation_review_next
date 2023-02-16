@@ -2,38 +2,71 @@
 @import '../../../fonts/Font-Face.module.scss';
 
 .write {
-    width: 70%;
-    height: 150vh;
     position: relative;
-    margin: 0 auto 0;
-    padding: toRem(20);
-    box-sizing: border-box;
-    border: 2px solid #EBEBEB;
-    &:focus-within {
-        outline: none;
-    }
-
-    .line{
-        line-height: toRem(20);
-        height: fit-content;
+    width: 100%;
+    display: flex;
+    .write--content {
+        width: 70%;
+        height: 150vh;
         position: relative;
-        padding: 0;
-        word-break: break-word;
-        font-family: '--main-font-kr', '--main-font';
-        &:first-child:before {
-            content:"내용을 입력해주세요";
-            opacity: 0.3;
+        margin: 0 auto 0;
+        padding: toRem(20);
+        box-sizing: border-box;
+        border: 2px solid #EBEBEB;
+        &:focus-within {
+            outline: none;
+        }
+    
+        .line{
+            line-height: toRem(20);
+            height: fit-content;
+            position: relative;
+            padding: 0;
+            word-break: break-word;
+            font-family: '--main-font-kr', '--main-font';
+            &:first-child::before {
+                content:"내용을 입력해주세요";
+                opacity: 0.3;
+            }
+            caret-color: skyblue;
+        }
+    
+        .line--noplaceholder {
+            &:first-child::before {
+                opacity: 0;
+                width: 0;
+                height: 0;
+                box-sizing: border-box;
+                overflow: hidden;
+                display: inline-block;
+            }
+        }
+
+        .image {
+            width: 100%;
+            aspect-ratio: 1.6;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            box-sizing: border-box;
+            border: none;
+        }
+
+        .image--highlight {
+            border: 2px solid skyblue !important;
         }
     }
 
-    .line--focused {
-        &::before {
-            opacity: 0;
-            width: 0;
-            height: 0;
-            box-sizing: border-box;
-            overflow: hidden;
-            display: inline-block;
+    .write--optionbar {
+        position: absolute;
+        right: 0;
+        align-self: flex-start;
+        padding: toRem(10);
+        width: fit-content; height: fit-content;
+        .write--optionbar--button {
+            width: toRem(35);
         }
     }
+
 }
+
