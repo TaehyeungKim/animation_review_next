@@ -23,8 +23,10 @@ function WriteContent() {
     const insertImageToContent = (e:any) => {
         const tempURL = URL.createObjectURL(e.target?.files[0]);
         const currentCaret = window.getSelection()?.anchorNode;
-        const image = document.createElement('div'); image.setAttribute('style', `background-image: url(${tempURL})`); image.setAttribute('class', `${styles.image}`);
-        contentArea.current?.insertBefore(image, currentCaret?.nextSibling as Node);
+        const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${styles.imageContainer}`);
+        const image = document.createElement('img'); image.setAttribute('src', tempURL);
+        imageContainer.appendChild(image);
+        contentArea.current?.insertBefore(imageContainer, currentCaret?.nextSibling as Node);
 
         const flheight = firstlineRef.current?.offsetHeight;
         
@@ -34,10 +36,10 @@ function WriteContent() {
 
     document.addEventListener('selectionchange', ()=>{
         const anchor = document.getSelection()?.anchorNode as HTMLElement
-        if(anchor?.classList.contains(styles.image))  anchor?.classList.add(`${styles['image--highlight']}`)
+        if(anchor?.classList.contains(styles.imageContainer))  anchor?.classList.add(`${styles['imageContainer--highlight']}`)
         else {
-            const highlighted = document.getElementsByClassName(`${styles['image--highlight']}`)[0]
-            if(highlighted) highlighted.classList.toggle(`${styles['image--highlight']}`) 
+            const highlighted = document.getElementsByClassName(`${styles['imageContainer--highlight']}`)[0]
+            if(highlighted) highlighted.classList.toggle(`${styles['imageContainer--highlight']}`) 
         }
     })
 
