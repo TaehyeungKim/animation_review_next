@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import styles from './WriteContent.module.scss'
 import {imageAdd} from '../../../icons/icons'
 import ButtonComponent from '../../../components/Global/ButtonComponent';
@@ -32,11 +32,14 @@ function WriteContent() {
         contentArea.current?.appendChild(newline);
     }
 
-    const highlightImage = () => {
-        const currentCaret = window.getSelection()?.anchorNode as HTMLElement;
-        //if(currentCaret.className === `${styles.image}`) currentCaret.classList.add(`${styles['image--highlight']}`)
-        console.log(currentCaret.className)
-    }
+    document.addEventListener('selectionchange', ()=>{
+        const anchor = document.getSelection()?.anchorNode as HTMLElement
+        if(anchor?.classList.contains(styles.image))  anchor?.classList.add(`${styles['image--highlight']}`)
+        else {
+            const highlighted = document.getElementsByClassName(`${styles['image--highlight']}`)[0]
+            if(highlighted) highlighted.classList.toggle(`${styles['image--highlight']}`) 
+        }
+    })
 
 
     return(
@@ -45,7 +48,6 @@ function WriteContent() {
                 e.target?.firstChild.classList.add(`${styles['line--noplaceholder']}`)
             }} onInput={(e:any)=>{
                 checkIsEmpty(e);
-                highlightImage()
             }} onBlur={(e:any)=>{
                 checkIfOnlyOneLine(e)
             }} ref={contentArea}>
