@@ -36,11 +36,19 @@ function WriteContent() {
 
     document.addEventListener('selectionchange', ()=>{
         const anchor = document.getSelection()?.anchorNode as HTMLElement
-        if(anchor?.classList.contains(styles.imageContainer))  anchor?.classList.add(`${styles['imageContainer--highlight']}`)
+		const isContainingClass = (anchor: HTMLElement, className: string) => {
+			try {
+				return anchor.classList.contains(className)
+			} catch(e) {
+				return false;
+			}
+		}
+        if(isContainingClass(anchor, styles.imageContainer))  anchor?.classList.add(`${styles['imageContainer--highlight']}`)
         else {
             const highlighted = document.getElementsByClassName(`${styles['imageContainer--highlight']}`)[0]
             if(highlighted) highlighted.classList.toggle(`${styles['imageContainer--highlight']}`) 
         }
+		console.log(anchor)
     })
 
 
