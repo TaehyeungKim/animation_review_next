@@ -10,10 +10,10 @@ function App() {
   return (
     <Router>
       <Routes>
-		<Route path='/' element={<WelcomePage/>}/>
-        <Route path='/main' element={<MainPage/>}/>
-        <Route path='/post/:id' element={<PostPage/>}/>
-		<Route path='/create' element={<CreatePage/>}/>
+		      <Route path='/' element={<WelcomePage/>}/>
+          <Route path='/main' element={<MainPage/>}/>
+          <Route path='/post/:id' element={<PostPage/>}/>
+		      <Route path='/create' element={<CreatePage/>}/>
       </Routes>
     </Router>
   )
