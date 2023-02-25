@@ -18,8 +18,8 @@
         }
     
         .line{
-            line-height: toRem(20);
-            height: fit-content;
+            line-height: toRem($content--font-Height);
+            height: toRem($content--font-Height);
             position: relative;
             padding: 0;
             margin: toRem(6) 0;

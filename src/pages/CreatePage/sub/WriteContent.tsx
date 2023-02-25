@@ -8,58 +8,84 @@ function WriteContent() {
     const imageInp = useRef<HTMLInputElement>(null)
     const contentArea = useRef<HTMLElement>(null);
 
+    const paragraphMaker = () => {
+        const addedLine = document.createElement('p');
+        addedLine.setAttribute('class', `${styles.line}`);
+        addedLine.setAttribute('style', `height: ${document.getElementById('firstline')?.offsetHeight as number / 16}rem`)
+        return addedLine
+    }
+
+    const detectFirstLine = () => {
+        let firstP = null;
+        const list = contentArea.current?.childNodes as NodeList
+        for(let i = 0; i < (list.length as number); i++ ) {
+            if(list[i].nodeName === 'P') {
+                firstP = list[i];
+                break;
+            } else { }
+        
+        }
+        return firstP
+    }
+    //------------------------------related to first line placeholder----------------------------------//
+    const addPlaceHolder = (target: HTMLElement) => target.classList.remove(`${styles['line--noplaceholder']}`)
+    const removePlaceHolder = (target: HTMLElement) => target.classList.add(`${styles['line--noplaceholder']}`)
+
+    const toggleFirstLinePlaceHolder = () => {
+        const selection = document.getSelection() as Selection;
+        if(detectFirstLine()?.textContent === '') {
+            selection.anchorNode === detectFirstLine() ? 
+            removePlaceHolder(detectFirstLine() as HTMLElement)
+            :
+            (()=>{if(contentArea.current?.childElementCount === 1)addPlaceHolder(detectFirstLine() as HTMLElement)})()
+
+        }
+    }
+    //------------------------------related to first line placeholder----------------------------------//
+
 
     const preventKeyEventDefault = (e: KeyboardEvent) => {
         
         const selection = document.getSelection() as Selection
-        const anchor = selection.anchorNode as Node;
+        const anchor = selection.anchorNode as Node
             switch(e.key) {
                 case "Backspace":
-                    if(anchor.textContent === '') {
+                    if(anchor.nodeName === 'P') {
+                        const firstP = detectFirstLine();
+                        if(anchor === firstP && anchor.textContent === '') e.preventDefault();
+                    }
+                    else if(anchor.nodeName === 'DIV') {
                         e.preventDefault();
-                        if(anchor !== contentArea.current?.firstChild) 
-                        {
-                        anchor.previousSibling?.hasChildNodes() && Object.getPrototypeOf(anchor.previousSibling?.firstChild).toString() === '[object Text]' ? 
-                        (()=>{
-                            console.log(Object.getPrototypeOf(anchor.previousSibling?.firstChild))
-                            const text = anchor.previousSibling?.firstChild as Node
-                            const textContent = text.textContent as string
-                            selection.setBaseAndExtent(text, textContent.length, anchor.previousSibling?.firstChild as Node, 0);
-                            selection.collapseToEnd();
+                        if(contentArea.current?.firstElementChild === anchor) {
+                            selection.setBaseAndExtent(anchor.nextSibling as Node, 0, anchor.nextSibling as Node, 0);
+                            contentArea.current?.removeChild(anchor);
 
-                        })()
-                        :
-                        (()=>{
-                            selection.setBaseAndExtent(anchor.previousSibling as Node, 0, anchor.previousSibling as Node, 0);    
-                        })()
-                        contentArea.current?.removeChild(anchor);
+
+                        } else {
+                            const replacingP = paragraphMaker()
+                            contentArea.current?.replaceChild(replacingP, anchor);
+                            selection.setBaseAndExtent(replacingP, 0, replacingP, 0);
                         }
                     }
                     break;
                 case "Enter":
-                    e.preventDefault();
-                    const addedLine = document.createElement('p');
-                    addedLine.setAttribute('class', `${styles.line}`);
-                    addedLine.setAttribute('style', `height: ${document.getElementById('firstline')?.offsetHeight as number / 16}rem`)
-                    Object.getPrototypeOf(anchor).toString() === '[object Text]' ? 
-                    (()=>{
-                        contentArea.current?.insertBefore(addedLine, anchor.parentNode?.nextSibling as Node);
-                        selection.setBaseAndExtent(anchor.parentNode?.nextSibling as Node, 0, anchor.parentNode?.nextSibling as Node, 0)
-                    })()
-                    :
-                    (()=>{
-                        contentArea.current?.insertBefore(addedLine, anchor.nextSibling);
-                        selection.setBaseAndExtent(anchor.nextSibling as Node, 0, anchor.nextSibling as Node, 0);
-                    })()
+                    const anc = anchor.nodeName === '#text' ? anchor.parentNode : anchor
+                    if(anc === contentArea.current?.firstElementChild) {
+                        e.preventDefault();   
+                        const addedLine = paragraphMaker();
+                        contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node);
+                        const [former, latter] = [
+                        document.createTextNode(anc?.textContent?.slice(0,selection.anchorOffset) as string), 
+                        document.createTextNode(anc?.textContent?.slice(selection.anchorOffset) as string)]
+                        selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
+                        anc?.replaceChild(former, anc.firstChild as Node);
+                        selection.anchorNode?.appendChild(latter);
+                    }
                     
                     break;
             }
     }
 
-    const checkIfOnlyOneLine = (e:any) => {
-        if(e.target?.childNodes.length === 1) e.target?.firstChild.textContent === '' ? 
-        e.target?.firstChild.classList.remove(`${styles['line--noplaceholder']}`) : e.target?.firstChild.classList.add(`${styles['line--noplaceholder']}`)       
-    }
 
     const insertImageToContent = (e:any) => {
         const tempURL = URL.createObjectURL(e.target?.files[0]);
@@ -67,7 +93,9 @@ function WriteContent() {
         const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${styles.imageContainer}`);
         const image = document.createElement('img'); image.setAttribute('src', tempURL);
         imageContainer.appendChild(image);
-        contentArea.current?.insertBefore(imageContainer, currentCaret?.nextSibling as Node);    
+        const marker = currentCaret?.nodeName === '#text' ? currentCaret.parentNode : currentCaret as Node
+        contentArea.current?.insertBefore(imageContainer, marker);
+        document.getSelection()?.setBaseAndExtent(imageContainer, 0, imageContainer, 0);    
     }
 	
 	const isContainingClass = (anchor: HTMLElement, className: string) => {
@@ -86,46 +114,20 @@ function WriteContent() {
             if(highlighted) highlighted.classList.toggle(`${styles['imageContainer--highlight']}`) 
         }
 	}
-	
-	// const skipEnterOnImage = (isContainingClass: (anchor: HTMLElement, className:string)=>boolean, currentSelection: Selection) => {
-	// 	if(currentSelection) {
-	// 		if(isContainingClass(currentSelection.anchorNode as HTMLElement, styles.imageContainer)) {
-	// 			const lineRef = document.getElementsByClassName(`${styles.line}`)[0] as HTMLElement
-	// 			const nlHeight = lineRef.offsetHeight / 16
-    //     		const newline = document.createElement('p'); newline.setAttribute('style', `height: ${nlHeight}rem`); newline.setAttribute('class', `${styles.line}`)
-	// 			const contentArea = currentSelection.anchorNode.parentNode as Node
-	// 			currentSelection.anchorNode.parentNode.appendChild(newline);
-	// 			const nextSibling = currentSelection.anchorNode?.nextSibling as Node;
-	// 			currentSelection.setBaseAndExtent(nextSibling, 0, nextSibling,0);
-				
-	// 		}
-	// 	}
-	// }
-	
-
+		
 
     document.addEventListener('selectionchange', ()=> toggleImageHighlight(isContainingClass))
 
     useEffect(()=>{
         contentArea.current?.addEventListener('keydown', preventKeyEventDefault);
     },[])
-	// document.addEventListener('keydown', (e:any)=>{
-	// 	if(e.key === 'Enter') {
-	// 		skipEnterOnImage(isContainingClass, document.getSelection() as Selection);
-	// 		console.log(document.getSelection()?.anchorNode?.previousSibling)
-	// 		//contentArea.current?.removeChild(document.getSelection()?.anchorNode?.previousSibling as Node)
-			
-	// 	}
-	// })
+
+    useEffect(()=>{document.addEventListener('selectionchange', toggleFirstLinePlaceHolder)},[])
 	
 
     return(
         <main className={styles.write}>
-            <section className={styles['write--content']} contentEditable='true' onFocus={(e:any)=>{
-                e.target?.firstChild.classList.add(`${styles['line--noplaceholder']}`)
-            }} onBlur={(e:any)=>{
-                checkIfOnlyOneLine(e)
-            }} ref={contentArea}>
+            <section className={styles['write--content']} contentEditable='true' ref={contentArea}>
                 <p className={styles.line} id={'firstline'}></p>
             </section>
             <aside className={styles['write--optionbar']}>
