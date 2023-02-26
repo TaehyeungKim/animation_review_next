@@ -43,7 +43,6 @@
             }
         }
         
-
         .imageContainer {
             width: 100%;
             height: fit-content;
@@ -51,12 +50,12 @@
             border: none;
             position: relative;
             margin: toRem(15) 0;
-
+        
             img {
                 width: 100%;
             }
         }
-
+        
         .imageContainer--highlight {
             &::after {
                 content:"";
@@ -69,17 +68,7 @@
                 left: 0;
             }
         }
-    }
-
-    .write--optionbar {
-        position: absolute;
-        right: 0;
-        align-self: flex-start;
-        padding: toRem(10);
-        width: fit-content; height: fit-content;
-        .write--optionbar--button {
-            width: toRem(35);
-        }
+        
     }
 
 }

@@ -1,12 +1,14 @@
 import { useRef, useEffect } from 'react';
 import styles from './WriteContent.module.scss'
-import {imageAdd} from '../../../icons/icons'
-import ButtonComponent from '../../../components/Global/ButtonComponent';
+import WriteContentAside from './WriteContentAside';
+
 
 function WriteContent() {
 
-    const imageInp = useRef<HTMLInputElement>(null)
+    
     const contentArea = useRef<HTMLElement>(null);
+
+    const asideStyle = {imageContainer: styles.imageContainer}
 
     const paragraphMaker = () => {
         const addedLine = document.createElement('p');
@@ -78,7 +80,7 @@ function WriteContent() {
                         document.createTextNode(anc?.textContent?.slice(0,selection.anchorOffset) as string), 
                         document.createTextNode(anc?.textContent?.slice(selection.anchorOffset) as string)]
                         selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
-                        anc?.replaceChild(former, anc.firstChild as Node);
+                        if(anc?.firstChild) anc?.replaceChild(former, anc.firstChild as Node);
                         selection.anchorNode?.appendChild(latter);
                     }
                     
@@ -86,17 +88,7 @@ function WriteContent() {
             }
     }
 
-
-    const insertImageToContent = (e:any) => {
-        const tempURL = URL.createObjectURL(e.target?.files[0]);
-        const currentCaret = window.getSelection()?.anchorNode;
-        const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${styles.imageContainer}`);
-        const image = document.createElement('img'); image.setAttribute('src', tempURL);
-        imageContainer.appendChild(image);
-        const marker = currentCaret?.nodeName === '#text' ? currentCaret.parentNode : currentCaret as Node
-        contentArea.current?.insertBefore(imageContainer, marker);
-        document.getSelection()?.setBaseAndExtent(imageContainer, 0, imageContainer, 0);    
-    }
+    
 	
 	const isContainingClass = (anchor: HTMLElement, className: string) => {
 			try {
@@ -127,15 +119,10 @@ function WriteContent() {
 
     return(
         <main className={styles.write}>
-            <section className={styles['write--content']} contentEditable='true' ref={contentArea}>
+            <section className={styles['write--content']} contentEditable='true' ref={contentArea} id={'contentArea'}>
                 <p className={styles.line} id={'firstline'}></p>
             </section>
-            <aside className={styles['write--optionbar']}>
-                <ButtonComponent className={styles['write--optionbar--button']} children={imageAdd()} event={[['onClick', ()=> {
-                    try{imageInp.current?.click()} catch(e) {console.log(e)}
-                }]]}/>
-                <input type='file' accept="image/*" hidden ref={imageInp} onChange={insertImageToContent}/>
-            </aside>
+            <WriteContentAside style={asideStyle}/>
         </main>
     )
 }

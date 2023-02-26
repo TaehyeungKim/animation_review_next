@@ -1,0 +1,13 @@
+@import '../../../utils/toremfunc.scss';
+@import '../../../fonts/Font-Face.module.scss';
+
+.write--optionbar {
+    position: absolute;
+    right: 0;
+    align-self: flex-start;
+    padding: toRem(10);
+    width: fit-content; height: fit-content;
+    .write--optionbar--button {
+        width: toRem(35);
+    }
+}
