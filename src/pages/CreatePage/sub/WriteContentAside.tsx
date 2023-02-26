@@ -21,6 +21,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
             hidden: true,
             ref: imageInp,
             onChange: insertImageToContent,
+            key: inpArray.length + 1
         })
         setInpArray(inpArray=>[...inpArray, newInp])
     }
@@ -31,13 +32,14 @@ function WriteContentAside({style}: WriteContentAsideProps) {
     const insertImageToContent = (e:any) => {
         const tempURL = URL.createObjectURL(e.target?.files[0]);
         const currentCaret = window.getSelection()?.anchorNode;
-        const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${style.imageContainer}`);
+        const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${style.imageContainer}`); 
         const image = document.createElement('img'); image.setAttribute('src', tempURL);
         imageContainer.appendChild(image);
         const marker = currentCaret?.nodeName === '#text' ? currentCaret.parentNode : currentCaret as Node
         document.getElementById('contentArea')?.insertBefore(imageContainer, marker);
         document.getSelection()?.setBaseAndExtent(imageContainer, 0, imageContainer, 0);    
         insertNewImgInp();
+
     }
 
     return (

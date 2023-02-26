@@ -100,11 +100,9 @@ function WriteContent() {
 	
 	const toggleImageHighlight = (isContainingClass: (anchor: HTMLElement, className:string)=>boolean) => {
 		const anchor = document.getSelection()?.anchorNode as HTMLElement
+        const highlighted = document.getElementsByClassName(`${styles['imageContainer--highlight']}`)
+        if(highlighted) for(let i =0; i < highlighted.length; i++) highlighted[i].classList.toggle(`${styles['imageContainer--highlight']}`) 
         if(isContainingClass(anchor, styles.imageContainer))  anchor?.classList.add(`${styles['imageContainer--highlight']}`)
-        else {
-            const highlighted = document.getElementsByClassName(`${styles['imageContainer--highlight']}`)[0]
-            if(highlighted) highlighted.classList.toggle(`${styles['imageContainer--highlight']}`) 
-        }
 	}
 		
 
