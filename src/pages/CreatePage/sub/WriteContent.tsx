@@ -54,7 +54,9 @@ function WriteContent() {
                 case "Backspace":
                     if(anchor.nodeName === 'P') {
                         const firstP = detectFirstLine();
-                        if(anchor === firstP && anchor.textContent === '') e.preventDefault();
+                        if(anchor === firstP && anchor.textContent === '' && contentArea.current?.childElementCount === 1) {
+                            e.preventDefault();
+                        }
                     }
                     else if(anchor.nodeName === 'DIV') {
                         e.preventDefault();
@@ -72,9 +74,10 @@ function WriteContent() {
                     break;
                 case "Enter":
                     const anc = anchor.nodeName === '#text' ? anchor.parentNode : anchor
-                    if(anc === contentArea.current?.firstElementChild) {
+                    const addedLine = paragraphMaker();
+                    if(anc === contentArea.current?.firstElementChild && anc?.nodeName !== "DIV") {
                         e.preventDefault();   
-                        const addedLine = paragraphMaker();
+                        
                         contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node);
                         const [former, latter] = [
                         document.createTextNode(anc?.textContent?.slice(0,selection.anchorOffset) as string), 
@@ -82,6 +85,10 @@ function WriteContent() {
                         selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
                         if(anc?.firstChild) anc?.replaceChild(former, anc.firstChild as Node);
                         selection.anchorNode?.appendChild(latter);
+                    } else if(anc?.nodeName === "DIV") {
+                        e.preventDefault();
+                        contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node)
+                        selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
                     }
                     
                     break;

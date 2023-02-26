@@ -36,7 +36,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
         const image = document.createElement('img'); image.setAttribute('src', tempURL);
         imageContainer.appendChild(image);
         const marker = currentCaret?.nodeName === '#text' ? currentCaret.parentNode : currentCaret as Node
-        document.getElementById('contentArea')?.insertBefore(imageContainer, marker);
+        document.getElementById('contentArea')?.insertBefore(imageContainer, marker?.nextSibling as Node);
         document.getSelection()?.setBaseAndExtent(imageContainer, 0, imageContainer, 0);    
         insertNewImgInp();
 
