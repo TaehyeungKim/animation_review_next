@@ -12,8 +12,9 @@ function WriteContent() {
 
     const paragraphMaker = () => {
         const addedLine = document.createElement('p');
+        const breakingLine = document.createElement('br');
         addedLine.setAttribute('class', `${styles.line}`);
-        addedLine.setAttribute('style', `height: ${document.getElementById('firstline')?.offsetHeight as number / 16}rem`)
+        addedLine.appendChild(breakingLine);
         return addedLine
     }
 
@@ -45,26 +46,36 @@ function WriteContent() {
     }
     //------------------------------related to first line placeholder----------------------------------//
 
-
+    
     const preventKeyEventDefault = (e: KeyboardEvent) => {
         
         const selection = document.getSelection() as Selection
         const anchor = selection.anchorNode as Node
             switch(e.key) {
                 case "Backspace":
+
+                    //when the paragraph line is blank//
                     if(anchor.nodeName === 'P') {
                         const firstP = detectFirstLine();
                         if(anchor === firstP && anchor.textContent === '' && contentArea.current?.childElementCount === 1) {
                             e.preventDefault();
                         }
                     }
+
+                    //when the paragraph line has some content
+                    else if(anchor.nodeName === '#text') {
+                        const previousSibling = anchor.parentNode?.previousSibling
+                        if(anchor.textContent !== '' && previousSibling?.nodeName === 'DIV') {
+                            e.preventDefault();
+                            selection.setBaseAndExtent(previousSibling, 0, previousSibling, 0);
+                        }
+                    }
+                    //when the current selection is image
                     else if(anchor.nodeName === 'DIV') {
                         e.preventDefault();
                         if(contentArea.current?.firstElementChild === anchor) {
                             selection.setBaseAndExtent(anchor.nextSibling as Node, 0, anchor.nextSibling as Node, 0);
                             contentArea.current?.removeChild(anchor);
-
-
                         } else {
                             const replacingP = paragraphMaker()
                             contentArea.current?.replaceChild(replacingP, anchor);
@@ -72,12 +83,13 @@ function WriteContent() {
                         }
                     }
                     break;
+                
+
                 case "Enter":
                     const anc = anchor.nodeName === '#text' ? anchor.parentNode : anchor
                     const addedLine = paragraphMaker();
                     if(anc === contentArea.current?.firstElementChild && anc?.nodeName !== "DIV") {
                         e.preventDefault();   
-                        
                         contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node);
                         const [former, latter] = [
                         document.createTextNode(anc?.textContent?.slice(0,selection.anchorOffset) as string), 
@@ -113,7 +125,7 @@ function WriteContent() {
 	}
 		
 
-    document.addEventListener('selectionchange', ()=> toggleImageHighlight(isContainingClass))
+    document.addEventListener('selectionchange', ()=> {toggleImageHighlight(isContainingClass);})
 
     useEffect(()=>{
         contentArea.current?.addEventListener('keydown', preventKeyEventDefault);

@@ -20,10 +20,11 @@
         .line{
             line-height: toRem($content--font-Height);
             height: fit-content;
+            min-height: toRem($content--font-Height);
             position: relative;
             padding: 0;
             margin: toRem(6) 0;
-            word-break: break-word;
+            word-break: break-all;
             font-family: '--main-font-kr', '--main-font';
             &:first-child::before {
                 content:"내용을 입력해주세요";
