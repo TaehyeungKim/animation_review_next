@@ -4,6 +4,7 @@ import styles from './WriteContentAside.module.scss'
 import {imageAdd} from '../../../icons/icons'
 import ButtonComponent from '../../../components/Global/ButtonComponent';
 
+
 interface WriteContentAsideProps {
     style: any;
 }
@@ -13,6 +14,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
     const [inpArray, setInpArray] = useState<Array<any>>([]);
 
     const imageInp = useRef<HTMLInputElement>(null);
+    const imageIdx = useRef<number>(0);
 
     const insertNewImgInp = () => {
         const newInp = React.createElement('input', {
@@ -21,7 +23,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
             hidden: true,
             ref: imageInp,
             onChange: insertImageToContent,
-            key: inpArray.length + 1
+            key: ++imageIdx.current
         })
         setInpArray(inpArray=>[...inpArray, newInp])
     }
