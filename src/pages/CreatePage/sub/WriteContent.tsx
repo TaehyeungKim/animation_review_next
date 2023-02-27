@@ -40,13 +40,13 @@ function WriteContent() {
             selection.anchorNode === detectFirstLine() ? 
             removePlaceHolder(detectFirstLine() as HTMLElement)
             :
-            (()=>{if(contentArea.current?.childElementCount === 1)addPlaceHolder(detectFirstLine() as HTMLElement)})()
+            (()=>{if(contentArea.current?.childElementCount === 1) addPlaceHolder(detectFirstLine() as HTMLElement)})()
 
         }
     }
     //------------------------------related to first line placeholder----------------------------------//
 
-    
+
     const preventKeyEventDefault = (e: KeyboardEvent) => {
         
         const selection = document.getSelection() as Selection
@@ -81,6 +81,12 @@ function WriteContent() {
                             contentArea.current?.replaceChild(replacingP, anchor);
                             selection.setBaseAndExtent(replacingP, 0, replacingP, 0);
                         }
+
+                        const aside = document.getElementById('aside')
+                        const anchorAlias = anchor as Element;
+                        const boundInp = aside?.getElementsByClassName('imageInp').namedItem(`${anchorAlias.getAttribute('key')}`) as Node;
+                        aside?.removeChild(boundInp);
+
                     }
                     break;
                 

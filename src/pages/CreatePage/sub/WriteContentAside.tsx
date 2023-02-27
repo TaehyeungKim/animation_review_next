@@ -23,7 +23,9 @@ function WriteContentAside({style}: WriteContentAsideProps) {
             hidden: true,
             ref: imageInp,
             onChange: insertImageToContent,
-            key: ++imageIdx.current
+            id: ++imageIdx.current,
+            key: imageIdx.current,
+            className: "imageInp"
         })
         setInpArray(inpArray=>[...inpArray, newInp])
     }
@@ -50,7 +52,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
             <ButtonComponent className={styles['write--optionbar--button']} children={imageAdd()} event={[['onClick', ()=> {
                 try{imageInp.current?.click()} catch(e) {console.log(e)}
             }]]}/>
-            <input type='file' accept="image/*" hidden ref={imageInp} onChange={insertImageToContent} key={0}/>
+            <input type='file' accept="image/*" hidden ref={imageInp} onChange={insertImageToContent} key={0} id={'0'} className={'imageInp'}/>
             {inpArray}
         </aside>
     )
