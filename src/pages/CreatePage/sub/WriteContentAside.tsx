@@ -41,6 +41,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
         document.getElementById('contentArea')?.insertBefore(imageContainer, marker?.nextSibling as Node);
         document.getSelection()?.setBaseAndExtent(imageContainer, 0, imageContainer, 0);    
         insertNewImgInp();
+        imageContainer.setAttribute('key', `${imageIdx.current-1}`)
 
     }
 
@@ -49,7 +50,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
             <ButtonComponent className={styles['write--optionbar--button']} children={imageAdd()} event={[['onClick', ()=> {
                 try{imageInp.current?.click()} catch(e) {console.log(e)}
             }]]}/>
-            <input type='file' accept="image/*" hidden ref={imageInp} onChange={insertImageToContent}/>
+            <input type='file' accept="image/*" hidden ref={imageInp} onChange={insertImageToContent} key={0}/>
             {inpArray}
         </aside>
     )
