@@ -30,8 +30,8 @@ function Header() {
                 <div className={styles.username}>
                     <h4>taehyeungkim98</h4>
                 </div>
-                <ButtonComponent className={styles.icon} children={notification()} id={'icon-notification'}/>
-                <ButtonComponent className={styles.icon} children={list()} id={'setting'}/>
+                <ButtonComponent className={styles.icon} children={notification()} id={styles['icon-notification']}/>
+                <ButtonComponent className={styles.icon} children={list()} id={styles['setting']}/>
             </div>
         </nav>
     )
