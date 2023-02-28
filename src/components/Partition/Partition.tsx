@@ -23,18 +23,18 @@ const loadArticles = async(title: string, start: number, limit: number, settingR
 function Partition({title}:PartitionProps) {
     const [resources, setResources] = useState<Array<any>>([]);
     const [scrollIdx, setScrollIdx] = useState<number>(0);
+    const [totalIdx, setTotalIdx] = useState<number>(0);
+
     const containerTranslated = useRef<number>(0);
+    const prevPartitionWidth = useRef<number>(0);
 
-    const updateScrollIdx = (idx: number) => {
-        setScrollIdx(idx);
-    }
+    const updateTotalIdx = (idx: number) => setTotalIdx(idx);
 
-    const settingResources = (resources: Array<any>) => {
-        setResources(resources)
-    }
+    const updateScrollIdx = (idx: number) => setScrollIdx(idx);
+
+    const settingResources = (resources: Array<any>) => setResources(resources)
 
     const scrollDiff = 400;
-    let windowWidth = window.innerWidth;
 
     const scrollMethod = (arg: number, index:number, partition: HTMLElement, container:HTMLElement, dif: number) => {
         const calcScrollIndex = (arg: number, index:number, dif: number, exceed: number) => {
@@ -62,26 +62,31 @@ function Partition({title}:PartitionProps) {
 
     } 
 
-    const adjustOnWindowResizing = (previousWidth: number, scrollDiff: number, containerTranslated: React.MutableRefObject<number>) => {
+    const adjustOnWindowResizing = (previousWidth:React.MutableRefObject<number>, scrollDiff: number, containerTranslated: React.MutableRefObject<number>) => {
         const partition = document.getElementById(`partition_${title}`)
         const container = document.getElementById(`container_${title}`)
-        if(window.innerWidth === partition?.offsetWidth && container) {
-            if(partition.getBoundingClientRect().right >= container.getBoundingClientRect().right - (scrollDiff * scrollIdx))
-            containerTranslated.current -= window.innerWidth - previousWidth 
-            container.setAttribute('style', `transform: translateX(-${containerTranslated.current}px)`)
-        } 
-        windowWidth = window.innerWidth;
-        console.log( scrollIdx, previousWidth, window.innerWidth, scrollDiff * scrollIdx, containerTranslated.current);
+        if((partition?.getBoundingClientRect().right as number) >= (container?.getBoundingClientRect().right as number) - (scrollDiff * scrollIdx))
+        containerTranslated.current -= partition?.offsetWidth as number - previousWidth.current 
+       
+        container?.setAttribute('style', `transform: translateX(-${containerTranslated.current}px)`)
+        previousWidth.current = partition?.offsetWidth as number;
+        const containerPartitionOffset = container?.offsetWidth as number - (partition?.offsetWidth as number)
+        const newTotalIdx = Math.ceil(containerPartitionOffset/scrollDiff)
+        updateTotalIdx(newTotalIdx)
+        //updateScrollIdx(newTotalIdx - Math.ceil((containerPartitionOffset - containerTranslated.current)/scrollDiff))
+        console.log(newTotalIdx)
     }
 
     const adjustEventHandler = () => {
-        adjustOnWindowResizing(windowWidth, scrollDiff, containerTranslated)
+        adjustOnWindowResizing(prevPartitionWidth, scrollDiff, containerTranslated)
     }
 
     
 
     useEffect(()=>{
-        loadArticles(title, 0, 5, settingResources)
+        loadArticles(title, 0, 5, settingResources).then(()=>prevPartitionWidth.current = document.getElementById(`partition_${title}`)?.offsetWidth as number)
+        
+        //updateTotalIdx(Math.ceil(document.getElementById(`partition_${title}`)?.offsetWidth as number - (document.getElementById(`container_${title}`)?.offsetWidth as number)))
     },[])
 
     //adjusting on window resizing
