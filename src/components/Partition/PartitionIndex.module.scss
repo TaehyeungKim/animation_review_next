@@ -1,0 +1,23 @@
+@import '../../utils/toremfunc.scss';
+@import '../../fonts/Font-Face.module.scss';
+
+.index {
+    position: relative;
+    width: 100%;
+    height: toRem(40);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .index_dot {
+        all: unset;
+        width: toRem(20); height: toRem(20);
+        border-radius: 50%;
+        border: 2px solid skyblue;
+        box-sizing: border-box;
+        &:checked {
+            background-color: skyblue; 
+        }
+        
+    }
+}
