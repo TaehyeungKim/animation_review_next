@@ -50,6 +50,10 @@
         box-sizing: border-box;
         width: fit-content;
         padding: toRem(10);
+
+    .article_container--noTransition {
+        transition: none !important;
+    }
 }
 
 @for $i from 0 through 10 {

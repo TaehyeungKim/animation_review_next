@@ -34,7 +34,7 @@ function Partition({title}:PartitionProps) {
 
     const settingResources = (resources: Array<any>) => setResources(resources)
 
-    const scrollDiff = 400;
+    let scrollDiff = 400;
 
     const scrollMethod = (arg: number, index:number, partition: HTMLElement, container:HTMLElement, dif: number) => {
         const calcScrollIndex = (arg: number, index:number, dif: number, exceed: number) => {
@@ -49,7 +49,9 @@ function Partition({title}:PartitionProps) {
         }
         const exceed = container.offsetWidth - partition.offsetWidth
         const currentIdx = calcScrollIndex(arg, index, dif, exceed)
-        container.setAttribute('style', `transform: translateX(-${dif * currentIdx}px)`)
+        containerTranslated.current = dif * currentIdx
+        container.setAttribute('style', `transform: translateX(-${containerTranslated.current}px)`);
+        
 
         currentIdx !== 0 ? 
             document.getElementById(`left_button_${title}`)?.setAttribute('style', 'display: block') 
@@ -73,8 +75,7 @@ function Partition({title}:PartitionProps) {
         const containerPartitionOffset = container?.offsetWidth as number - (partition?.offsetWidth as number)
         const newTotalIdx = Math.ceil(containerPartitionOffset/scrollDiff)
         updateTotalIdx(newTotalIdx)
-        //updateScrollIdx(newTotalIdx - Math.ceil((containerPartitionOffset - containerTranslated.current)/scrollDiff))
-        console.log(newTotalIdx)
+        updateScrollIdx(newTotalIdx - Math.ceil((containerPartitionOffset - containerTranslated.current)/scrollDiff))
     }
 
     const adjustEventHandler = () => {
@@ -85,13 +86,10 @@ function Partition({title}:PartitionProps) {
 
     useEffect(()=>{
         loadArticles(title, 0, 5, settingResources).then(()=>prevPartitionWidth.current = document.getElementById(`partition_${title}`)?.offsetWidth as number)
-        
-        //updateTotalIdx(Math.ceil(document.getElementById(`partition_${title}`)?.offsetWidth as number - (document.getElementById(`container_${title}`)?.offsetWidth as number)))
     },[])
 
     //adjusting on window resizing
     useEffect(()=>{
-        containerTranslated.current = scrollIdx * scrollDiff;
         window.addEventListener('resize', adjustEventHandler)
         return(()=>{window.removeEventListener('resize', adjustEventHandler)})
     },[scrollIdx])
