@@ -10,12 +10,11 @@ interface PartitionIndexProps {
 function PartitionIndex({totalIdx, scrollIdx, title}: PartitionIndexProps) {
 
     useEffect(()=>{
-        console.log('added', document.getElementById(`${title}_idx_${Math.ceil(scrollIdx)}`))
         document.getElementById(`${title}_idx_${Math.ceil(scrollIdx)}`)?.setAttribute('checked', 'true');
         return(()=>{
             document.getElementById(`${title}_idx_${Math.ceil(scrollIdx)}`)?.removeAttribute('checked');
-            console.log('removed')})
-    },[scrollIdx])
+            })
+    },[totalIdx, scrollIdx])
 
     return(
         <section className = {styles.index}>
