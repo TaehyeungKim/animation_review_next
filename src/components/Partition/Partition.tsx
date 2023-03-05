@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react'
+import { useQuery } from 'react-query'
 import styles from './Partition.module.scss'
 import ArticleFeed from '../ArticleFeed/ArticleFeed'
 import {leftArrow, rightArrow} from '../../icons/icons'
@@ -7,28 +8,20 @@ import PartitionIndex from './PartitionIndex';
 
 
 interface PartitionProps {
-    title: string;
+    title: string,
+    data: Array<any>,
+    status: string,
+    error: unknown
 }
 
-const loadArticles = async(title: string, start: number, limit: number, settingResources: (resources: Array<any>)=>void) => {
+function Partition({title, data, status, error}:PartitionProps) {
 
-    const query = new URLSearchParams(
-        {'_start': `${start}`, '_limit': `${limit}`}
-    )
-    const resource = await fetch('https://jsonplaceholder.typicode.com/photos?' + query, {
-        method: 'GET'
-    })
-    const res = await resource.json();
-    settingResources(res);
-    
-}
-function Partition({title}:PartitionProps) {
-    const [resources, setResources] = useState<Array<any>>([]);
     const [scrollIdx, setScrollIdx] = useState<number>(0);
     const [totalIdx, setTotalIdx] = useState<number>(0);
 
     const containerTranslated = useRef<number>(0);
     const prevPartitionWidth = useRef<number>(0);
+    
 
     const updateTotalIdx = (container: HTMLElement, partition: HTMLElement, scrollDiff: number) => {
         const containerPartitionOffset = container?.offsetWidth as number - (partition?.offsetWidth as number)
@@ -39,7 +32,6 @@ function Partition({title}:PartitionProps) {
 
     const updateScrollIdx = (idx: number) => setScrollIdx(idx);
 
-    const settingResources = (resources: Array<any>) => setResources(resources)
 
     let scrollDiff = 400;
 
@@ -54,6 +46,7 @@ function Partition({title}:PartitionProps) {
             updateScrollIdx(returnIdx);
             return returnIdx
         }
+
         const exceed = container.offsetWidth - partition.offsetWidth
         const currentIdx = calcScrollIndex(arg, index, dif, exceed)
         containerTranslated.current = dif * currentIdx
@@ -91,21 +84,21 @@ function Partition({title}:PartitionProps) {
     
 
     useEffect(()=>{
-        loadArticles(title, 0, 5, settingResources).then(()=>
-        {
+        if(status === 'success') {
             const container = document.getElementById(`container_${title}`) as HTMLElement
             const partition = document.getElementById(`partition_${title}`) as HTMLElement           
             prevPartitionWidth.current = document.getElementById(`partition_${title}`)?.offsetWidth as number
             updateTotalIdx(container, partition, scrollDiff);
-        })
-    },[])
+        }
+    },[status])
 
     //adjusting on window resizing
     useEffect(()=>{
-        window.addEventListener('resize', adjustEventHandler)
-        return(()=>{window.removeEventListener('resize', adjustEventHandler)})
-    },[scrollIdx])
-
+        if(status === 'success') {
+            window.addEventListener('resize', adjustEventHandler)
+            return(()=>{window.removeEventListener('resize', adjustEventHandler)})
+        }
+    },[status,scrollIdx])
     
     return(
         <section className={styles.partition} id={`partition_${title}`}>
@@ -113,9 +106,7 @@ function Partition({title}:PartitionProps) {
             <ButtonComponent className = {`${styles.article_scroll} `+ styles.right} children={rightArrow()} id={`right_button_${title}`} event={[['onClick', ()=>scrollMethod(1, scrollIdx, document.getElementById(`partition_${title}`)!, document.getElementById(`container_${title}`)!, scrollDiff)]]}/>
             <h3 className={styles.partition_title}>{title}</h3>
             <div className={styles.article_container} id={`container_${title}`}>
-                {resources.length > 0 ? resources.map((data:any)=>{
-                    return (<ArticleFeed data={data}/>)
-                }): null}
+                {data.map((data:any, index: number)=>{return(<ArticleFeed data={data} key={index}/>)})}
             </div>
             <PartitionIndex totalIdx={totalIdx} scrollIdx={scrollIdx} title={title}/>
         </section>
