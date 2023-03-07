@@ -2,6 +2,7 @@ import { useQueries } from 'react-query'
 import styles from './MainPage.module.scss'
 import Header from '../../components/Header/Header'
 import Partition from '../../components/Partition/Partition'
+import Loading from '../../components/Partition/Loading/Loading'
 
 
 const loadArticles = async(title: string, start: number, limit: number) => {
@@ -37,7 +38,7 @@ function MainPage() {
     const result = useQueries([...titleArr.map((title:string)=>{return new QueryObject(title)})])
 
     for(let i = 0; i < result.length; i++) {
-        if(!result[i].data) return (<div>isLoading</div>)
+        if(!result[i].data) return (<Loading></Loading>)
     }
 
     return (

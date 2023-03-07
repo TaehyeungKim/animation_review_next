@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useRef} from 'react'
-import { useQuery } from 'react-query'
 import styles from './Partition.module.scss'
 import ArticleFeed from '../ArticleFeed/ArticleFeed'
 import {leftArrow, rightArrow} from '../../icons/icons'

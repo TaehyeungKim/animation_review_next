@@ -9,5 +9,8 @@
     width: fit-content; height: fit-content;
     .write--optionbar--button {
         width: toRem(35);
+        @media(max-width: 450px) {
+            width: toRem(25);
+        }
     }
 }

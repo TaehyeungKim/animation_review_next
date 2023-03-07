@@ -1,11 +1,13 @@
 @import '../../../../../utils/toremfunc.scss';
 @import '../../../../../fonts/Font-Face.module.scss';
 
+$ph: 50;
+$ch: 40;
+$bh: 45;
+
 .bar_down {
-    $ph: 50;
-    $ch: 40;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     width: 100%;
     align-items: center;
     overflow: hidden;
@@ -71,4 +73,22 @@
 
 .hide {
     height: 0 !important;
+}
+
+@media (max-width: 450px) {
+    .bar_down {
+        .bar_down--profile {
+            flex-basis: toRem($ph - 15);
+        }
+
+        .bar_down--submit {
+            flex-basis: toRem($bh - 15);
+        }
+
+        .bar_down--comment {
+            textarea {
+                font-size: toRem($ch * 0.3);
+            }
+        }
+    }   
 }

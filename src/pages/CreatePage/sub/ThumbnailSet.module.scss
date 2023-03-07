@@ -2,7 +2,9 @@
 
 .thumbnail {
 	position: relative;
-	height: toRem($intro-thumbnailH);
+	height: 40vw;
+	min-height: toRem($intro-thumbnailH - 100);
+	max-height: toRem($intro-thumbnailH);
 	width: 100%;
 	background-position: center;
 	background-size: cover;
@@ -24,6 +26,9 @@
 		
 		.thumbnail_optionbar--imageAdd, .thumbnail_optionbar--imageDelete, .thumbnail_optionbar--alignment {
 			width: toRem(35);
+			@media(max-width: 450px) {
+				width: toRem(25);
+			}
 		}
 	}
 }

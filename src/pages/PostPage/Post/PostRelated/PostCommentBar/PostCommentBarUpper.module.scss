@@ -24,3 +24,11 @@
         }
 
     }
+
+    @media (max-width: 450px) {
+        .bar_upper {
+            .like, .share, .exclamation, .hideshowtoggle {
+                flex-basis: toRem(30);
+            }
+        }
+    }

@@ -35,8 +35,21 @@
                     .info--username {
                         margin-right: toRem(30);
                         font-style: italic;
+                        @media(max-width: 400px) {
+                            display: block;
+                        }
                     }
                     .info--date {
+                        font-size: toRem(12);
+                        @media(max-width: 400px) {
+                            display: block;
+                        }
+                    }
+                }
+
+                .content--content {
+                    font-size: toRem(16);
+                    @media(max-width: 400px) {
                         font-size: toRem(12);
                     }
                 }
