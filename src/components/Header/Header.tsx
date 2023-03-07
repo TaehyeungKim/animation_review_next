@@ -1,15 +1,21 @@
-import { useNavigate, useNavigationType } from 'react-router-dom'
+import { useContext } from 'react'
+
+import { useNavigate } from 'react-router-dom'
 import styles from './Header.module.scss'
 import logo from '../../images/logo192.png'
 import search_icon from '../../icons/search.svg'
 import {notification, setting, list} from '../../icons/icons'
 import ButtonComponent from '../Global/ButtonComponent'
 
+import AppContext from '../../AppContext'
+
 
 
 function Header() {
 
     const navigate = useNavigate();
+
+    const appContext = useContext(AppContext);
 
     return (
         <nav className={styles.nav}>
@@ -31,7 +37,7 @@ function Header() {
                     <h4>taehyeungkim98</h4>
                 </div>
                 <ButtonComponent className={styles.icon} children={notification()} id={styles['icon-notification']}/>
-                <ButtonComponent className={styles.icon} children={list()} id={styles['setting']}/>
+                <ButtonComponent className={styles.icon} children={list()} id={styles['setting']} event={[['onClick', appContext.context_sidebar.setter]]}/>
             </div>
         </nav>
     )

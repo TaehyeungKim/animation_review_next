@@ -1,0 +1,46 @@
+@import '../../utils/toremfunc.scss';
+@import '../../fonts/Font-Face.module.scss';
+
+.disablingBackground {
+    z-index: 100;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(233, 233, 233, 0.7);
+    .sidebar {
+        position: relative;
+        width: toRem(300);
+        height: 100%;
+        box-sizing: border-box;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        animation-timing-function:  ease-in-out;
+        background-color: yellow;
+    }
+
+    .sidebar--appear {
+        animation-name: sidebar-appear;
+    }
+
+    .sidebar--disappear {
+        animation-name: sidebar-disappear;
+    }
+}
+
+@keyframes sidebar-appear {
+    from {
+        transform: translateX(-100%)
+    }
+    to {
+        transform: translateX(0)
+    }
+}
+
+@keyframes sidebar-disappear {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}

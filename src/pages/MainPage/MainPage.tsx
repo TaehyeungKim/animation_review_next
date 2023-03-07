@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { useQueries } from 'react-query'
 import styles from './MainPage.module.scss'
 import Header from '../../components/Header/Header'
 import Partition from '../../components/Partition/Partition'
-import Loading from '../../components/Partition/Loading/Loading'
+import Loading from '../../components/Loading/Loading'
+import Sidebar from '../../components/Sidebar/Sidebar'
 
 
 const loadArticles = async(title: string, start: number, limit: number) => {
@@ -44,6 +46,7 @@ function MainPage() {
     return (
         <>
         <Header/>
+        <Sidebar/>
         <div className={styles.contents}>
             {result.map((res: any, index: number)=>{
                 return (<Partition title={res.data.title} data={res.data.data} status={res.status} error = {res.error} key={index}/>)
