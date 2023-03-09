@@ -6,9 +6,7 @@ import ButtonComponent from '../../../../../components/Global/ButtonComponent'
 function PostComment() {
     return(
         <li className={styles['list_container--comment']}>
-            <div className={styles['comment--profile']}>
-                <ProfilePictureComponent/>
-            </div>
+            <ProfilePictureComponent className={styles['comment--profile']}/>
             <div className={styles['comment--content']}>
                 <div className={styles['content--info']}>
                     <span className={styles['info--username']}>taehyeungkim98</span>

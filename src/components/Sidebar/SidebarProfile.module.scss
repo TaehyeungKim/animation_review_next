@@ -1,0 +1,15 @@
+@import '../../utils/toremfunc.scss';
+@import '../../fonts/Font-Face.module.scss';
+
+.profile {
+    display: flex;
+    flex-direction: row nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-basis: toRem(200);
+
+    .profile--picture {
+        width: toRem(70);
+        aspect-ratio: 1;
+    }
+}

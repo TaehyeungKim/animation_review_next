@@ -20,9 +20,7 @@ function ArticleFeedHeader() {
     return(
         <header className={styles.header}>
             <div className={styles.user}>
-                <div className={styles['user_profileContainer']}>
-                    <ProfilePictureComponent/>
-                </div>
+                <ProfilePictureComponent className = {styles['user_profileContainer']}/>
                 <h4 className={styles.username}>taehyeungkim98</h4>
             </div>
             <BadgeContainer badge = {[{src: logo}]}/>

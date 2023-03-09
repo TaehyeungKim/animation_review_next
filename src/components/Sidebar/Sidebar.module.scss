@@ -3,7 +3,9 @@
 
 .disablingBackground {
     z-index: 100;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
     width: 100vw;
     background-color: rgba(233, 233, 233, 0.7);
@@ -15,7 +17,15 @@
         animation-duration: 0.5s;
         animation-fill-mode: forwards;
         animation-timing-function:  ease-in-out;
-        background-color: yellow;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+
+        .sidebar--button {
+            width: toRem(30);
+            position: absolute;
+            right: toRem(10); top: toRem(10);
+        }
     }
 
     .sidebar--appear {

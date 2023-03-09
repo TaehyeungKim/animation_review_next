@@ -38,9 +38,7 @@ function CommentBarBelow({visible}:CommentBarBelowProps) {
     },[visible])
     return(
         <div className={styles_below['bar_down']} ref={container}>
-            <div className={styles_below['bar_down--profile']}>
-                <ProfilePictureComponent/>
-            </div>
+            <ProfilePictureComponent className={styles_below['bar_down--profile']}/>
             <div className={styles_below['bar_down--comment']}>
                 <textarea placeholder={"댓글을 입력해주세요"}></textarea>
             </div>
