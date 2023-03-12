@@ -115,7 +115,9 @@ function WriteContent() {
 
     
 	
-	const isContainingClass = (anchor: HTMLElement, className: string) => {
+	
+	const toggleImageHighlight = () => {
+        const isContainingClass = (anchor: HTMLElement, className: string) => {
 			try {
 				return anchor.classList.contains(className)
 			} catch(e) {
@@ -123,7 +125,6 @@ function WriteContent() {
 			}
 		}
 	
-	const toggleImageHighlight = (isContainingClass: (anchor: HTMLElement, className:string)=>boolean) => {
 		const anchor = document.getSelection()?.anchorNode as HTMLElement
         const highlighted = document.getElementsByClassName(`${styles['imageContainer--highlight']}`)
         if(highlighted) for(let i =0; i < highlighted.length; i++) highlighted[i].classList.toggle(`${styles['imageContainer--highlight']}`) 
@@ -131,13 +132,21 @@ function WriteContent() {
 	}
 		
 
-    document.addEventListener('selectionchange', ()=> {toggleImageHighlight(isContainingClass);})
+    
 
     useEffect(()=>{
         contentArea.current?.addEventListener('keydown', preventKeyEventDefault);
+        return(()=>{contentArea.current?.removeEventListener('keydown', preventKeyEventDefault)})
     },[])
 
-    useEffect(()=>{document.addEventListener('selectionchange', toggleFirstLinePlaceHolder)},[])
+    useEffect(()=>{
+        document.addEventListener('selectionchange', toggleImageHighlight)
+        document.addEventListener('selectionchange', toggleFirstLinePlaceHolder)
+        return(()=>{
+            document.removeEventListener('selectionchange', toggleImageHighlight)
+            document.removeEventListener('selectionchange', toggleFirstLinePlaceHolder)
+        })
+    },[])
 	
 
     return(
