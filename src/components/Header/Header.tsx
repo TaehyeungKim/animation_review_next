@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import styles from './Header.module.scss'
@@ -16,6 +16,8 @@ function Header() {
     const navigate = useNavigate();
 
     const appContext = useContext(AppContext);
+
+    useEffect(()=>{console.log(appContext.context_sidebar.visibility)},[])
 
     return (
         <nav className={styles.nav}>
@@ -37,7 +39,7 @@ function Header() {
                     <h4>taehyeungkim98</h4>
                 </div>
                 <ButtonComponent className={styles.icon} children={notification()} id={styles['icon-notification']}/>
-                <ButtonComponent className={styles.icon} children={list()} id={styles['setting']} event={[['onClick', appContext.context_sidebar.setter]]}/>
+                <ButtonComponent className={styles.icon} children={list()} id={styles['setting']} event={[['onClick', appContext.context_sidebar.show]]}/>
             </div>
         </nav>
     )

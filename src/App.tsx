@@ -16,7 +16,8 @@ function App() {
 
   const contextRef = {
     context_sidebar: {
-      setter: ()=>setSidebarVisible(!isSidebarVisible),
+      hide: ()=>setSidebarVisible(false),
+      show:()=>setSidebarVisible(true),
       visibility: isSidebarVisible
     }
   }

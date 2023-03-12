@@ -1,15 +1,52 @@
 @import '../../utils/toremfunc.scss';
 @import '../../fonts/Font-Face.module.scss';
 
+.badgeDisplay {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: toRem(10);
+    box-sizing: border-box;
+    margin-top: toRem(10);
+
+    .badgeDisplay--container {
+        position: relative;
+        margin: 0 toRem(5);
+        width: toRem(25);
+        .badgeDisplay--badge{
+
+            width: 100%;
+            aspect-ratio: 1;
+        }
+
+        .badgeDisplay--caption {
+            display: block;
+            text-align: center;
+        }
+    }
+
+    
+}
+
 .profile {
     display: flex;
-    flex-direction: row nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
     flex-basis: toRem(200);
+    font-family: '--main-font-kr', '--main-font';
 
     .profile--picture {
         width: toRem(70);
         aspect-ratio: 1;
+    }
+
+    .profile--name {
+        font-size: toRem(20);
+        margin-top: toRem(5);
+        font-weight: 600;
     }
 }

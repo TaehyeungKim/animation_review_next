@@ -21,10 +21,23 @@
         display: flex;
         flex-direction: column;
 
-        .sidebar--button {
+        .sidebar--close {
             width: toRem(30);
             position: absolute;
             right: toRem(10); top: toRem(10);
+        }
+
+        .sidebar--write {
+            width: fit-content;
+            aspect-ratio: initial;
+            align-self: center;
+            border-radius: toRem(7);
+            background-color: skyblue;
+            padding: toRem(5) toRem(14);
+
+            .write {
+                font-size: toRem(17);
+            }
         }
     }
 

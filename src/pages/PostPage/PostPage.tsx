@@ -3,6 +3,7 @@ import Header from '../../components/Header/Header';
 import Loading from '../../components/Loading/Loading';
 import Post from './Post/Post';
 import styles from './PostPage.module.scss';
+import Sidebar from '../../components/Sidebar/Sidebar';
 
 function PostPage() {
 
@@ -36,7 +37,8 @@ function PostPage() {
 
     return(
         <>
-        <Header></Header>
+        <Header/>
+        <Sidebar/>
         {data ? 
         <div className = {styles.contents}>
             <Post data={data}/>
