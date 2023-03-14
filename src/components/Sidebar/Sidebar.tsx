@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from './Sidebar.module.scss';
 import SidebarProfile from './SidebarProfile';
 

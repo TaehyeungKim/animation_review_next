@@ -11,11 +11,13 @@
         font-weight: 200;
 
         .list_container--comment {
+            position: relative;
             display:flex;
             align-items: center;
             flex-flow: row nowrap;
             padding: toRem(20);
             border-bottom: toRem(2) solid rgba(163, 163, 163, 0.3);
+            overflow-y: visible;
             &:last-child {
                 border-bottom: none;
             }
@@ -64,4 +66,20 @@
 .modal {
     position: absolute;
     background-color: white;
+
+    .modalList {
+        font-size: toRem(18);
+        li {
+            display: block;
+            padding: toRem(5) toRem(10);
+            border-bottom: rgb(233, 233, 232);
+            &:hover {
+                background-color: rgba(163, 163, 163, 0.3);
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
 }
