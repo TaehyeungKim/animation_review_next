@@ -41,7 +41,7 @@ function Header() {
                     <h4>taehyeungkim98</h4>
                 </div>
                 <ButtonComponent className={styles.icon} children={notification()} id={styles['icon-notification']}/>
-                <ButtonComponent className={styles.icon} children={list()} id={styles['setting']} event={[['onClick', toggleSidebar]]}/>
+                <ButtonComponent className={styles.icon} children={list()} id={styles['setting']} event={[['click', toggleSidebar]]}/>
             </div>
             {sidebarVisible && createPortal(<Sidebar toggle={toggleSidebar}/>,document.getElementById('root') as Element)}
         </nav>

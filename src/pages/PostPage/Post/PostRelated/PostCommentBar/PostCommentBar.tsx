@@ -13,12 +13,13 @@ interface CommentBarUpperProps {
 }
 
 function CommentBarUpper({toggleBar, visible}:CommentBarUpperProps) {
+    
     return(
         <div className={styles_upper['bar_upper']}>
             <ButtonComponent className={styles_upper.like} children={likeplus()}/>
             <ButtonComponent className={styles_upper.like} children={share()}/>
             <ButtonComponent className={styles_upper.exclamation} children={exclamation()}/>
-            <ButtonComponent className={styles_upper.hideshowtoggle} children={visible ? toggleon() : toggleoff()} event={[['onClick', ()=>{toggleBar(visible)}]]}/>      
+            <ButtonComponent className={styles_upper.hideshowtoggle} children={visible ? toggleon() : toggleoff()} event={[['click', ()=>{toggleBar(visible)}]]}/>      
         </div>
     )
 }

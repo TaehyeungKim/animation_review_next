@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState, useRef, useCallback} from 'react'
 import styles from './Partition.module.scss'
 import ArticleFeed from '../ArticleFeed/ArticleFeed'
 import {leftArrow, rightArrow} from '../../icons/icons'
@@ -13,6 +13,7 @@ interface PartitionProps {
     error: unknown
 }
 
+
 function Partition({title, data, status, error}:PartitionProps) {
 
     const [scrollIdx, setScrollIdx] = useState<number>(0);
@@ -20,6 +21,14 @@ function Partition({title, data, status, error}:PartitionProps) {
 
     const containerTranslated = useRef<number>(0);
     const prevPartitionWidth = useRef<number>(0);
+
+
+    //----------------------------------------------------------------scroll related--------------------------------------------------------------------
+
+    interface ScrollFunctionRef {
+        leftScrollEventCaller: undefined | (()=>void),
+        rightScrollEventCaller: (()=>void) | undefined
+    }
     
 
     const updateTotalIdx = (container: HTMLElement, partition: HTMLElement, scrollDiff: number) => {
@@ -34,7 +43,22 @@ function Partition({title, data, status, error}:PartitionProps) {
 
     let scrollDiff = 400;
 
-    const scrollMethod = (arg: number, index:number, partition: HTMLElement, container:HTMLElement, dif: number) => {
+    interface ScrollMethodParam {
+        arg: number,
+        index: number,
+        partitionId: string,
+        containerId: string,
+        dif: number
+    }
+
+    const scrollParamsTemplate = {
+        partitionId: `partition_${title}`,
+        containerId: `container_${title}`,
+        dif: scrollDiff
+    }
+
+    const scrollMethod = (params: ScrollMethodParam) => {
+        const elementGetter = (id: string) => { return document.getElementById(id) as HTMLElement }
         const calcScrollIndex = (arg: number, index:number, dif: number, exceed: number) => {
             let returnIdx = 0;
             if(((index + arg)*dif < exceed) && ((index+arg)*dif > 0)) returnIdx = index + arg
@@ -45,10 +69,11 @@ function Partition({title, data, status, error}:PartitionProps) {
             updateScrollIdx(returnIdx);
             return returnIdx
         }
+        const [container, partition] = [elementGetter(params.containerId), elementGetter(params.partitionId)]
 
         const exceed = container.offsetWidth - partition.offsetWidth
-        const currentIdx = calcScrollIndex(arg, index, dif, exceed)
-        containerTranslated.current = dif * currentIdx
+        const currentIdx = calcScrollIndex(params.arg, params.index, params.dif, exceed)
+        containerTranslated.current = params.dif * currentIdx
         container.setAttribute('style', `transform: translateX(-${containerTranslated.current}px)`);
         
 
@@ -56,12 +81,19 @@ function Partition({title, data, status, error}:PartitionProps) {
             document.getElementById(`left_button_${title}`)?.setAttribute('style', 'display: block') 
             : 
             document.getElementById(`left_button_${title}`)?.removeAttribute('style')
-        currentIdx === exceed/dif ?  
+        currentIdx === exceed/params.dif ?  
             document.getElementById(`right_button_${title}`)?.setAttribute('style', 'display: none') 
             :
             document.getElementById(`right_button_${title}`)?.removeAttribute('style')
+    }
 
-    } 
+    const leftScrollEventCaller = useCallback(scrollMethod.bind(null, {...scrollParamsTemplate, index: scrollIdx, arg: -1}),[scrollParamsTemplate, scrollIdx])
+    const rightScrollEventCaller = useCallback(scrollMethod.bind(null, {...scrollParamsTemplate, index: scrollIdx, arg: 1}),[scrollParamsTemplate, scrollIdx])
+
+    //----------------------------------------------------------------scroll related--------------------------------------------------------------------
+    
+    
+
 
     const adjustOnWindowResizing = (previousWidth:React.MutableRefObject<number>, scrollDiff: number, containerTranslated: React.MutableRefObject<number>) => {
         const container = document.getElementById(`container_${title}`) as HTMLElement
@@ -101,8 +133,8 @@ function Partition({title, data, status, error}:PartitionProps) {
     
     return(
         <section className={styles.partition} id={`partition_${title}`}>
-            <ButtonComponent className = {`${styles.article_scroll} ` + styles.left} children={leftArrow()} id={`left_button_${title}`} event={[['onClick', ()=>scrollMethod(-1, scrollIdx, document.getElementById(`partition_${title}`)!, document.getElementById(`container_${title}`)!, scrollDiff)]]}/> 
-            <ButtonComponent className = {`${styles.article_scroll} `+ styles.right} children={rightArrow()} id={`right_button_${title}`} event={[['onClick', ()=>scrollMethod(1, scrollIdx, document.getElementById(`partition_${title}`)!, document.getElementById(`container_${title}`)!, scrollDiff)]]}/>
+            <ButtonComponent className = {`${styles.article_scroll} ` + styles.left} children={leftArrow()} id={`left_button_${title}`} event={[['click', leftScrollEventCaller]]}/> 
+            <ButtonComponent className = {`${styles.article_scroll} `+ styles.right} children={rightArrow()} id={`right_button_${title}`} event={[['click', rightScrollEventCaller]]}/>
             <h3 className={styles.partition_title}>{title}</h3>
             <div className={styles.article_container} id={`container_${title}`}>
                 {data.map((data:any, index: number)=>{return(<ArticleFeed data={data} key={index}/>)})}

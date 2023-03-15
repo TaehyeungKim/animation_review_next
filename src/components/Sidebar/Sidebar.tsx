@@ -40,9 +40,9 @@ function Sidebar({toggle}: SidebarProps) {
     return( 
     <div className = {styles.disablingBackground}>
         <aside className={`${styles.sidebar} ${styles['sidebar--appear']}`} id={'sidebar'}>
-            <ButtonComponent className={styles['sidebar--close']} event={[['onClick', ()=>hidingSidebar(document.getElementById('sidebar') as HTMLDivElement)]]} children={close()}/>
+            <ButtonComponent className={styles['sidebar--close']} event={[['click', ()=>hidingSidebar(document.getElementById('sidebar') as HTMLDivElement)]]} children={close()}/>
             <SidebarProfile/>
-            <ButtonComponent className={styles['sidebar--write']} event={[['onClick', navigateToCreate]]} children={<p className={styles.write}>글쓰기</p>}/>
+            <ButtonComponent className={styles['sidebar--write']} event={[['click', navigateToCreate]]} children={<p className={styles.write}>글쓰기</p>}/>
         </aside>
     </div>
     )
