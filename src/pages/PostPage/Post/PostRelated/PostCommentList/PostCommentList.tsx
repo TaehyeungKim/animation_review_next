@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import styles from './PostCommentList.module.scss'
 import ProfilePictureComponent from '../../../../../components/Global/ProfilePictureComponent'
 import { moreDot } from '../../../../../icons/icons'
@@ -7,11 +7,10 @@ import ButtonComponent from '../../../../../components/Global/ButtonComponent'
 interface PostCommentModalProps {
     buttonNode: Element,
     id:number,
-    hideModal: ()=>void,
 }
 
 
-function PostCommentModal({buttonNode, id, hideModal}:PostCommentModalProps) {
+function PostCommentModal({buttonNode, id}:PostCommentModalProps) {
 
     const [dotStyle, setDotStyle] = useState<ModalStyle>({top: 0, right: 0, position: 'absolute', zIndex: 3});
     const dotDomRef = useRef<HTMLDivElement>(null)
@@ -22,8 +21,6 @@ function PostCommentModal({buttonNode, id, hideModal}:PostCommentModalProps) {
         const modalX = parseFloat(window.getComputedStyle(buttonNode.parentNode as Element).getPropertyValue('padding-right')) + parseFloat(window.getComputedStyle(buttonNode).getPropertyValue('width'));
         if(bottom >= bottomBorder) setDotStyle({...dotStyle, right: modalX, bottom: 0, top: 'initial'})
         else setDotStyle({...dotStyle, right: modalX})
-
-        window.addEventListener('click', (e: Event) => hideModal(), {once: true})
     },[])
 
 
@@ -37,7 +34,9 @@ function PostCommentModal({buttonNode, id, hideModal}:PostCommentModalProps) {
 }
 
 interface PostCommentProps {
-    id: number
+    id: number,
+    modalPointer: number,
+    updateModalPointer: (idx:number)=>void
 }
 
 interface ModalStyle {
@@ -48,14 +47,14 @@ interface ModalStyle {
     bottom?: number|string
 }
 
-function PostComment({id}:PostCommentProps) {
+function PostComment({id, modalPointer, updateModalPointer}:PostCommentProps) {
 
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    //const [modalVisible, setModalVisible] = useState<boolean>(false);
     const showModal = (e: Event) => {
         e.stopPropagation()
-        setModalVisible(true)
+        updateModalPointer(id);
     }
-    const hideModal= () => setModalVisible(false);
+    //const hideModal= () => setModalVisible(false);
 
 
     return(
@@ -71,7 +70,7 @@ function PostComment({id}:PostCommentProps) {
                 </div>
             </div>
             <ButtonComponent className={styles['comment--more']} children={moreDot()} id={`more_button_${id}`} event={[['click', showModal, {capture: true}]]}/>
-            {modalVisible && <PostCommentModal buttonNode={document.getElementById(`more_button_${id}`) as Element} id={id} hideModal={hideModal}/>}
+            {id === modalPointer && <PostCommentModal buttonNode={document.getElementById(`more_button_${id}`) as Element} id={id}/>}
         </li>
     )
 }
@@ -81,11 +80,17 @@ interface PostCommentListProps {
 }
 
 function PostCommentList({data}:PostCommentListProps) {
+
+    const [modalPointer, setModalPointer] = useState<number>(-1);
+
+    const updateModalPointer = (idx:number) => setModalPointer(idx);
+
+    useEffect(()=>window.addEventListener('click', ()=>updateModalPointer(-1)),[])
     
     return (
     <section className={styles.list}>
         <ul className = {styles.list_container}>
-            {data.map((data: any, index: number)=>{return (<PostComment id={index} key={index}/>)})}
+            {data.map((data: any, index: number)=>{return (<PostComment id={index} key={index} modalPointer={modalPointer} updateModalPointer={updateModalPointer}/>)})}
         </ul>
     </section>
     )
