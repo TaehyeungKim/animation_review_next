@@ -49,7 +49,7 @@ function WriteContentAside({style}: WriteContentAsideProps) {
 
     return (
         <aside className={styles['write--optionbar']} id={'aside'}>
-            <ButtonComponent className={styles['write--optionbar--button']} children={imageAdd()} event={[['onClick', ()=> {
+            <ButtonComponent className={styles['write--optionbar--button']} children={imageAdd()} event={[['click', ()=> {
                 try{imageInp.current?.click()} catch(e) {console.log(e)}
             }]]}/>
             <input type='file' accept="image/*" hidden ref={imageInp} onChange={insertImageToContent} key={0} id={'0'} className={'imageInp'}/>

@@ -32,7 +32,7 @@ function Header() {
                 </div>
 
                 <div className={styles.search}>
-                    <input placeholder="검색어를 입력하세요"></input>
+                    <input placeholder="검색어를 입력하세요" id='search-input'></input>
                     <div className={styles.search_icon}>
                         <img src={search_icon}/>
                     </div>

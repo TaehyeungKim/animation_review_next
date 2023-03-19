@@ -41,16 +41,16 @@ function ThumbnailSet() {
 		<section className={styles.thumbnail} style={thumbnail ? {backgroundImage: `url(${thumbnail})`} : undefined}>
 			<ThumbnailTitle align={titleAlignOrder[titleAlignIndex].dir}/>
 			<aside className = {styles.thumbnail_optionbar}>
-				<ButtonComponent className={styles['thumbnail_optionbar--imageAdd']} children={imageAdd()} event={[['onClick', ()=>{
+				<ButtonComponent className={styles['thumbnail_optionbar--imageAdd']} children={imageAdd()} event={[['click', ()=>{
 						imageInp.current?.click();}]]}/>
 				<input type="file" accept="image/*" hidden ref={imageInp} onChange = {(e:any)=>{
 						updateThumbnail(e);
 					}}/>
-				<ButtonComponent className={styles['thumbnail_optionbar--imageDelete']} children={trash()} event={[['onClick', ()=>{
+				<ButtonComponent className={styles['thumbnail_optionbar--imageDelete']} children={trash()} event={[['click', ()=>{
 						deleteThumbnail();
 					}]]}/>
 				<ButtonComponent className={styles['thumbnail_optionbar--alignment']} children={titleAlignOrder[titleAlignIndex].image} event={
-					[['onClick', ()=>{changeTitleAlign(titleAlignIndex, titleAlignOrder)}]]
+					[['click', ()=>{changeTitleAlign(titleAlignIndex, titleAlignOrder)}]]
 				}/>
 			</aside>
 		</section>

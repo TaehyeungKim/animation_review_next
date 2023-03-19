@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import styles from './WriteContent.module.scss'
 import WriteContentAside from './WriteContentAside';
+import {EditableP} from './EditableContentElements'
 
 
 function WriteContent() {
@@ -94,16 +95,17 @@ function WriteContent() {
                 case "Enter":
                     const anc = anchor.nodeName === '#text' ? anchor.parentNode : anchor
                     const addedLine = paragraphMaker();
-                    if(anc === contentArea.current?.firstElementChild && anc?.nodeName !== "DIV") {
-                        e.preventDefault();   
-                        contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node);
-                        const [former, latter] = [
-                        document.createTextNode(anc?.textContent?.slice(0,selection.anchorOffset) as string), 
-                        document.createTextNode(anc?.textContent?.slice(selection.anchorOffset) as string)]
-                        selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
-                        if(anc?.firstChild) anc?.replaceChild(former, anc.firstChild as Node);
-                        selection.anchorNode?.appendChild(latter);
-                    } else if(anc?.nodeName === "DIV") {
+                    // if(anc === contentArea.current?.firstElementChild && anc?.nodeName !== "DIV") {
+                    //     e.preventDefault();   
+                    //     contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node);
+                    //     const [former, latter] = [
+                    //     document.createTextNode(anc?.textContent?.slice(0,selection.anchorOffset) as string), 
+                    //     document.createTextNode(anc?.textContent?.slice(selection.anchorOffset) as string)]
+                    //     selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
+                    //     if(anc?.firstChild) anc?.replaceChild(former, anc.firstChild as Node);
+                    //     selection.anchorNode?.appendChild(latter);
+                    // }
+                     if(anc?.nodeName === "DIV") {
                         e.preventDefault();
                         contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node)
                         selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
@@ -152,7 +154,7 @@ function WriteContent() {
     return(
         <main className={styles.write}>
             <section className={styles['write--content']} contentEditable='true' ref={contentArea} id={'contentArea'}>
-                <p className={styles.line} id={'firstline'}></p>
+                <EditableP className={styles.line}/>
             </section>
             <WriteContentAside style={asideStyle}/>
         </main>
