@@ -156,6 +156,9 @@ function WriteContent() {
             <section className={styles['write--content']} contentEditable='true' ref={contentArea} id={'contentArea'}>
                 <EditableP className={styles.line}/>
             </section>
+            <button onSelect={()=>{return false}} id='change_red'>빨강</button>
+            <button onSelect={()=>{return false}} id='change_green'>초록</button>
+            <button onSelect={()=>{return false}} id='change_yellow'>노랑</button>
             <WriteContentAside style={asideStyle}/>
         </main>
     )
