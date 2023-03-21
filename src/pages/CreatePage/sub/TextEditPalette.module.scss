@@ -1,0 +1,32 @@
+@import '../../../utils/toremfunc.scss';
+@import '../../../fonts/Font-Face.module.scss';
+
+
+.container {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    width: fit-content;
+    padding: toRem(5);
+    border-bottom: 2px dotted skyblue;
+
+    .colorPalette {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+        justify-content: center;
+
+        .colors {
+            flex-basis: toRem(15);
+            border-radius: 50%;
+            aspect-ratio: 1;
+            overflow: hidden;
+            margin: toRem(7);
+
+            .color {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

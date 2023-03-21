@@ -95,16 +95,6 @@ function WriteContent() {
                 case "Enter":
                     const anc = anchor.nodeName === '#text' ? anchor.parentNode : anchor
                     const addedLine = paragraphMaker();
-                    // if(anc === contentArea.current?.firstElementChild && anc?.nodeName !== "DIV") {
-                    //     e.preventDefault();   
-                    //     contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node);
-                    //     const [former, latter] = [
-                    //     document.createTextNode(anc?.textContent?.slice(0,selection.anchorOffset) as string), 
-                    //     document.createTextNode(anc?.textContent?.slice(selection.anchorOffset) as string)]
-                    //     selection.setBaseAndExtent(anc?.nextSibling as Node, 0, anc?.nextSibling as Node, 0)
-                    //     if(anc?.firstChild) anc?.replaceChild(former, anc.firstChild as Node);
-                    //     selection.anchorNode?.appendChild(latter);
-                    // }
                      if(anc?.nodeName === "DIV") {
                         e.preventDefault();
                         contentArea.current?.insertBefore(addedLine, anc?.nextSibling as Node)
@@ -156,9 +146,6 @@ function WriteContent() {
             <section className={styles['write--content']} contentEditable='true' ref={contentArea} id={'contentArea'}>
                 <EditableP className={styles.line}/>
             </section>
-            <button onSelect={()=>{return false}} id='change_red'>빨강</button>
-            <button onSelect={()=>{return false}} id='change_green'>초록</button>
-            <button onSelect={()=>{return false}} id='change_yellow'>노랑</button>
             <WriteContentAside style={asideStyle}/>
         </main>
     )

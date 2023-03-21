@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { isForOfStatement } from "typescript";
+import { useState, useEffect, useLayoutEffect} from "react";
+import TextEditPalette from './TextEditPalette'
 
 
 interface EditableContentElements {
@@ -12,8 +12,24 @@ interface EditablePprops extends EditableContentElements {
 }
 
 function EditableP({className}:EditablePprops) {
+    const [paletteVisible, setPaletteVisible] = useState<boolean>(false);
+    const [rangeDomRect, setRangeDomRect] = useState<DOMRect>();
+
+    const selection = document.getSelection() as Selection;
+
+    const pCollection = document.getElementsByClassName(className) as HTMLCollectionOf<HTMLParagraphElement>;
+    
+
+    const updatePaletteVisible = () => {
+        
+        if(!selection.getRangeAt(0).collapsed) setPaletteVisible(true);
+        else setPaletteVisible(false);
+    }
+
 
     const changeLetterColor = (color: string, line: Node, selection: Selection) => {
+
+        
 
         const {anchorNode, focusNode, anchorOffset, focusOffset} = selection 
         if(anchorNode?.nodeName !== '#text' || focusNode?.nodeName !== '#text') return ;
@@ -39,16 +55,12 @@ function EditableP({className}:EditablePprops) {
         if(line.contains(anchorNode) && line.contains(focusNode)) setRangeStartAndEnd(anchorNode, focusNode, anchorOffset, focusOffset, range);
         else if(!line.contains(anchorNode) && !line.contains(focusNode)) setRangeStartAndEnd(line.firstChild as Node, line.lastChild as Node, 0, line.lastChild?.textContent?.length as number, range);
         else {
-            let [markerNode, markerNodeOffset] = line.contains(anchorNode) ? [anchorNode, anchorOffset] : [focusNode, focusOffset]; 
-            if(line.nextSibling && selection.containsNode(line.nextSibling as Node, true)) {
-                setRangeStartAndEnd(markerNode, line.lastChild as Node, markerNodeOffset, line.lastChild?.textContent?.length as number, range);
-                console.log('changed1')
-            }
-            else {
-                setRangeStartAndEnd(line.firstChild as Node, markerNode, 0, markerNodeOffset, range);
-                console.log('changed2')
-            }
+            let [markerNode, markerNodeOffset] = line.contains(anchorNode) ? [anchorNode, anchorOffset] : [focusNode, focusOffset];     
+            if(line.nextSibling?.nodeName === 'P' && selection.containsNode(line.nextSibling as Node, true)) setRangeStartAndEnd(markerNode, line.lastChild as Node, markerNodeOffset, line.lastChild?.textContent?.length as number, range)
+            else setRangeStartAndEnd(line.firstChild as Node, markerNode, 0, markerNodeOffset, range);
         }
+
+        selection.addRange(range)
 
         const extracted = range.extractContents().textContent as string;
         span.appendChild(document.createTextNode(extracted));
@@ -56,7 +68,6 @@ function EditableP({className}:EditablePprops) {
     }
 
     const change = (selection: Selection, color: string)=> {
-        const pCollection = document.getElementsByClassName(className) as HTMLCollectionOf<HTMLParagraphElement>;
         let [top, bottom] = [-1,-1]
         for(let i = 0; i < pCollection.length; i++) {
             if(selection?.containsNode(pCollection[i], true)) {
@@ -73,21 +84,24 @@ function EditableP({className}:EditablePprops) {
         for(let j = top; j <= bottom; j++) {
             changeLetterColor(`${color}`, pCollection[j], selection)
         }
+        selection.collapseToEnd()
+        setPaletteVisible(false);
     }
 
-    const changeRed = change.bind(null, document.getSelection() as Selection, 'red')
-    const changeGreen = change.bind(null, document.getSelection() as Selection, 'green')
-    const changeYellow = change.bind(null, document.getSelection() as Selection, 'yellow')
+    const updateRangeDomRect = (rect: DOMRect) => setRangeDomRect(rect);
+    
+
 
     useEffect(()=>{
-        document.getElementById('change_red')?.addEventListener('click', changeRed)
-        document.getElementById('change_green')?.addEventListener('click', changeGreen)
-        document.getElementById('change_yellow')?.addEventListener('click', changeYellow)
+        document.addEventListener('selectionchange', updatePaletteVisible)
     },[])
-   
+
+
     return(
         <>
         <p className={className}><br/></p>
+        {paletteVisible && <TextEditPalette change={change} rangeDomRect={document.getSelection()?.getRangeAt(0).getBoundingClientRect() as DOMRect}/>}
+        
         </>
     )
 }
