@@ -3,25 +3,25 @@
 
 
 .container {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-flow: row wrap;
-    width: fit-content;
+    left: toRem(20);
+    right: toRem(20);
     padding: toRem(5);
     border-bottom: 2px dotted skyblue;
+    background: rgba(192, 235, 255, 1);
+    box-sizing: border-box;
 
     .colorPalette {
-        display: flex;
-        flex-flow: row wrap;
-        width: 100%;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: toRem(10);
 
         .colors {
-            flex-basis: toRem(15);
+            width: toRem(17);
             border-radius: 50%;
-            aspect-ratio: 1;
             overflow: hidden;
-            margin: toRem(7);
 
             .color {
                 width: 100%;

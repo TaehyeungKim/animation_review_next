@@ -7,7 +7,8 @@
     display: flex;
     .write--content {
         width: 70%;
-        min-height: 150vh;
+        //min-height: 150vh;
+        min-height: toRem(800);
         position: relative;
         margin: 0 auto 0;
         padding: toRem(20);

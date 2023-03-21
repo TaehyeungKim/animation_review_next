@@ -1,5 +1,6 @@
 import { useState, useEffect, useLayoutEffect} from "react";
 import TextEditPalette from './TextEditPalette'
+import {SpanStyle} from './InterFaceModule'
 
 
 interface EditableContentElements {
@@ -27,9 +28,7 @@ function EditableP({className}:EditablePprops) {
     }
 
 
-    const changeLetterColor = (color: string, line: Node, selection: Selection) => {
-
-        
+    const customizeLetter = (style: SpanStyle, line: Node, selection: Selection) => {
 
         const {anchorNode, focusNode, anchorOffset, focusOffset} = selection 
         if(anchorNode?.nodeName !== '#text' || focusNode?.nodeName !== '#text') return ;
@@ -50,7 +49,7 @@ function EditableP({className}:EditablePprops) {
         }
 
         const span = document.createElement('span');
-        span.setAttribute('style', `color: ${color}`);
+        span.setAttribute('style', `${style.propertyKey}: ${style.propertyValue}`);
 
         if(line.contains(anchorNode) && line.contains(focusNode)) setRangeStartAndEnd(anchorNode, focusNode, anchorOffset, focusOffset, range);
         else if(!line.contains(anchorNode) && !line.contains(focusNode)) setRangeStartAndEnd(line.firstChild as Node, line.lastChild as Node, 0, line.lastChild?.textContent?.length as number, range);
@@ -67,7 +66,7 @@ function EditableP({className}:EditablePprops) {
         range.insertNode(span);
     }
 
-    const change = (selection: Selection, color: string)=> {
+    const change = (selection: Selection, style: SpanStyle)=> {
         let [top, bottom] = [-1,-1]
         for(let i = 0; i < pCollection.length; i++) {
             if(selection?.containsNode(pCollection[i], true)) {
@@ -82,13 +81,13 @@ function EditableP({className}:EditablePprops) {
             }
         }
         for(let j = top; j <= bottom; j++) {
-            changeLetterColor(`${color}`, pCollection[j], selection)
+            customizeLetter(style, pCollection[j], selection)
         }
         selection.collapseToEnd()
         setPaletteVisible(false);
     }
 
-    const updateRangeDomRect = (rect: DOMRect) => setRangeDomRect(rect);
+    const updateRangeDomRect = () => setRangeDomRect(selection.getRangeAt(0).getBoundingClientRect());
     
 
 
@@ -96,11 +95,15 @@ function EditableP({className}:EditablePprops) {
         document.addEventListener('selectionchange', updatePaletteVisible)
     },[])
 
+    useEffect(()=>{
+        document.addEventListener('selectionchange', updateRangeDomRect)
+    },[])
+
 
     return(
         <>
         <p className={className}><br/></p>
-        {paletteVisible && <TextEditPalette change={change} rangeDomRect={document.getSelection()?.getRangeAt(0).getBoundingClientRect() as DOMRect}/>}
+        {paletteVisible && <TextEditPalette change={change} rangeDomRect={rangeDomRect as DOMRect}/>}
         
         </>
     )
