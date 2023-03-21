@@ -27,6 +27,26 @@ function EditableP({className}:EditablePprops) {
         else setPaletteVisible(false);
     }
 
+    const substituteWithSpanDeepByRecursion = (node: Node, style: SpanStyle, range: Range) => {
+        const childNodes = node.childNodes;
+        childNodes.forEach((node: ChildNode)=>{
+            if(node.nodeName === '#text') {
+                if(node.textContent !== "") {
+                    range.setStart(node, 0);
+                    range.setEnd(node, node.textContent?.length as number);
+                    const content = range.extractContents();
+                    const contentText = document.createTextNode(content.textContent as string)
+                    const span = document.createElement('span');
+                    span.setAttribute('style', `${style.propertyKey}: ${style.propertyValue}`);
+                    span.appendChild(contentText);
+                    range.insertNode(span as Node);
+                }
+                
+            } else substituteWithSpanDeepByRecursion(node, style, range)
+        })
+        return node;
+    }
+
 
     const customizeLetter = (style: SpanStyle, line: Node, selection: Selection) => {
 
@@ -40,7 +60,7 @@ function EditableP({className}:EditablePprops) {
             try {
                 range.setStart(firstNode, firstOffset);
                 range.setEnd(secondNode, secondOffset);
-                if(range.toString()==="") throw new Error("anchorNode is latter than the focusNode");
+                if(range.toString()==="") throw new Error("firstNode is latter than the secondNode");
             } catch(e) {
                 range.setStart(secondNode, secondOffset);
                 range.setEnd(firstNode, firstOffset);
@@ -61,9 +81,12 @@ function EditableP({className}:EditablePprops) {
 
         selection.addRange(range)
 
-        const extracted = range.extractContents().textContent as string;
-        span.appendChild(document.createTextNode(extracted));
-        range.insertNode(span);
+        const extracted = range.extractContents();
+        const node = substituteWithSpanDeepByRecursion(extracted, style, range)
+        selection.getRangeAt(0).insertNode(node);
+        // const extractedText = extracted.textContent as string;
+        // span.appendChild(document.createTextNode(extractedText));
+        // range.insertNode(span);
     }
 
     const change = (selection: Selection, style: SpanStyle)=> {
