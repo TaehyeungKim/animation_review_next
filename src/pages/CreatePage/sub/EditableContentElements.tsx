@@ -1,6 +1,7 @@
-import { useState, useEffect, useLayoutEffect} from "react";
+import { useState, useEffect } from "react";
 import TextEditPalette from './TextEditPalette'
 import {SpanStyle} from './InterFaceModule'
+
 
 
 interface EditableContentElements {
@@ -21,30 +22,9 @@ function EditableP({className}:EditablePprops) {
     const pCollection = document.getElementsByClassName(className) as HTMLCollectionOf<HTMLParagraphElement>;
     
 
-    const updatePaletteVisible = () => {
-        
+    const updatePaletteVisible = () => { 
         if(!selection.getRangeAt(0).collapsed) setPaletteVisible(true);
         else setPaletteVisible(false);
-    }
-
-    const substituteWithSpanDeepByRecursion = (node: Node, style: SpanStyle, range: Range) => {
-        const childNodes = node.childNodes;
-        childNodes.forEach((node: ChildNode)=>{
-            if(node.nodeName === '#text') {
-                if(node.textContent !== "") {
-                    range.setStart(node, 0);
-                    range.setEnd(node, node.textContent?.length as number);
-                    const content = range.extractContents();
-                    const contentText = document.createTextNode(content.textContent as string)
-                    const span = document.createElement('span');
-                    span.setAttribute('style', `${style.propertyKey}: ${style.propertyValue}`);
-                    span.appendChild(contentText);
-                    range.insertNode(span as Node);
-                }
-                
-            } else substituteWithSpanDeepByRecursion(node, style, range)
-        })
-        return node;
     }
 
 
@@ -68,8 +48,6 @@ function EditableP({className}:EditablePprops) {
             
         }
 
-        const span = document.createElement('span');
-        span.setAttribute('style', `${style.propertyKey}: ${style.propertyValue}`);
 
         if(line.contains(anchorNode) && line.contains(focusNode)) setRangeStartAndEnd(anchorNode, focusNode, anchorOffset, focusOffset, range);
         else if(!line.contains(anchorNode) && !line.contains(focusNode)) setRangeStartAndEnd(line.firstChild as Node, line.lastChild as Node, 0, line.lastChild?.textContent?.length as number, range);
@@ -81,12 +59,55 @@ function EditableP({className}:EditablePprops) {
 
         selection.addRange(range)
 
-        const extracted = range.extractContents();
-        const node = substituteWithSpanDeepByRecursion(extracted, style, range)
-        selection.getRangeAt(0).insertNode(node);
-        // const extractedText = extracted.textContent as string;
-        // span.appendChild(document.createTextNode(extractedText));
-        // range.insertNode(span);
+        const arr: Node[] = []
+
+        const searchTextNode = (node: Node, status: string, firstBranch=true) => {
+            if(!node || !selection.containsNode(node, true)) return ;
+            if(node.nodeName === '#text') {
+                if(node.textContent !== "")  {
+                    arr.push(node)
+                }
+            } 
+            else {
+                if(status !== 'up') searchTextNode(node.childNodes[0], 'down', false)
+            }
+
+            if(node.nextSibling === null) {
+                if(firstBranch)searchTextNode(node.parentNode as Node, 'up', firstBranch)
+                else return ;
+            }
+            else searchTextNode(node.nextSibling, 'right', firstBranch)
+        }
+
+        const [start, end, startOffset, endOffset] = [range.startContainer, range.endContainer, range.startOffset, range.endOffset]
+
+        searchTextNode(start, 'right');
+
+
+        arr.forEach((node: Node, index: number, array: Node[])=>{
+            if(array.length === 1) {
+                range.setStart(node, startOffset);
+                range.setEnd(node, endOffset);
+            } else {
+                switch(index) {
+                    case 0:
+                        range.setStart(node, startOffset); range.setEnd(node, node.textContent?.length as number);
+
+                        break;
+                    case array.length - 1:
+                        range.setStart(node, 0); 
+                        range.setEnd(node, endOffset);
+                        break;
+                    default:
+                        range.setStart(node, 0); range.setEnd(node, node.textContent?.length as number)
+                }
+            }
+            const elm = range.extractContents();
+            const span = document.createElement('span');
+            span.setAttribute('style', `${style.propertyKey}: ${style.propertyValue}`);
+            span.appendChild(elm);
+            range.insertNode(span);
+        })
     }
 
     const change = (selection: Selection, style: SpanStyle)=> {
@@ -121,6 +142,7 @@ function EditableP({className}:EditablePprops) {
     useEffect(()=>{
         document.addEventListener('selectionchange', updateRangeDomRect)
     },[])
+
 
 
     return(
