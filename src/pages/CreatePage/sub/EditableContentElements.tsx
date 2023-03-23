@@ -17,15 +17,17 @@ function EditableP({className}:EditablePprops) {
     const [paletteVisible, setPaletteVisible] = useState<boolean>(false);
     const [rangeDomRect, setRangeDomRect] = useState<DOMRect>();
 
+    const [isMouseOrKeyUp, setIsMouseOrKeyUp] = useState<boolean>(true);
+
+    const setMouseOrKeyDown = () => setIsMouseOrKeyUp(false);
+    const setMouseOrKeyUp = () => setIsMouseOrKeyUp(true);
+
     const selection = document.getSelection() as Selection;
 
     const pCollection = document.getElementsByClassName(className) as HTMLCollectionOf<HTMLParagraphElement>;
     
 
-    const updatePaletteVisible = () => { 
-        if(!selection.getRangeAt(0).collapsed) setPaletteVisible(true);
-        else setPaletteVisible(false);
-    }
+    
 
 
     const customizeLetter = (style: SpanStyle, line: Node, selection: Selection) => {
@@ -58,6 +60,7 @@ function EditableP({className}:EditablePprops) {
         }
 
         selection.addRange(range)
+
 
         const arr: Node[] = []
 
@@ -132,18 +135,32 @@ function EditableP({className}:EditablePprops) {
     }
 
     const updateRangeDomRect = () => setRangeDomRect(selection.getRangeAt(0).getBoundingClientRect());
+
+    const updatePaletteVisible = (isMouseUp: boolean) => { 
+        if(isMouseUp) {
+            let timer = setTimeout(()=>{
+                if(!selection.getRangeAt(0).collapsed){
+                    updateRangeDomRect()
+                    setPaletteVisible(true);
+                } 
+                else setPaletteVisible(false);
+                clearTimeout(timer)
+            }, 30)
+        }
+
+    }
     
-
-
     useEffect(()=>{
-        document.addEventListener('selectionchange', updatePaletteVisible)
-    },[])
-
-    useEffect(()=>{
-        document.addEventListener('selectionchange', updateRangeDomRect)
+        window.addEventListener('mousedown', setMouseOrKeyDown)
+        window.addEventListener('keydown', setMouseOrKeyDown)
+        window.addEventListener('mouseup', setMouseOrKeyUp)
+        window.addEventListener('keyup', setMouseOrKeyUp)
     },[])
 
 
+    useEffect(()=>{
+        document.getSelection()?.anchorNode ? updatePaletteVisible(isMouseOrKeyUp) : null
+    },[isMouseOrKeyUp])
 
     return(
         <>
