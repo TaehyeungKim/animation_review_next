@@ -122,7 +122,23 @@ function WriteContent() {
         if(highlighted) for(let i =0; i < highlighted.length; i++) highlighted[i].classList.toggle(`${styles['imageContainer--highlight']}`) 
         if(isContainingClass(anchor, styles.imageContainer))  anchor?.classList.add(`${styles['imageContainer--highlight']}`)
 	}
+
+    const preventPastingStyle = (e: ClipboardEvent) => {
+        e.preventDefault();
+        const selection = document.getSelection();
+        const text = e.clipboardData?.getData('text/plain');
+        if(!selection?.rangeCount) return ;
+        else {
+            const { startContainer, startOffset } = selection.getRangeAt(0);
+            const [former, latter] = [startContainer.textContent?.slice(0,startOffset) as string, startContainer.textContent?.slice(startOffset)];
+            startContainer.textContent = former + text + latter;
+        }
+        
+    }
 		
+    useEffect(()=>{
+        contentArea.current?.addEventListener('paste', preventPastingStyle)
+    },[])
 
     
 

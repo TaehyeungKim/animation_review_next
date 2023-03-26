@@ -159,7 +159,7 @@ function EditableP({className}:EditablePprops) {
 
 
     useEffect(()=>{
-        document.getSelection()?.anchorNode ? updatePaletteVisible(isMouseOrKeyUp) : null
+        document.getSelection()?.rangeCount ? updatePaletteVisible(isMouseOrKeyUp) : null
     },[isMouseOrKeyUp])
 
     return(
