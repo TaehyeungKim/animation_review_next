@@ -25,9 +25,18 @@ function EditableP({className}:EditablePprops) {
     const selection = document.getSelection() as Selection;
 
     const pCollection = document.getElementsByClassName(className) as HTMLCollectionOf<HTMLParagraphElement>;
-    
 
-    
+    const setRangeStartAndEnd = (firstNode: Node, secondNode: Node, firstOffset: number, secondOffset: number, range: Range) => {
+        try {
+            range.setStart(firstNode, firstOffset);
+            range.setEnd(secondNode, secondOffset);
+            if(range.toString()==="") throw new Error("firstNode is latter than the secondNode");
+        } catch(e) {
+            range.setStart(secondNode, secondOffset);
+            range.setEnd(firstNode, firstOffset);
+        }
+        
+    }
 
 
     const customizeLetter = (style: SpanStyle, line: Node, selection: Selection) => {
@@ -36,19 +45,6 @@ function EditableP({className}:EditablePprops) {
         if(anchorNode?.nodeName !== '#text' || focusNode?.nodeName !== '#text') return ;
 
         const range = new Range();
-
-
-        const setRangeStartAndEnd = (firstNode: Node, secondNode: Node, firstOffset: number, secondOffset: number, range: Range) => {
-            try {
-                range.setStart(firstNode, firstOffset);
-                range.setEnd(secondNode, secondOffset);
-                if(range.toString()==="") throw new Error("firstNode is latter than the secondNode");
-            } catch(e) {
-                range.setStart(secondNode, secondOffset);
-                range.setEnd(firstNode, firstOffset);
-            }
-            
-        }
 
 
         if(line.contains(anchorNode) && line.contains(focusNode)) setRangeStartAndEnd(anchorNode, focusNode, anchorOffset, focusOffset, range);
@@ -65,7 +61,7 @@ function EditableP({className}:EditablePprops) {
         const arr: Node[] = []
 
         const searchTextNode = (node: Node, status: string, firstBranch=true) => {
-            if(!node || !selection.containsNode(node, true)) return ;
+            if(!node || !selection.containsNode(node, true) || node.nodeName === 'P') return ;
             if(node.nodeName === '#text') {
                 if(node.textContent !== "")  {
                     arr.push(node)
@@ -83,6 +79,7 @@ function EditableP({className}:EditablePprops) {
         }
 
         const [start, end, startOffset, endOffset] = [range.startContainer, range.endContainer, range.startOffset, range.endOffset]
+
 
         searchTextNode(start, 'right');
 
@@ -127,10 +124,10 @@ function EditableP({className}:EditablePprops) {
                 break;
             }
         }
-        for(let j = top; j <= bottom; j++) {
-            customizeLetter(style, pCollection[j], selection)
-        }
+        for(let j = top; j <= bottom; j++) customizeLetter(style, pCollection[j], selection)
+        
         selection.collapseToEnd()
+        
         setPaletteVisible(false);
     }
 
@@ -159,7 +156,9 @@ function EditableP({className}:EditablePprops) {
 
 
     useEffect(()=>{
-        document.getSelection()?.rangeCount ? updatePaletteVisible(isMouseOrKeyUp) : null
+        if(document.getSelection()?.rangeCount) {
+            updatePaletteVisible(isMouseOrKeyUp)  
+        } else {}
     },[isMouseOrKeyUp])
 
     return(

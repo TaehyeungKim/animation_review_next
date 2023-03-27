@@ -58,15 +58,13 @@ function WriteContent() {
                     //when the paragraph line is blank//
                     if(anchor.nodeName === 'P') {
                         const firstP = detectFirstLine();
-                        if(anchor === firstP && anchor.textContent === '' && contentArea.current?.childElementCount === 1) {
-                            e.preventDefault();
-                        }
+                        if(anchor === firstP && anchor.textContent === '' && contentArea.current?.childElementCount === 1) e.preventDefault();   
                     }
 
                     //when the paragraph line has some content
                     else if(anchor.nodeName === '#text') {
                         const previousSibling = anchor.parentNode?.previousSibling
-                        if(anchor.textContent !== '' && previousSibling?.nodeName === 'DIV') {
+                        if(anchor.textContent === '' && previousSibling?.nodeName === 'DIV') {
                             e.preventDefault();
                             selection.setBaseAndExtent(previousSibling, 0, previousSibling, 0);
                         }
