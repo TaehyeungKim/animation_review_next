@@ -34,7 +34,11 @@
         flex-flow: row wrap;    
         justify-content: flex-start;
         align-items: center;
-        width: toRem(400);
+        width: 100%;
+        left: 0;
+        background-color: white;
+        padding: inherit;
+        box-sizing: border-box;
 
         .color_button {
             position: relative;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TextEditPalette from './TextEditPalette'
 import {SpanStyle} from './InterFaceModule'
+import {searchTextNode} from './EditablContentModule'
 
 
 
@@ -80,27 +81,11 @@ function EditableP({className}:EditablePprops) {
 
         const arr: Node[] = []
 
-        const searchTextNode = (node: Node, status: string, firstBranch=true) => {
-            if(!node || !selection.containsNode(node, true) || node.nodeName === 'P') return ;
-            if(node.nodeName === '#text') {
-                if(node.textContent !== "")  {
-                    arr.push(node)
-                }
-            } 
-            else {
-                if(status !== 'up') searchTextNode(node.childNodes[0], 'down', false)
-            }
-
-            if(node.nextSibling === null) {
-                if(firstBranch)searchTextNode(node.parentNode as Node, 'up', firstBranch)
-                else return ;
-            }
-            else searchTextNode(node.nextSibling, 'right', firstBranch)
-        }
+       
 
         const [start, end, startOffset, endOffset] = [range.startContainer, range.endContainer, range.startOffset, range.endOffset]
 
-        searchTextNode(start, 'right');
+        searchTextNode(start, 'right', arr, selection);
 
         arr.forEach((node: Node, index: number, array: Node[])=>{
             if(array.length === 1) {

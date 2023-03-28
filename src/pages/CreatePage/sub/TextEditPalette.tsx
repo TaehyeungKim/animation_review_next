@@ -4,6 +4,7 @@ import { SpanStyle } from "./InterFaceModule";
 import ButtonComponent from "../../../components/Global/ButtonComponent"
 import styles from './TextEditPalette.module.scss'
 import {fontColor, bold} from '../../../icons/icons'
+import {searchTextNode} from './EditablContentModule'
 
 interface TextEditPaletteProps {
     change: (selection: Selection, style: SpanStyle) => void,
@@ -92,9 +93,13 @@ function FontSizeSubPalette({change, selection, containerRef, fontSizeArr}:FontS
 
     const [selectedSize, setSelectedSize] = useState<number>(16);
 
-    useEffect(()=>{
+    const compareWithNextTextSpan = () => {
+
+    }
+
+    useLayoutEffect(()=>{
         
-    },[ ,selectedSize])
+    },[])
 
     return(
         <select className={styles.fontSizeSelect}>

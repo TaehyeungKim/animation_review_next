@@ -131,12 +131,11 @@ function WriteContent() {
             const [former, latter] = [startContainer.textContent?.slice(0,startOffset) as string, startContainer.textContent?.slice(startOffset)];
             startContainer.textContent = former + text + latter;
             const range = new Range();
-            if(startContainer.nodeName === 'P') {
-                range.setStart(startContainer.firstChild as Node, 0);
-                range.setEnd(startContainer.lastChild as Node, text?.length as number);
-            }
+            if(startContainer.nodeName === 'P') range.setEnd(startContainer.lastChild as Node, text?.length as number);
             else range.setEnd(startContainer, startOffset + (text?.length as number - 1));
+            selection.removeAllRanges();
             selection.addRange(range);
+            selection.collapseToEnd();
         }
         
     }
