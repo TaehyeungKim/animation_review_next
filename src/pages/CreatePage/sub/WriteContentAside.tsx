@@ -35,10 +35,13 @@ function WriteContentAside({style}: WriteContentAsideProps) {
     
     const insertImageToContent = (e:any) => {
         const tempURL = URL.createObjectURL(e.target?.files[0]);
-        const currentCaret = window.getSelection()?.anchorNode;
         const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${style.imageContainer}`); 
         const image = document.createElement('img'); image.setAttribute('src', tempURL);
         imageContainer.appendChild(image);
+
+
+        const currentCaret = window.getSelection()?.anchorNode;
+        
         const marker = currentCaret?.nodeName === '#text' ? currentCaret.parentNode : currentCaret as Node
         document.getElementById('contentArea')?.insertBefore(imageContainer, marker?.nextSibling as Node);
         document.getSelection()?.setBaseAndExtent(imageContainer, 0, imageContainer, 0);    

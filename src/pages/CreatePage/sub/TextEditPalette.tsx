@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef, useReducer } from "react";
+import React, { useState, useLayoutEffect, useRef, useReducer, useEffect } from "react";
 import { SpanStyle } from "./InterFaceModule";
 
 import ButtonComponent from "../../../components/Global/ButtonComponent"
@@ -52,32 +52,56 @@ const reducer = (state: PaletteState, action: PaletteAction ) => {
 interface PaletteSubComponentProps {
     change: (selection: Selection, style: SpanStyle) => void,
     selection: Selection,
-    containerRef: React.RefObject<HTMLDivElement>
+    containerRef: React.RefObject<HTMLDivElement>,
+    opened: boolean
 }
 
 interface ColorPaletteProps extends PaletteSubComponentProps {
     colorArr: string[]
 }
 
-function ColorSubPalette({change, selection, colorArr, containerRef}: ColorPaletteProps) {
+interface FontSizePaletteProps extends PaletteSubComponentProps {
+    fontSizeArr: number[]
+}
+
+function ColorSubPalette({change, selection, colorArr, containerRef, opened}: ColorPaletteProps) {
 
     const [styleOfTheSubPalette, setStyleOfTheSubPalette] = useState<React.CSSProperties>({top: 0});
+    const colorPaletteRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(()=>{
         const heightOfWholePalette = containerRef.current?.offsetHeight as number;
         setStyleOfTheSubPalette({...styleOfTheSubPalette, top: heightOfWholePalette})
     },[])
+
     return (
-        <div className={styles.colorPalette} style={styleOfTheSubPalette}>
+        opened ? <div className={styles.colorPalette} style={styleOfTheSubPalette} ref={colorPaletteRef}>
             {colorArr.map((color: string, index: number) => {
                 const colorPaletteElm = <div className = {styles.color} style={{background: `${color}`}} onSelect={()=>{return false}}></div>
-                return <ButtonComponent className={styles.color_button} children={colorPaletteElm} key={index} event={[['click', change.bind(null, selection, {
+                return <ButtonComponent className={`${styles.color_button} ${styles['color_button--animation']}`} children={colorPaletteElm} key={index} event={[['click', change.bind(null, selection, {
                     propertyKey: 'color',
                     propertyValue: color
-                })]]}/>
+                })]]} style={{animationDelay: `${(index+1) * 30}ms`}}/>
             })
             }
-        </div>
+        </div> : null
+    )
+}
+
+function FontSizeSubPalette({change, selection, containerRef, fontSizeArr}:FontSizePaletteProps) {
+
+    const [selectedSize, setSelectedSize] = useState<number>(16);
+
+    useEffect(()=>{
+        
+    },[ ,selectedSize])
+
+    return(
+        <select className={styles.fontSizeSelect}>
+            {fontSizeArr.map((size:number, index: number)=>{
+                return <option key={index}>{size}</option>
+            })}
+        </select>
     )
 }
 
@@ -94,6 +118,7 @@ function TextEditPalette({change, rangeDomRect}: TextEditPaletteProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const colorArr = ['black','red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple', 'pink']
+    const fontSizeArr = [16, 24, 32, 40, 48]
 
     const selection = document.getSelection() as Selection
 
@@ -116,12 +141,13 @@ function TextEditPalette({change, rangeDomRect}: TextEditPaletteProps) {
                 propertyKey: 'font-weight',
                 propertyValue: 'bold'
             })]]}/>
+            <FontSizeSubPalette change={change} selection={selection} containerRef={containerRef} fontSizeArr={fontSizeArr} opened={state.opened}/>
             {(()=>{
                 switch(state.type) {
                     default: 
                         return ;
                     case "color":
-                        return state.opened ? <ColorSubPalette change={change} selection={selection} colorArr={colorArr} containerRef={containerRef}/> : null
+                        return <ColorSubPalette change={change} selection={selection} colorArr={colorArr} containerRef={containerRef} opened={state.opened}/>
                 }
             })()}
         </div>

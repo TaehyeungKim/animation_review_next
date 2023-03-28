@@ -7,9 +7,10 @@ interface ButtonComponentProps {
     children: JSX.Element,
     event?: Array<Array<any>>
     id?: string,
+    style?: React.CSSProperties
 }
 
-function ButtonComponent({className, children, event, id}:ButtonComponentProps) {
+function ButtonComponent({className, children, event, id, style}:ButtonComponentProps) {
 
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -23,7 +24,7 @@ function ButtonComponent({className, children, event, id}:ButtonComponentProps) 
     },[event])
 
     return(
-        <button className={`${className} ${styles.basic}`} id={id} ref={buttonRef}>
+        <button className={`${className} ${styles.basic}`} id={id} ref={buttonRef} style={style}>
             {children}
         </button>
     )
