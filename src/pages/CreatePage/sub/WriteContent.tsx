@@ -130,6 +130,13 @@ function WriteContent() {
             const { startContainer, startOffset } = selection.getRangeAt(0);
             const [former, latter] = [startContainer.textContent?.slice(0,startOffset) as string, startContainer.textContent?.slice(startOffset)];
             startContainer.textContent = former + text + latter;
+            const range = new Range();
+            if(startContainer.nodeName === 'P') {
+                range.setStart(startContainer.firstChild as Node, 0);
+                range.setEnd(startContainer.lastChild as Node, text?.length as number);
+            }
+            else range.setEnd(startContainer, startOffset + (text?.length as number - 1));
+            selection.addRange(range);
         }
         
     }
@@ -160,7 +167,7 @@ function WriteContent() {
             <section className={styles['write--content']} contentEditable='true' ref={contentArea} id={'contentArea'}>
                 <EditableP className={styles.line}/>
             </section>
-            <WriteContentAside style={asideStyle}/>
+            <WriteContentAside style={asideStyle} paragraphMaker={paragraphMaker}/>
         </main>
     )
 }

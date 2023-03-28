@@ -7,9 +7,10 @@ import ButtonComponent from '../../../components/Global/ButtonComponent';
 
 interface WriteContentAsideProps {
     style: any;
+    paragraphMaker:()=>HTMLParagraphElement
 }
 
-function WriteContentAside({style}: WriteContentAsideProps) {
+function WriteContentAside({style, paragraphMaker}: WriteContentAsideProps) {
 
     const [inpArray, setInpArray] = useState<Array<any>>([]);
 
@@ -30,6 +31,10 @@ function WriteContentAside({style}: WriteContentAsideProps) {
         setInpArray(inpArray=>[...inpArray, newInp])
     }
     
+    const crawlToTheP = (node: Node): Node => {
+        if(node.nodeName === "P") return node;
+        else return crawlToTheP(node.parentNode as Node)
+    }
     
     
     
@@ -39,13 +44,28 @@ function WriteContentAside({style}: WriteContentAsideProps) {
         const image = document.createElement('img'); image.setAttribute('src', tempURL);
         imageContainer.appendChild(image);
 
+        const range = document.getSelection()?.getRangeAt(0) as Range;
 
-        const currentCaret = window.getSelection()?.anchorNode;
-        
-        const marker = currentCaret?.nodeName === '#text' ? currentCaret.parentNode : currentCaret as Node
-        document.getElementById('contentArea')?.insertBefore(imageContainer, marker?.nextSibling as Node);
+        const {startContainer, endContainer, startOffset, endOffset} = range
+
+        const theCurrentLine = crawlToTheP(endContainer);
+
+        range.setStart(startContainer, startOffset);
+        range.setEnd(theCurrentLine.lastChild as Node, theCurrentLine.lastChild?.textContent?.length as number)
+
+        const extracted = range.extractContents();
+
+        const newParagraph = paragraphMaker();
+        newParagraph.removeChild(newParagraph.children[0]); 
+        newParagraph.appendChild(extracted);
+
+        document.getElementById('contentArea')?.insertBefore(imageContainer, theCurrentLine.nextSibling as Node);
+        document.getElementById('contentArea')?.insertBefore(newParagraph, imageContainer.nextSibling as Node);
+
         document.getSelection()?.setBaseAndExtent(imageContainer, 0, imageContainer, 0);    
+
         insertNewImgInp();
+
         imageContainer.setAttribute('key', `${imageIdx.current-1}`)
 
     }
