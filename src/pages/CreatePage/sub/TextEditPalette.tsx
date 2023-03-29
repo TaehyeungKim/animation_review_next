@@ -1,10 +1,10 @@
-import React, { useState, useLayoutEffect, useRef, useReducer, useEffect } from "react";
+import React, { useState, useLayoutEffect, useRef, useReducer, useEffect, Children, ReactElement } from "react";
 import { SpanStyle } from "./InterFaceModule";
 
 import ButtonComponent from "../../../components/Global/ButtonComponent"
 import styles from './TextEditPalette.module.scss'
 import {fontColor, bold} from '../../../icons/icons'
-import {searchTextNode} from './EditablContentModule'
+import {compareWithNextTextNode} from './EditablContentModule'
 
 interface TextEditPaletteProps {
     change: (selection: Selection, style: SpanStyle) => void,
@@ -89,22 +89,38 @@ function ColorSubPalette({change, selection, colorArr, containerRef, opened}: Co
     )
 }
 
+
+
 function FontSizeSubPalette({change, selection, containerRef, fontSizeArr}:FontSizePaletteProps) {
 
-    const [selectedSize, setSelectedSize] = useState<number>(16);
+    const fontSelect = useRef<HTMLSelectElement>(null);
 
-    const compareWithNextTextSpan = () => {
+    let firstOption: ReactElement
 
-    }
+    const {startContainer} = selection.getRangeAt(0);
 
-    useLayoutEffect(()=>{
-        
+    console.log(compareWithNextTextNode(startContainer, selection))
+
+    if(compareWithNextTextNode(startContainer, selection)) firstOption = 
+    <option className={styles.fontSizeSelect}>
+        {window.getComputedStyle(startContainer.parentNode as Element).getPropertyValue('font-size').split('px')[0]}
+    </option>
+    else firstOption = <option className={styles.fontSizeSelect}>크기를 선택하세요</option>
+
+    const fontChange = (e: any) => change(selection, {propertyKey: 'font-size', propertyValue: `${parseInt(e.target.value)/16}rem`})
+
+
+    useEffect(()=>{
+        fontSelect.current?.addEventListener('change', fontChange)
     },[])
 
     return(
-        <select className={styles.fontSizeSelect}>
+        <select className={styles.fontSizeSelect} ref={fontSelect}>
+            {firstOption}
             {fontSizeArr.map((size:number, index: number)=>{
-                return <option key={index}>{size}</option>
+                return (<option className={styles.fontSizeOption} key={index}>
+                    {size}
+                </option>)
             })}
         </select>
     )

@@ -63,10 +63,14 @@
     }
 
     .fontSizeSelect {
-        width: toRem(70);
+        width: fit-content;
         height: toRem(30);
         outline: none;
 
+        .fontSizeOption {
+            width: 100%;
+            height: inherit;
+        }
     }
 }
 

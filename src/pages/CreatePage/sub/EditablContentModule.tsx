@@ -19,27 +19,33 @@ const searchTextNode = (node: Node, status: string, arr: Node[], selection: Sele
 export {searchTextNode}
 
 const nextNode = (currentNode: Node):Node=> {
-    if(!currentNode.nextSibling) return nextNode(currentNode.parentNode?.nextSibling as Node)
-    else return currentNode.nextSibling as Node
+    if(!currentNode.nextSibling) return nextNode(currentNode.parentNode as Node)
+    else {
+        if(currentNode.nextSibling.nodeName === 'BR') return nextNode(currentNode.nextSibling.nextSibling as Node);
+        else return currentNode.nextSibling as Node
+    }
+    
 }
 
-// const findFirstTextNode = (node: Node):Node=> {
-//     if(node.nodeName === "#text") return node;
-//     else {
-//         const nodeLength = node.childNodes.length as number;
-//         for(let i =0; i < nodeLength; i++) {
-//             if(node.childNodes[i].textContent !== "") return findFirstTextNode(node.childNodes[i]);
-//         }
-//     }
-// }
+const findTextNodeDeep = (node: Node):Node|boolean => {
+    if(node.nodeName === '#text')  return node;
+    else if(node.nodeName === 'SPAN'|| node.nodeName === 'P') return findTextNodeDeep(node.firstChild as Node)
+    else return false;
+}
 
-// const compareWithNextNode = (currentTextNode: Node, nextTextNode: Node, formerResult: boolean=false) => {
+const compareWithNextTextNode = (currentNode: Node, selection:Selection):boolean=> {
 
-    
-//     if(formerResult) return true;
-//     else {
-//         const result = window.getComputedStyle(currentTextNode.parentNode as Element).getPropertyValue('font-size')
-//         === window.getComputedStyle(nextTextNode.parentNode as Element).getPropertyValue('font-size')
-//         return compareWithNextNode(nextTextNode)
-//     }
-// }
+
+    if(!selection.containsNode(nextNode(currentNode), true)) return true;
+    else {
+        const nextTextNode = findTextNodeDeep(nextNode(currentNode))
+        const currentTextNode = findTextNodeDeep(currentNode);
+        
+        if(typeof(currentTextNode) === 'object' && typeof(nextTextNode) === 'object') {
+            if(window.getComputedStyle(currentTextNode.parentNode as Element).getPropertyValue('font-size') === window.getComputedStyle(nextTextNode.parentNode as Element).getPropertyValue('font-size')) 
+            return compareWithNextTextNode(nextTextNode, selection)
+            else return false;
+        } else return false;}
+}
+
+export {compareWithNextTextNode}
