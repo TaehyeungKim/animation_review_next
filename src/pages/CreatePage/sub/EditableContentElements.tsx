@@ -150,10 +150,10 @@ function EditableP({className}:EditablePprops) {
     }
     
     useEffect(()=>{
-        window.addEventListener('mousedown', setMouseOrKeyDown)
-        window.addEventListener('keydown', setMouseOrKeyDown)
-        window.addEventListener('mouseup', setMouseOrKeyUp)
-        window.addEventListener('keyup', setMouseOrKeyUp)
+        document.addEventListener('mousedown', setMouseOrKeyDown)
+        document.addEventListener('keydown', setMouseOrKeyDown)
+        document.addEventListener('mouseup', setMouseOrKeyUp)
+        document.addEventListener('keyup', setMouseOrKeyUp)
     },[])
 
 

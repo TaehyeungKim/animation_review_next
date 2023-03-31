@@ -18,6 +18,7 @@ const searchTextNode = (node: Node, status: string, arr: Node[], selection: Sele
 
 export {searchTextNode}
 
+
 const nextNode = (currentNode: Node):Node=> {
     if(!currentNode.nextSibling) return nextNode(currentNode.parentNode as Node)
     else {
@@ -27,25 +28,29 @@ const nextNode = (currentNode: Node):Node=> {
     
 }
 
-const findTextNodeDeep = (node: Node):Node|boolean => {
-    if(node.nodeName === '#text')  return node;
+const findTextNodeDeep = (node: Node):Node|Boolean => {
+    if(node.nodeName === '#text') {
+        if(node.textContent === "") return findTextNodeDeep(nextNode(node));   
+        else return node;
+    }
     else if(node.nodeName === 'SPAN'|| node.nodeName === 'P') return findTextNodeDeep(node.firstChild as Node)
     else return false;
 }
 
 const compareWithNextTextNode = (currentNode: Node, selection:Selection):boolean=> {
 
+    let nextTextNode = findTextNodeDeep(nextNode(currentNode))
+    let currentTextNode = findTextNodeDeep(currentNode);
+    if(nextTextNode === false) return true;
 
     if(!selection.containsNode(nextNode(currentNode), true)) return true;
     else {
-        const nextTextNode = findTextNodeDeep(nextNode(currentNode))
-        const currentTextNode = findTextNodeDeep(currentNode);
-        
-        if(typeof(currentTextNode) === 'object' && typeof(nextTextNode) === 'object') {
-            if(window.getComputedStyle(currentTextNode.parentNode as Element).getPropertyValue('font-size') === window.getComputedStyle(nextTextNode.parentNode as Element).getPropertyValue('font-size')) 
-            return compareWithNextTextNode(nextTextNode, selection)
-            else return false;
-        } else return false;}
+        nextTextNode = nextTextNode as Node;
+        currentTextNode = currentTextNode as Node;
+        if(window.getComputedStyle(currentTextNode.parentNode as Element).getPropertyValue('font-size') === window.getComputedStyle(nextTextNode.parentNode as Element).getPropertyValue('font-size')) 
+        return compareWithNextTextNode(nextTextNode, selection)
+        else return false;
+        } 
 }
 
 export {compareWithNextTextNode}

@@ -95,17 +95,10 @@ function FontSizeSubPalette({change, selection, containerRef, fontSizeArr}:FontS
 
     const fontSelect = useRef<HTMLSelectElement>(null);
 
-    let firstOption: ReactElement
-
     const {startContainer} = selection.getRangeAt(0);
 
-    console.log(compareWithNextTextNode(startContainer, selection))
+    const defaultValue = compareWithNextTextNode(startContainer, selection) ? window.getComputedStyle(startContainer.parentNode as Element).getPropertyValue('font-size').split('px')[0] : '크기를 선택하세요';
 
-    if(compareWithNextTextNode(startContainer, selection)) firstOption = 
-    <option className={styles.fontSizeSelect}>
-        {window.getComputedStyle(startContainer.parentNode as Element).getPropertyValue('font-size').split('px')[0]}
-    </option>
-    else firstOption = <option className={styles.fontSizeSelect}>크기를 선택하세요</option>
 
     const fontChange = (e: any) => change(selection, {propertyKey: 'font-size', propertyValue: `${parseInt(e.target.value)/16}rem`})
 
@@ -115,8 +108,8 @@ function FontSizeSubPalette({change, selection, containerRef, fontSizeArr}:FontS
     },[])
 
     return(
-        <select className={styles.fontSizeSelect} ref={fontSelect}>
-            {firstOption}
+        <select className={styles.fontSizeSelect} ref={fontSelect} value={defaultValue}>
+            <option hidden>크기를 선택하세요</option>
             {fontSizeArr.map((size:number, index: number)=>{
                 return (<option className={styles.fontSizeOption} key={index}>
                     {size}

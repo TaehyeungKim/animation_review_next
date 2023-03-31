@@ -19,7 +19,7 @@
         }
     
         .line{
-            line-height: toRem($content--font-Height);
+            line-height: fit-content;;
             height: fit-content;
             min-height: toRem($content--font-Height);
             position: relative;
