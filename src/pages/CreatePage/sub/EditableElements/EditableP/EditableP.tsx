@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
-import TextEditPalette from './TextEditPalette'
-import {SpanStyle} from './InterFaceModule'
-import {searchTextNode} from './EditablContentModule'
+import TextEditPalette from "./TextEditPalette";
+import {SpanStyle, EditableContentElements} from '../InterFaceModule'
+import {searchTextNode} from '../EditablContentModule'
 
-
-
-interface EditableContentElements {
-    className: string,
-    id?: string
-}
 
 interface EditablePprops extends EditableContentElements {
 

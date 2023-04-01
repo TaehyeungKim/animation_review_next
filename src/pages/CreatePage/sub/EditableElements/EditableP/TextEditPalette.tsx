@@ -1,10 +1,10 @@
 import React, { useState, useLayoutEffect, useRef, useReducer, useEffect, Children, ReactElement } from "react";
-import { SpanStyle } from "./InterFaceModule";
+import { SpanStyle } from "../InterFaceModule";
 
-import ButtonComponent from "../../../components/Global/ButtonComponent"
+import ButtonComponent from "../../../../../components/Global/ButtonComponent"
 import styles from './TextEditPalette.module.scss'
-import {fontColor, bold} from '../../../icons/icons'
-import {compareWithNextTextNode} from './EditablContentModule'
+import {fontColor, bold} from '../../../../../icons/icons'
+import {compareWithNextTextNode} from '../EditablContentModule'
 
 interface TextEditPaletteProps {
     change: (selection: Selection, style: SpanStyle) => void,

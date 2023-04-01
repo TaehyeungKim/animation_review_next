@@ -1,6 +1,6 @@
 import styles from './CreatePage.module.scss'
 import Header from '../../components/Header/Header';
-import ThumbnailSet from './sub/ThumbnailSet';
+import ThumbnailSet from './sub/Thumbnail/ThumbnailSet';
 import WriteContent from './sub/WriteContent'
 
 function CreatePage() {

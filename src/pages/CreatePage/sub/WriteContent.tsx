@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import styles from './WriteContent.module.scss'
 import WriteContentAside from './WriteContentAside';
-import {EditableP} from './EditableContentElements'
+import {EditableP} from './EditableElements/EditableP/EditableP';
 
 
 function WriteContent() {

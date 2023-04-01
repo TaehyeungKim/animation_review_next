@@ -1,8 +1,8 @@
 import {useState, useRef} from 'react';
 import styles from './ThumbnailSet.module.scss';
-import {imageAdd, trash, leftalign, centeralign, rightalign} from '../../../icons/icons';
+import {imageAdd, trash, leftalign, centeralign, rightalign} from '../../../../icons/icons';
 import ThumbnailTitle from './ThumbnailTitle'; 
-import ButtonComponent from '../../../components/Global/ButtonComponent';
+import ButtonComponent from '../../../../components/Global/ButtonComponent';
 
 
 function ThumbnailSet() {
