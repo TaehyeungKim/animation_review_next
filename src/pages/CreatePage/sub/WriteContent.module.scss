@@ -52,6 +52,11 @@
             border: none;
             position: relative;
             margin: toRem(15) 0;
+
+            ::selection {
+                color: none;
+                background: none;
+            }
         
             img {
                 width: 100%;

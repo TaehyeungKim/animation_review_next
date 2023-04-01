@@ -108,7 +108,7 @@ function FontSizeSubPalette({change, selection, containerRef, fontSizeArr}:FontS
     },[])
 
     return(
-        <select className={styles.fontSizeSelect} ref={fontSelect} value={defaultValue}>
+        <select className={styles.fontSizeSelect} ref={fontSelect} defaultValue={defaultValue}>
             <option hidden>크기를 선택하세요</option>
             {fontSizeArr.map((size:number, index: number)=>{
                 return (<option className={styles.fontSizeOption} key={index}>

@@ -5,7 +5,7 @@ import {searchTextNode} from '../EditablContentModule'
 
 
 interface EditablePprops extends EditableContentElements {
-
+    
 }
 
 function EditableP({className}:EditablePprops) {

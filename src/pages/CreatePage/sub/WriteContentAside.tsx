@@ -40,11 +40,12 @@ function WriteContentAside({style, paragraphMaker}: WriteContentAsideProps) {
     
     const insertImageToContent = (e:any) => {
         const tempURL = URL.createObjectURL(e.target?.files[0]);
-        const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${style.imageContainer}`); 
+        const imageContainer = document.createElement('div'); imageContainer.setAttribute('class', `${style.imageContainer}`);
         const image = document.createElement('img'); image.setAttribute('src', tempURL);
         imageContainer.appendChild(image);
 
-        const range = document.getSelection()?.getRangeAt(0) as Range;
+        const selection = document.getSelection() as Selection;
+        const range = selection.getRangeAt(0) as Range;
 
         const {startContainer, endContainer, startOffset, endOffset} = range
 
@@ -67,6 +68,7 @@ function WriteContentAside({style, paragraphMaker}: WriteContentAsideProps) {
         insertNewImgInp();
 
         imageContainer.setAttribute('key', `${imageIdx.current-1}`)
+
 
     }
 
