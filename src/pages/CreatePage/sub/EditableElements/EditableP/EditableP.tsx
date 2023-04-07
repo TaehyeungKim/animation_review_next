@@ -59,6 +59,14 @@ function EditableP({className}:EditablePprops) {
             }
             
         }
+
+        const findNextLine = (line: Node):Node|null => {
+            if(line.nextSibling && line.nextSibling.nodeName === 'P') return line.nextSibling as Node;
+            else {
+                if(!line.nextSibling) return null;
+                else return findNextLine(line.nextSibling as Node);
+            } 
+        }
     
 
         if(line.contains(anchorNode) && line.contains(focusNode)) setRangeStartAndEnd(anchorNode, focusNode, anchorOffset, focusOffset, range);
@@ -66,7 +74,7 @@ function EditableP({className}:EditablePprops) {
         
         else {
             let [markerNode, markerNodeOffset] = line.contains(anchorNode) ? [anchorNode, anchorOffset] : [focusNode, focusOffset];     
-            if(line.nextSibling?.nodeName === 'P' && selection.containsNode(line.nextSibling as Node, true)) setRangeStartAndEnd(markerNode, findFirstAndLastTextNode(line, false) as Node, markerNodeOffset, findFirstAndLastTextNode(line, false).textContent?.length as number, range)
+            if(findNextLine(line) && selection.containsNode(line.nextSibling as Node, true)) setRangeStartAndEnd(markerNode, findFirstAndLastTextNode(line, false) as Node, markerNodeOffset, findFirstAndLastTextNode(line, false).textContent?.length as number, range)
             else setRangeStartAndEnd(findFirstAndLastTextNode(line, true) as Node, markerNode, 0, markerNodeOffset, range);
         }
 
@@ -75,12 +83,12 @@ function EditableP({className}:EditablePprops) {
 
         const arr: Node[] = []
 
-       
-
         const [start, end, startOffset, endOffset] = [range.startContainer, range.endContainer, range.startOffset, range.endOffset]
 
         searchTextNode(start, 'right', arr, selection);
 
+        console.log(arr, startOffset, endOffset, range);
+        debugger;
         arr.forEach((node: Node, index: number, array: Node[])=>{
             if(array.length === 1) {
                 range.setStart(node, startOffset);
