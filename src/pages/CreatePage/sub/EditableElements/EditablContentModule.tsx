@@ -33,19 +33,14 @@ const findTextNodeDeep = (node: Node):Node|Boolean => {
         case '#text': 
             if(node.textContent === "") return findTextNodeDeep(nextNode(node));   
             else return node;
-        case 'SPAN'||'P':
+        case 'SPAN':
+        case 'P':
             return findTextNodeDeep(node.firstChild as Node);
         case 'DIV':
             return findTextNodeDeep(nextNode(node));
         default:
             return false;
     }
-    // if(node.nodeName === '#text') {
-    //     if(node.textContent === "") return findTextNodeDeep(nextNode(node));   
-    //     else return node;
-    // }
-    // else if(node.nodeName === 'SPAN'|| node.nodeName === 'P') return findTextNodeDeep(node.firstChild as Node)
-    // else return false;
 }
 
 const compareWithNextTextNode = (currentNode: Node, selection:Selection):boolean=> {

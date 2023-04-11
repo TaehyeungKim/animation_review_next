@@ -27,7 +27,7 @@ interface PaletteAction {
     opened: boolean
 }
 
-const reducer = (state: PaletteState, action: PaletteAction ) => {
+const reducer = (state: PaletteState, action: PaletteAction) => {
     if(action.type === state.type) {
         switch(action.type) {
             default:

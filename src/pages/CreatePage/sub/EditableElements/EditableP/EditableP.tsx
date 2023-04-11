@@ -87,8 +87,6 @@ function EditableP({className}:EditablePprops) {
 
         searchTextNode(start, 'right', arr, selection);
 
-        console.log(arr, startOffset, endOffset, range);
-        debugger;
         arr.forEach((node: Node, index: number, array: Node[])=>{
             if(array.length === 1) {
                 range.setStart(node, startOffset);
@@ -140,7 +138,9 @@ function EditableP({className}:EditablePprops) {
     const updatePaletteVisible = (isMouseUp: boolean) => { 
         if(isMouseUp) {
             let timer = setTimeout(()=>{
-                if(!selection.getRangeAt(0).collapsed){
+                const {anchorNode, focusNode} = document.getSelection() as Selection;
+                const contentArea = document.getElementById('contentArea') as HTMLElement;
+                if(contentArea.contains(anchorNode) && contentArea.contains(focusNode) && !selection.getRangeAt(0).collapsed){
                     updateRangeDomRect()
                     setPaletteVisible(true);
                 } 

@@ -3,10 +3,11 @@ import styles_title from './ThumbnailTitle.module.scss';
 
 interface ThumbnailTitleElementProps {
 	style: string,
-	tag: string
+	tag: string,
+	id: string
 }
 
-function ThumbnailTitleElement({style, tag}:ThumbnailTitleElementProps) {
+function ThumbnailTitleElement({style, tag, id}:ThumbnailTitleElementProps) {
 	const restorePlaceholder = (e:any) => {
 		if(e.target?.innerHTML === '') {
 			e.target?.classList.remove(`${styles_title['title--focused']}`)
@@ -23,7 +24,8 @@ function ThumbnailTitleElement({style, tag}:ThumbnailTitleElementProps) {
 				},
 		 onBlur: (e:any)=>{
 					restorePlaceholder(e);
-				}
+				},
+		id: id
 		}
 		)
 
@@ -40,9 +42,9 @@ interface ThumbnailTitleProps {
 
 function ThumbnailTitle({align}: ThumbnailTitleProps) {
 	return(
-		<div className = {`${styles_title.title} ${styles_title[align]}`}>
-			<ThumbnailTitleElement style={styles_title['title--main']} tag={'h1'}/>
-			<ThumbnailTitleElement style={styles_title['title--sub']} tag={'h3'}/>
+		<div className = {`${styles_title.title} ${styles_title[align]}`} id={`thumbnailTitle`} title={`title_${align}`}>
+			<ThumbnailTitleElement style={styles_title['title--main']} tag={'h1'} id='mainTitle'/>
+			<ThumbnailTitleElement style={styles_title['title--sub']} tag={'h3'} id="subTitle"/>
 		</div>
 	)
 }

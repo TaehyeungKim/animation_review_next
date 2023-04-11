@@ -139,6 +139,16 @@ function WriteContent() {
         }
         
     }
+
+    const changeSelectionToImage = () => {
+        const selection = document.getSelection() as Selection
+        const {focusNode} = selection
+        if(focusNode?.nodeName === 'DIV') selection.setBaseAndExtent(focusNode, 0, focusNode, 0)
+        else {
+
+        }
+        
+    }
 		
     useEffect(()=>{
         contentArea.current?.addEventListener('paste', preventPastingStyle)
@@ -158,6 +168,10 @@ function WriteContent() {
             document.removeEventListener('selectionchange', toggleImageHighlight)
             document.removeEventListener('selectionchange', toggleFirstLinePlaceHolder)
         })
+    },[])
+
+    useEffect(()=>{
+        document.addEventListener('mouseup', changeSelectionToImage);
     },[])
 	
 
