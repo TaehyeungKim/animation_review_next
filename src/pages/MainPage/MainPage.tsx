@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useQueries } from 'react-query'
 import styles from './MainPage.module.scss'
 import Header from '../../components/Header/Header'
@@ -12,7 +12,7 @@ const loadArticles = async(title: string, start: number, limit: number) => {
     const query = new URLSearchParams(
         {'_start': `${start}`, '_limit': `${limit}`}
     )
-    const resource = await fetch('https://jsonplaceholder.typicode.com/photos?' + query, {
+    const resource = await fetch('http://localhost:4000/reviewPosts?' + query, {
         method: 'GET'
     })
     const res = await resource.json();
@@ -37,6 +37,7 @@ function MainPage() {
 
     let titleArr = ['Best!', '추천 게시물', '가장 HOT'];
     const result = useQueries([...titleArr.map((title:string)=>{return new QueryObject(title)})])
+
 
     for(let i = 0; i < result.length; i++) {
         if(!result[i].data) return (<Loading></Loading>)

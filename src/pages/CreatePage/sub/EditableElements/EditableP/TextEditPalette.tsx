@@ -149,7 +149,7 @@ function TextEditPalette({change, rangeDomRect}: TextEditPaletteProps) {
     },[rangeDomRect])
 
     return(
-        <div className = {styles.container} contentEditable='false' ref={containerRef} style={paletteStyle as React.CSSProperties}>
+        <div className = {styles.container} contentEditable='false' ref={containerRef} style={paletteStyle as React.CSSProperties} id="texteditpalette">
             <ButtonComponent className = {styles.colors} children={fontColor()} event={[['click', showSubComponent.bind(null, "color")],['select', ()=>{return false}]]}/>
             <ButtonComponent className={styles.bold} children = {bold()} event={[['click', change.bind(null, selection, {
                 propertyKey: 'font-weight',

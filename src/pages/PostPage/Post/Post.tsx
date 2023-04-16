@@ -13,7 +13,7 @@ function Post({data}:PostProps) {
     let commentData = [{id: 1}, {id: 2}, {id: 3}]
     return (
         <div className = {styles.container} id={'postpageContainer'}>
-            <PostIntro photoURL={data.photo.url} title={data.content.title}/>
+            <PostIntro photoURL={data.content.thumbnail.image} title={data.content.thumbnail.title.main}/>
             <PostContent/>
             <PostCommentBar/>
             <PostCommentList data={commentData}/>

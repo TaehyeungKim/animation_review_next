@@ -14,15 +14,11 @@ function PostPage() {
 
     const loadPost = async(id:string) => {
         try {
-            const contentResource = await fetch("https://jsonplaceholder.typicode.com/posts/" + id, {
+            const contentResource = await fetch("http://localhost:4000/reviewPosts/" + id, {
             method: "GET"
         })
-            const photoResource = await fetch("https://jsonplaceholder.typicode.com/photos/" + id, {
-                method: "GET"
-            })
             const contentRes = await contentResource.json();
-            const photoRes = await photoResource.json();
-            return {content: contentRes, photo: photoRes}
+            return {content: contentRes}
 
         } catch(e) {
             console.log(e);
