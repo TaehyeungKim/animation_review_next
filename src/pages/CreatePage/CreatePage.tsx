@@ -18,12 +18,18 @@ function CreatePage() {
 	}
 
 	const mutation = useMutation({
-		mutationFn: async (data: CreateData) => {
-			await sleep();
-			return axios.post('http://localhost:4000/reviewPosts', data)
+		mutationFn: async (data: FormData) => {
+			for(const value of data.values()) console.log(value)
+			//return axios.post('http://localhost:4000/reviewPosts', data)
+			return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
+				headers: {'Content-Type': 'multipart/form-data'}
+			})
+			//https://animation-view-fnlkc.run.goorm.site
 		},
 		mutationKey: 'create',
-		onMutate: ()=>{navigate('/main')}
+		onError: (e)=>{console.log(e)},
+		//onMutate: ()=>{navigate('/main')}
+		onSuccess: ()=>navigate('/main')
 	})
 	
 	const dispatchData = () => {
@@ -34,22 +40,31 @@ function CreatePage() {
 
 		for(let i = 0; i < contentArea.childElementCount; i++) contentArea.children[i].removeAttribute('class')
 
+		const formData = new FormData();
 
-		const createData = {
-			id: 170,
-			thumbnail: {
-				title: {
-					main: document.getElementById('mainTitle')?.textContent as string,
-					sub: document.getElementById('subTitle')?.textContent as string
-				},
-				align: document.getElementById('thumbnailTitle')?.title as string,
-				image: thumbnailImgFile
-			},
-			body: {
-				content: contentArea.innerHTML
-			}
-		}
-		mutation.mutate(createData)
+		formData.append('mainTitle', document.getElementById('mainTitle')?.textContent as string);
+		formData.append('subTitle', document.getElementById('subTitle')?.textContent as string);
+		formData.append('titleAlign', document.getElementById('thumbnailTitle')?.title as string);
+		formData.append('thumbnailImage', thumbnailImgFile);
+		formData.append('bodyContent', contentArea.innerHTML);
+
+		mutation.mutate(formData)
+
+		// const createData = {
+		// 	id: 171,
+		// 	thumbnail: {
+		// 		title: {
+		// 			main: document.getElementById('mainTitle')?.textContent as string,
+		// 			sub: document.getElementById('subTitle')?.textContent as string
+		// 		},
+		// 		align: document.getElementById('thumbnailTitle')?.title as string,
+		// 		image: thumbnailImgFile
+		// 	},
+		// 	body: {
+		// 		content: contentArea.innerHTML
+		// 	}
+		// }
+		// mutation.mutate(createData)
 	}
 
 
