@@ -14,7 +14,7 @@ function PostPage() {
 
     const loadPost = async(id:string) => {
         try {
-            const contentResource = await fetch("http://localhost:4000/reviewPosts/" + id, {
+            const contentResource = await fetch('https://aniview-server-chiaf.run.goorm.site/reviewPosts/' + id, {
             method: "GET"
         })
             const contentRes = await contentResource.json();

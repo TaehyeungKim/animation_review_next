@@ -12,7 +12,7 @@ const loadArticles = async(title: string, start: number, limit: number) => {
     const query = new URLSearchParams(
         {'_start': `${start}`, '_limit': `${limit}`}
     )
-    const resource = await fetch('http://localhost:4000/reviewPosts?' + query, {
+    const resource = await fetch('https://aniview-server-chiaf.run.goorm.site/reviewPosts?' + query, {
         method: 'GET'
     })
     const res = await resource.json();
