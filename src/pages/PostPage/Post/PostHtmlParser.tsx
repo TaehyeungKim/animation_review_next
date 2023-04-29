@@ -10,8 +10,6 @@ function* stringtIterator(str: string, start=0): Generator {
 export default function createElementByRecursion(str: string) {
     const iterator = stringtIterator(str);
 
-    const elmProperty: ElemProperty  = {}
-
     let tagName = "";
 
 
@@ -37,7 +35,9 @@ export default function createElementByRecursion(str: string) {
         if(currentCharacter === ">") {
             if(attrKeyAndValue !== "") {
                 const [attrKey, attrValue] = attrKeyAndValue.split('=');
-                attrValue === "" ? element.setAttribute(attrKey, "") : element.setAttribute(attrKey, attrValue.slice(1, attrValue.length-1))
+                attrValue === "" ? element.setAttribute(attrKey, "") 
+                : 
+                element.setAttribute(attrKey, attrValue.slice(1, attrValue.length-1))
                 
             }
             break;
@@ -71,6 +71,51 @@ export default function createElementByRecursion(str: string) {
                     [metWithFirstQuotation, metWithSecondQuotation]= [false, false]
                 }
             }
+        }
+
+        let childDepthIndex = 0;
+        let childStr = "";
+        let tempStr = "";
+
+        const openingTagRegexp = /^<[^/]*?>$/i;
+        const closingTagRegexp = /^<\/*?>$/i;
+        const endByItSelfTagRegexp = /^<[^>]*?\/>$/i
+        const completeEndedTagRegexp = /^<[^/]*?>.*<\/*?>$/i
+
+
+        while(true) {
+            const [currentCharacter, currentPosition] = iterator.next().value
+            console.log(currentCharacter, currentPosition);
+            debugger;
+            if(currentPosition === str.length-1) break;
+
+            if(currentCharacter !== ">") tempStr += currentCharacter;
+            else {
+                if(endByItSelfTagRegexp.test(tempStr)) {
+                    childStr = tempStr;
+                    console.log(tempStr)
+                    //element.appendChild(createElementByRecursion(childStr));
+                    childStr = tempStr = "";
+                }
+                else {
+                    if(openingTagRegexp.test(tempStr)) {
+                        childDepthIndex += 1;
+                        childStr += tempStr;
+                        tempStr = "";
+                    }
+                    if(closingTagRegexp.test(tempStr)) {
+                        childDepthIndex -= 1;
+                        childStr += tempStr;
+                        tempStr = "";
+                    }
+                    if(completeEndedTagRegexp.test(childStr) && childDepthIndex === 0) {
+                        //element.appendChild(createElementByRecursion(childStr));
+                        childStr = tempStr = "";
+                    }
+                }
+            }
+
+            
         }
 
         
