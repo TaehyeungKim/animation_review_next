@@ -17,7 +17,10 @@ function Post({data}:PostProps) {
     let commentData = [{id: 1}, {id: 2}, {id: 3}]
 
     useEffect(()=>{
-        console.log(createElementByRecursion(document.getElementById('postpageContainer')?.innerHTML as string))
+        console.log(createElementByRecursion(
+            '<p class="1111" contentEditable><span style="color: red; font-weight: bold" contentEditable class="2222"><span style="color: pink;"></span></span><span></span><input/></p>'
+        ))
+        console.log(createElementByRecursion('<input class="1111"/>'))
     },[])
 
     return (
