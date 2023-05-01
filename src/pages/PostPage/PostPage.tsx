@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import Header from '../../components/Header/Header';
 import Loading from '../../components/Loading/Loading';

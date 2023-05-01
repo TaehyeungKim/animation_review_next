@@ -1,3 +1,5 @@
+import React, {useRef, cloneElement} from 'react'
+
 function* stringtIterator(str: string, start=0): Generator {
     for(let i = start; i < str.length; i++) yield [str[i], i]
 }
@@ -14,6 +16,8 @@ export default function createElementByRecursion(str: string) {
     while(true) {
         const [currentCharacter, currentPosition] = iterator.next().value;
 
+        if(currentCharacter === "\\") continue
+
         if(currentCharacter === " " || currentCharacter === ">") {
             const regexp = /.*\//i
             if(regexp.test(tagName)) {
@@ -27,6 +31,7 @@ export default function createElementByRecursion(str: string) {
         if(currentPosition !== 0) tagName += currentCharacter;
    
     }
+
 
     const element = document.createElement(tagName);
 
@@ -45,13 +50,18 @@ export default function createElementByRecursion(str: string) {
         while(true) {
             const [currentCharacter, currentPosition] = iterator.next().value;
 
+            if(currentCharacter === "\\") continue
+
 
             if(currentCharacter === ">"||currentCharacter === "/") {
                 if(attrKeyAndValue !== "") {
                     const [attrKey, attrValue] = attrKeyAndValue.split('=');
-                    attrValue === undefined ? element.setAttribute(attrKey, "") 
+                    attrValue === undefined ? 
+                    element.setAttribute(attrKey, "") 
+                    
                     : 
                     element.setAttribute(attrKey, attrValue.slice(1, attrValue.length-1))
+                    
                 }
                 if(currentCharacter === ">") break;
                 else {
@@ -71,7 +81,7 @@ export default function createElementByRecursion(str: string) {
                 if(!alreadyMetWithEquation) {
                     let attrKey = attrKeyAndValue.slice(0,attrKeyAndValue.length - 1);
                     element.setAttribute(attrKey, "");
-
+                    
                     attrKeyAndValue = "";
                 } 
                 else {
@@ -80,6 +90,7 @@ export default function createElementByRecursion(str: string) {
                         const [attrKey, attrValue] = attrKeyAndValue.split("=");
 
                         element.setAttribute(attrKey, attrValue.slice(1,attrValue.length-1))
+                        
 
                         attrKeyAndValue = "";
 
@@ -108,6 +119,9 @@ export default function createElementByRecursion(str: string) {
 
         while(true) {
             const [currentCharacter, currentPosition] = iterator.next().value
+
+            if(currentCharacter === "\\") continue
+
             if(currentPosition === str.length-1) {
                 break;
             }
@@ -120,7 +134,12 @@ export default function createElementByRecursion(str: string) {
             else {
                 if(endByItSelfTagRegexp.test(tempStr)) {
                     childStr = tempStr;
+                    element.appendChild(document.createTextNode(""))
                     element.appendChild(createElementByRecursion(childStr));
+                    
+                    
+                    
+
                     childStr = tempStr = "";
                 }
                 else {
@@ -135,6 +154,7 @@ export default function createElementByRecursion(str: string) {
                         tempStr = "";
                     }
                     if(completeEndedTagRegexp.test(childStr) && childDepthIndex === 0) {
+                        element.appendChild(document.createTextNode(""))
                         element.appendChild(createElementByRecursion(childStr));
                         childStr = tempStr = "";
                     }
@@ -145,6 +165,6 @@ export default function createElementByRecursion(str: string) {
         }
     }
 
-    
+    element.appendChild(document.createTextNode(""))
     return element;
 }
