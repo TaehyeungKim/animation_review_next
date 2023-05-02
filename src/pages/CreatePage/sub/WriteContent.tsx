@@ -177,7 +177,7 @@ function WriteContent() {
 
     return(
         <main className={styles.write}>
-            <section className={styles['write--content']} contentEditable='true' ref={contentArea} id={'contentArea'}>
+            <section className={styles['write--content']} contentEditable='true' suppressContentEditableWarning ref={contentArea} id={'contentArea'}>
                 <EditableP className={styles.line}/>
             </section>
             <WriteContentAside style={asideStyle} paragraphMaker={paragraphMaker}/>

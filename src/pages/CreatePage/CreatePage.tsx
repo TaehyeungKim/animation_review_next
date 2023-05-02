@@ -5,14 +5,17 @@ import WriteContent from './sub/WriteContent'
 import ButtonComponent from '../../components/Global/ButtonComponent';
 import {CreateData} from './CreateDataInterface';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {MapTextNodeWithIndex, PostSpaceMapping} from '../../components/Global/MapTextNodeWithIndex';
 import createElementByRecursion from '../../components/Global/PostHtmlParser'
 import axios from 'axios'
 import {TextIndexMap} from '../../components/Global/MapTextNodeWithIndex'
+import NPObserver from '../../components/Global/NetworkProgressObserver';
 
 
 function CreatePage() {
+
+	const queryClient = useQueryClient()
 
 	type MapData = {
 		paragraphTemplate: string,
@@ -36,13 +39,25 @@ function CreatePage() {
 			// return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
 			// 	headers: {'Content-Type': 'multipart/form-data'}
 			// })
-			
-			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', data)
+			//NPObserver.setNetworkInfo(data.getAll().mainTitle, )
+			const json = JSON.parse(JSON.stringify(data));
+
+			NPObserver.setNetworkInfo(json.mainTitle, json.thumbnailImage, 0)
+
+
+			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', data, {
+				onUploadProgress: (progressEvent) => {
+					const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+					NPObserver.updateNetworkPercentage(percentage);
+					console.log(percentage)
+				},
+			})
 		},
 		mutationKey: 'create',
 		onError: (e)=>{console.log(e)},
-		//onMutate: ()=>{navigate('/main')}
-		onSuccess: ()=>navigate('/main')
+		onMutate: (variables)=>{
+			navigate('/main')
+		}
 	})
 	
 	const dispatchData = () => {
@@ -76,17 +91,27 @@ function CreatePage() {
 		formData.append('mainTitle', document.getElementById('mainTitle')?.textContent as string);
 		formData.append('subTitle', document.getElementById('subTitle')?.textContent as string);
 		formData.append('titleAlign', document.getElementById('thumbnailTitle')?.title as string);
-		formData.append('thumbnailImage', thumbnailImgFile);
+		//formData.append('thumbnailImage', thumbnailImgFile);
 		// paragraphTemplateMapArray.forEach((mapData: MapData, index: number)=>{
 		// 	formData.append(`p_${index}`, JSON.stringify(mapData))
 		// })
 		formData.append('paragraphContents', JSON.stringify(paragraphTemplateMapArray));
+		
+		//test --to be deleted
+		thumbnailImgFile.text().then((value)=>
+		{
+			formData.append('thumbnailImage', value);
+			const object: FormDataToJson = {};
+			formData.forEach((value, key)=>object[key]=value)
 
+			mutation.mutate(object)
+		})
+		//
 
-		const object: FormDataToJson = {};
-		formData.forEach((value, key)=>object[key]=value)
+		// const object: FormDataToJson = {};
+		// formData.forEach((value, key)=>object[key]=value)
 
-		mutation.mutate(object)
+		// mutation.mutate(object)
 
 
 

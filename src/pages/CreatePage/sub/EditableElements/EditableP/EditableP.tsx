@@ -140,7 +140,7 @@ function EditableP({className}:EditablePprops) {
             let timer = setTimeout(()=>{
                 const {anchorNode, focusNode} = document.getSelection() as Selection;
                 const contentArea = document.getElementById('contentArea') as HTMLElement;
-                if(contentArea.contains(anchorNode) && contentArea.contains(focusNode) && !selection.getRangeAt(0).collapsed){
+                if(contentArea && contentArea.contains(anchorNode) && contentArea.contains(focusNode) && !selection.getRangeAt(0).collapsed){
                     updateRangeDomRect()
                     setPaletteVisible(true);
                 } 

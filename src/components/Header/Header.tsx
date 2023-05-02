@@ -8,13 +8,17 @@ import {notification, setting, list} from '../../icons/icons'
 import ButtonComponent from '../Global/ButtonComponent'
 import Sidebar from '../Sidebar/Sidebar'
 import { createPortal } from 'react-dom'
-import { useIsMutating } from 'react-query'
+import { useIsMutating, useQueryClient } from 'react-query'
+import NetworkProgressBar from './NetworkProgressBar'
 
 
 
 function Header() {
 
     const isMutating = useIsMutating();
+    const queryClient = useQueryClient();
+    
+
 
     const [sidebarVisible, setSidebarVisible] = useState<boolean>(false);
 
@@ -45,7 +49,7 @@ function Header() {
                 <ButtonComponent className={styles.icon} children={list()} id={styles['setting']} event={[['click', toggleSidebar]]}/>
             </div>
             {sidebarVisible && createPortal(<Sidebar toggle={toggleSidebar}/>,document.getElementById('root') as Element)}
-            {isMutating ? <div>Is Mutating</div> : null}
+            {isMutating ? <NetworkProgressBar/> : null}
         </nav>
     )
 }
