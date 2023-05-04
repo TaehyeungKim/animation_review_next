@@ -24,6 +24,9 @@
         flex-direction: row;
         align-items: center;;
         margin: 0 auto;
+        z-index: 15;
+        position: relative;
+        background-color: white;
         > div {
             position: relative;
             height: 100%;

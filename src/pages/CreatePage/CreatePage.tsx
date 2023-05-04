@@ -33,30 +33,41 @@ function CreatePage() {
 	}
 
 	const mutation = useMutation({
-		mutationFn: async (data: FormData|FormDataToJson) => {
+		mutationFn: async (data: FormData) => {
 			//return axios.post('http://localhost:4000/reviewPosts', data)
 
-			// return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
-			// 	headers: {'Content-Type': 'multipart/form-data'}
-			// })
-			//NPObserver.setNetworkInfo(data.getAll().mainTitle, )
-			const json = JSON.parse(JSON.stringify(data));
 
-			NPObserver.setNetworkInfo(json.mainTitle, json.thumbnailImage, 0)
+			const json:{[key:string]:FormDataEntryValue} = {}
+			data.forEach((value, key)=>{
+				json[key] = value;
+			})
+			
 
+			NPObserver.setNetworkInfo(data.get('mainTitle') as string, data.get('thumbnailImage') as File, 0)
+			NPObserver.registerTimeStamp(Date.now());
 
+			await sleep();
+
+			// -------------dev----------------
 			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', data, {
 				onUploadProgress: (progressEvent) => {
 					const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
 					NPObserver.updateNetworkPercentage(percentage);
-					console.log(percentage)
 				},
 			})
+
+			//-------------deploy-------------
+			// return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
+			// 	headers: {'Content-Type': 'multipart/form-data'}
+			// })
 		},
 		mutationKey: 'create',
 		onError: (e)=>{console.log(e)},
 		onMutate: (variables)=>{
 			navigate('/main')
+		},
+		onSuccess: ()=>{
+			NPObserver.succeedNetwork();
 		}
 	})
 	
@@ -79,10 +90,6 @@ function CreatePage() {
 						textSpacemap: textSpacemap
 					}
 					paragraphTemplateMapArray.push(mapData)
-
-					//const newElement = createElementByRecursion(copiedNode.outerHTML);
-					//PostSpaceMapping(newElement, map);
-					//document.getElementById('contentArea')?.appendChild(newElement)
 				}
 			})
 
@@ -91,45 +98,10 @@ function CreatePage() {
 		formData.append('mainTitle', document.getElementById('mainTitle')?.textContent as string);
 		formData.append('subTitle', document.getElementById('subTitle')?.textContent as string);
 		formData.append('titleAlign', document.getElementById('thumbnailTitle')?.title as string);
-		//formData.append('thumbnailImage', thumbnailImgFile);
-		// paragraphTemplateMapArray.forEach((mapData: MapData, index: number)=>{
-		// 	formData.append(`p_${index}`, JSON.stringify(mapData))
-		// })
+		formData.append('thumbnailImage', thumbnailImgFile);
 		formData.append('paragraphContents', JSON.stringify(paragraphTemplateMapArray));
 		
-		//test --to be deleted
-		thumbnailImgFile.text().then((value)=>
-		{
-			formData.append('thumbnailImage', value);
-			const object: FormDataToJson = {};
-			formData.forEach((value, key)=>object[key]=value)
-
-			mutation.mutate(object)
-		})
-		//
-
-		// const object: FormDataToJson = {};
-		// formData.forEach((value, key)=>object[key]=value)
-
-		// mutation.mutate(object)
-
-
-
-		// const createData = {
-		// 	id: 171,
-		// 	thumbnail: {
-		// 		title: {
-		// 			main: document.getElementById('mainTitle')?.textContent as string,
-		// 			sub: document.getElementById('subTitle')?.textContent as string
-		// 		},
-		// 		align: document.getElementById('thumbnailTitle')?.title as string,
-		// 		image: thumbnailImgFile
-		// 	},
-		// 	body: {
-		// 		content: contentArea.innerHTML
-		// 	}
-		// }
-		// mutation.mutate(createData)
+		mutation.mutate(formData)
 	}
 
 	

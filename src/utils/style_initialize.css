@@ -1,3 +1,9 @@
+@import '../fonts/Font-Face.module.scss';
+
+* {
+    font-family: '--main-font', '--main-font-kr';
+}
+
 figure {
     display: block;
     margin: 0;
