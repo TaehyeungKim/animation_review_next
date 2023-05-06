@@ -37,19 +37,18 @@ function CreatePage() {
 			//return axios.post('http://localhost:4000/reviewPosts', data)
 
 
-			const json:{[key:string]:FormDataEntryValue} = {}
+			const formDataToJson:{[key:string]:FormDataEntryValue} = {}
 			data.forEach((value, key)=>{
-				json[key] = value;
+				formDataToJson[key] = value;
 			})
 			
 
 			NPObserver.setNetworkInfo(data.get('mainTitle') as string, data.get('thumbnailImage') as File, 0)
 			NPObserver.registerTimeStamp(Date.now());
 
-			await sleep();
 
 			// -------------dev----------------
-			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', data, {
+			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', formDataToJson, {
 				onUploadProgress: (progressEvent) => {
 					const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
 					NPObserver.updateNetworkPercentage(percentage);
@@ -58,7 +57,11 @@ function CreatePage() {
 
 			//-------------deploy-------------
 			// return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
-			// 	headers: {'Content-Type': 'multipart/form-data'}
+			// 	headers: {'Content-Type': 'multipart/form-data'},
+			// 	onUploadProgress: (progressEvent) => {
+			// 			const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+			// 			NPObserver.updateNetworkPercentage(percentage);
+			// 		}
 			// })
 		},
 		mutationKey: 'create',
@@ -100,6 +103,7 @@ function CreatePage() {
 		formData.append('titleAlign', document.getElementById('thumbnailTitle')?.title as string);
 		formData.append('thumbnailImage', thumbnailImgFile);
 		formData.append('paragraphContents', JSON.stringify(paragraphTemplateMapArray));
+		formData.append('userId', 'taehyeungkim98');
 		
 		mutation.mutate(formData)
 	}

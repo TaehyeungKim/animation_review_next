@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react'
 import { useQueries } from 'react-query'
 import styles from './MainPage.module.scss'
