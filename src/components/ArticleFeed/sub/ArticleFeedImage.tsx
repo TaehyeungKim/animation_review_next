@@ -2,19 +2,16 @@ import styles from './ArticleFeedImage.module.scss';
 
 interface ArticleFeedImageProps {
     url?:string,
-    image?: File|string
 }
 
 
-function ArticleFeedImage({url, image}:ArticleFeedImageProps) {
+function ArticleFeedImage({url}:ArticleFeedImageProps) {
 
-    if(typeof(image) === 'object') {
-        const tempURL = URL.createObjectURL(image as File);
-    }
+
 
 
     return(
-        <figure className = {styles.thumbnail} style={{backgroundImage: `url(${url})`}}>
+        <figure className = {styles.thumbnail} style={{backgroundImage: `url("https://animation-view-fnlkc.run.goorm.site/images/${url}`}}>
         </figure>
     )
 }

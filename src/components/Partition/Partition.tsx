@@ -25,12 +25,6 @@ function Partition({title, data, status, error}:PartitionProps) {
 
     //----------------------------------------------------------------scroll related--------------------------------------------------------------------
 
-    interface ScrollFunctionRef {
-        leftScrollEventCaller: undefined | (()=>void),
-        rightScrollEventCaller: (()=>void) | undefined
-    }
-    
-
     const updateTotalIdx = (container: HTMLElement, partition: HTMLElement, scrollDiff: number) => {
         const containerPartitionOffset = container?.offsetWidth as number - (partition?.offsetWidth as number)
         const newTotalIdx = Math.ceil(containerPartitionOffset/scrollDiff)

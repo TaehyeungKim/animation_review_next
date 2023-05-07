@@ -48,27 +48,27 @@ function CreatePage() {
 
 
 			// -------------dev----------------
-			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', formDataToJson, {
-				onUploadProgress: (progressEvent) => {
-					const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
-					NPObserver.updateNetworkPercentage(percentage);
-				},
-			})
+			// return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', formDataToJson, {
+			// 	onUploadProgress: (progressEvent) => {
+			// 		const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+			// 		NPObserver.updateNetworkPercentage(percentage);
+			// 	},
+			// })
 
 			//-------------deploy-------------
-			// return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
-			// 	headers: {'Content-Type': 'multipart/form-data'},
-			// 	onUploadProgress: (progressEvent) => {
-			// 			const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
-			// 			NPObserver.updateNetworkPercentage(percentage);
-			// 		}
-			// })
+			return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
+				headers: {'Content-Type': 'multipart/form-data'},
+				onUploadProgress: (progressEvent) => {
+						const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+						NPObserver.updateNetworkPercentage(percentage);
+					}
+			})
 		},
 		mutationKey: 'create',
 		onError: (e)=>{console.log(e)},
-		onMutate: (variables)=>{
-			navigate('/main')
-		},
+		// onMutate: (variables)=>{
+		// 	navigate('/main')
+		// },
 		onSuccess: ()=>{
 			NPObserver.succeedNetwork();
 		}

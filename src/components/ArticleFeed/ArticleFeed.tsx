@@ -13,8 +13,8 @@ function ArticleFeed({data}: ArticleFeedProps) {
         <Link to = {`../post/${data.id}`} relative='path'>
         <article className={styles.article_feed}>
             <ArticleFeedHeader/>
-            <ArticleFeedImage url={data.thumbnailImage} image={data.thumbnailImage}/>
-            <ArticleFeedContent title={data.mainTitle} like={50000} watch={120000} />
+            <ArticleFeedImage url={data.url}/>
+            <ArticleFeedContent title={data.maintitle} like={50000} watch={120000} />
         </article>
         </Link>
     )
