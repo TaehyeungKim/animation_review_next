@@ -1,0 +1,61 @@
+@use '@/utils/toremfunc.scss';
+
+.title {
+	padding: toremfunc.toRem(10);
+	margin: 0 0 toremfunc.toRem(10) toremfunc.toRem(10);
+	
+	.title--main, .title--sub {
+		font-family: '--main-font-kr',  '--main-font';
+		&:focus-within {
+			outline: none;
+		}
+	}
+	
+	.title--main {
+		font-weight: 400;
+		font-size: toremfunc.toRem(40);
+		@media(max-width: 450px) {
+			font-size: toremfunc.toRem(30);
+		}
+		margin: initial;
+		
+		&::before {
+			content:"제목을 입력하세요"
+		}
+	}
+	
+	.title--sub {
+		font-weight: 200;
+		font-size: toremfunc.toRem(25);
+		@media(max-width: 450px) {
+			font-size: toremfunc.toRem(15);
+		}
+		margin: initial;
+		margin-top: toremfunc.toRem(20);
+		&::before {
+			content:"부제목을 입력하세요";
+		}
+	}
+	
+	.title--focused {
+		&::before {
+			content: "" !important;
+		}
+	}
+}
+
+.left {
+	align-self: flex-end;
+	text-align: left;
+}
+.center {
+	align-self: center;
+	margin: 0 auto 0;
+	text-align: center;
+}
+
+.right {
+	align-self: flex-start;
+	margin: toremfunc.toRem(10) toremfunc.toRem(10) 0 auto;
+	text-align: right;
+}

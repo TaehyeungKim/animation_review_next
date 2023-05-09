@@ -1,0 +1,111 @@
+@use  '@/utils/toremfunc.scss';
+
+
+.nav {
+    position: fixed;
+    top: 0;
+    left:0;
+    height: toremfunc.toRem(toremfunc.$headerH);
+    width: 100%;
+    font-family: '--main-font';
+    font-weight: 500;
+    z-index: 10;
+    background-color: white;
+	box-sizing: border-box;
+    
+    box-shadow: 1px 1px 3.5px 3.5px #E3E3E3;
+
+    .nav_container {
+        height: 100%;
+        width: 100%;
+        max-width: toremfunc.toRem(toremfunc.$page_content_maxwidth);
+        display: flex;
+        flex-direction: row;
+        align-items: center;;
+        margin: 0 auto;
+        z-index: 15;
+        position: relative;
+        background-color: white;
+        > div {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            margin: 0 toremfunc.toRem(10);
+        }
+    
+    
+        .logo {
+            img {
+                height: inherit;
+            }
+        }
+    
+        
+        .search {
+            cursor: pointer;
+            position: relative;
+            margin-left: auto;
+            input {
+                height: 40%;
+                width: toremfunc.toRem(200);
+                border-radius: toremfunc.toRem(10);
+                transition: width 0.5s ease-in-out;
+                
+                &:focus-within {
+                    outline: none;
+                    border-color: skyblue;
+                    width: toremfunc.toRem(400);
+                }
+            }
+    
+            .search_icon {
+                position: absolute;
+                width: toremfunc.toRem(30);
+                right: toremfunc.toRem(10);
+
+            }
+        }
+    
+        .title {
+            h3 {cursor: pointer;}
+        }
+    
+        .icon {
+            flex-basis: toremfunc.toRem(40);
+            width: toremfunc.toRem(40);
+            margin: toremfunc.toRem(8);
+        }
+    }
+}
+
+@media (max-width: 764px) {
+    .nav {
+        .nav_container {
+            .username {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .nav {
+        .nav_container {
+           #icon-notification {
+                display: none;
+           }
+
+           .search {
+                input {
+                    display: none;
+                }
+           }
+
+           .logo {
+                height: 80%;
+           }
+        }
+    }
+}
+ 

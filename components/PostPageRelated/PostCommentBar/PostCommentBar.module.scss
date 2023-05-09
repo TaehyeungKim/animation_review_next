@@ -1,0 +1,17 @@
+@use '@/utils/toremfunc.scss';
+
+.bar {
+    position: sticky;
+    bottom: 0;
+    width:100%;
+    max-width: toremfunc.toRem(toremfunc.$page_content_maxwidth);
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,0.9);
+    padding: toremfunc.toRem(10) toremfunc.toRem(30) toremfunc.toRem(10);   
+}
+
+@media(max-width: 768px) {
+    .bar {
+        padding: toremfunc.toRem(5) toremfunc.toRem(20) toremfunc.toRem(5);
+    }
+}

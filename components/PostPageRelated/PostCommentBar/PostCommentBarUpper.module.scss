@@ -1,0 +1,31 @@
+@use '@/utils/toremfunc.scss';
+
+    .bar_upper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        box-sizing: border-box;
+
+        .like, .share, .exclamation, .hideshowtoggle {
+            flex-basis: toremfunc.toRem(35);
+            margin: 0 toremfunc.toRem(3);
+        }
+
+        .share {
+            margin-bottom: toremfunc.toRem(3);
+        }
+
+        .hideshowtoggle {
+            margin-left: auto;
+        }
+
+    }
+
+    @media (max-width: 450px) {
+        .bar_upper {
+            .like, .share, .exclamation, .hideshowtoggle {
+                flex-basis: toremfunc.toRem(30);
+            }
+        }
+    }

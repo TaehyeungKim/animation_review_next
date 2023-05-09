@@ -1,0 +1,62 @@
+@use '@/utils/toremfunc.scss';
+
+.partition {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: toremfunc.toRem(60) 0;
+    
+    .article_scroll {
+        position: absolute;
+        width: toremfunc.toRem(40);
+        box-sizing: border-box;
+        z-index: 5;
+        opacity: 0.4;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .left {
+        left: toremfunc.toRem(10);
+        display: none;
+    }
+    .right {
+        right: toremfunc.toRem(10);
+    }
+}
+	
+	.partition_title {
+		font-family: '--partition-main-font', '--main-font-kr', '--main-font';
+        font-weight: 600;
+        font-size: toremfunc.toRem(40);
+        margin-bottom: toremfunc.toRem(20);
+        padding-left: toremfunc.toRem(50);
+	}
+
+    .article_container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        transition: transform 0.4s ease-in-out;
+        box-sizing: border-box;
+        width: fit-content;
+        padding: toremfunc.toRem(10);
+
+    .article_container--noTransition {
+        transition: none !important;
+    }
+}
+
+@for $i from 0 through 10 {
+    .scroll_level_#{$i} {
+        transform: translateX((-$i * 400px))
+    }
+}

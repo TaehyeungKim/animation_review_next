@@ -1,0 +1,84 @@
+@use '@/utils/toremfunc.scss';
+
+.list {
+    width: 100%;
+
+    .list_container {
+        display: block;
+        width: 100%;
+        font-family: '--main-font-kr', '--main-font';
+        font-weight: 200;
+
+        .list_container--comment {
+            position: relative;
+            display:flex;
+            align-items: center;
+            flex-flow: row nowrap;
+            padding: toremfunc.toRem(20);
+            border-bottom: toremfunc.toRem(2) solid rgba(163, 163, 163, 0.3);
+            overflow-y: visible;
+            &:last-child {
+                border-bottom: none;
+            }
+            &:hover {
+                background-color: rgba(163, 163, 163, 0.3);
+                cursor: pointer;
+            }
+            .comment--profile {
+                width: toremfunc.toRem(35);
+                aspect-ratio: 1;
+                margin: 0 toremfunc.toRem(20)
+            }
+            .comment--content {
+                flex-grow: 1;
+                .content--info {
+                    font-size: toremfunc.toRem(15);
+                    .info--username {
+                        margin-right: toremfunc.toRem(30);
+                        font-style: italic;
+                        @media(max-width: 400px) {
+                            display: block;
+                        }
+                    }
+                    .info--date {
+                        font-size: toremfunc.toRem(12);
+                        @media(max-width: 400px) {
+                            display: block;
+                        }
+                    }
+                }
+
+                .content--content {
+                    font-size: toremfunc.toRem(16);
+                    @media(max-width: 400px) {
+                        font-size: toremfunc.toRem(12);
+                    }
+                }
+            }
+            .comment--more {
+                width: toremfunc.toRem(30);
+            }
+        }
+    }
+}
+
+.modal {
+    position: absolute;
+    background-color: white;
+
+    .modalList {
+        font-size: toremfunc.toRem(18);
+        li {
+            display: block;
+            padding: toremfunc.toRem(5) toremfunc.toRem(10);
+            border-bottom: rgb(233, 233, 232);
+            &:hover {
+                background-color: rgba(163, 163, 163, 0.3);
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}

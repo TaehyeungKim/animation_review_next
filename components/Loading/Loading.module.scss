@@ -1,0 +1,27 @@
+@use '@/utils/toremfunc.scss';
+
+.loading {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loading_wrapper {
+        width: toremfunc.toRem(300);   
+        .loading_image {
+            width: 100%;
+            animation: loading-spin 10s infinite;
+        }
+    }
+}
+
+@keyframes loading-spin {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+    
+}

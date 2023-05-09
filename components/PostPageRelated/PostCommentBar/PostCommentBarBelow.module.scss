@@ -1,0 +1,93 @@
+@use '@/utils/toremfunc.scss';
+
+$ph: 50;
+$ch: 40;
+$bh: 45;
+
+.bar_down {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    align-items: center;
+    overflow: hidden;
+    transition: height 0.4s ease-in-out;
+    height:toremfunc.toRem(max($ph, $ch));
+
+    .bar_down--profile {
+        flex-basis: toremfunc.toRem($ph);
+        aspect-ratio: 1;
+        position: relative;
+        .profile {
+             width: 100%;
+             height: 100%;
+             background: url('~@/public/logo192.png');
+             background-position: center;
+             background-repeat: no-repeat;
+             background-size: cover;
+             border-radius: 50%;
+        }
+        margin-right: toremfunc.toRem(4);
+    }
+
+    .bar_down--comment {
+        flex-grow: 1;
+        height: toremfunc.toRem($ch);
+        margin: 0 toremfunc.toRem(4);
+        textarea {
+            width: 100%;
+            height: 100%;
+            resize: none;
+            font-family: '--main-font-kr';
+            font-size: toremfunc.toRem($ch * 0.4);
+            border-radius:  toremfunc.toRem($ch/2);
+            border: 2px solid rgb(163, 213, 233);
+            transition: border 0.5s ease-in-out;
+            line-height: toremfunc.toRem($ch);
+            box-sizing: content-box;
+            padding-left: toremfunc.toRem(10);
+            &::placeholder {
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                display: inline-block;
+            }
+            &:focus-within {
+                outline: none;
+                border: 2px solid rgb(41, 179, 233);
+                &::placeholder {
+                    color: transparent;
+                }
+            }
+            
+            
+
+        }
+
+    }
+    .bar_down--submit {
+        flex-basis: toremfunc.toRem(45);
+        margin-left: toremfunc.toRem(20);
+    }
+}
+
+.hide {
+    height: 0 !important;
+}
+
+@media (max-width: 450px) {
+    .bar_down {
+        .bar_down--profile {
+            flex-basis: toremfunc.toRem($ph - 15);
+        }
+
+        .bar_down--submit {
+            flex-basis: toremfunc.toRem($bh - 15);
+        }
+
+        .bar_down--comment {
+            textarea {
+                font-size: toremfunc.toRem($ch * 0.3);
+            }
+        }
+    }   
+}

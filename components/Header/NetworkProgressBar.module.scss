@@ -1,0 +1,68 @@
+@use '@/utils/toremfunc.scss';
+
+@keyframes showProgressBar {
+    0% {
+        transform: translateY(-100%);
+    } 100% {
+        transform: translateY(0%);
+    }
+}
+
+.progressContainer {
+    width: 100%;
+    position: relative;
+    padding: toremfunc.toRem(5) toremfunc.toRem(10);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    font-family: '';
+    animation-name: showProgressBar;
+    animation: showProgressBar 1s ease-in-out;
+    animation-fill-mode: backwards;
+
+    z-index: -10;
+
+    .progressContainer--thumbnail {
+        height: toremfunc.toRem(50);
+        aspect-ratio: 1.7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 0 toremfunc.toRem(7);
+    }
+
+    .progressContainer--infoWrapper {
+        width: 100%;
+        .progressContainer--articleInfo {
+            display: flex;
+    
+            .progressContainer--articleInfo_title {
+                margin-left: toremfunc.toRem(5);
+                display: inline-block
+            }
+
+            .progressContainer--articleInfo_date {
+                margin-left: auto;
+                margin-right: toremfunc.toRem(40);
+                font-style: italic;
+                color: #BFBFBF;
+                font-size: toremfunc.toRem(15);
+            }
+    
+    
+        }
+
+        .progressContainer--networkProgress {
+            .progressBar {
+                width: 100%;
+            }
+           
+        }
+    }
+
+
+    
+}

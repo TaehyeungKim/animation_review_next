@@ -1,0 +1,23 @@
+@use '@/utils/toremfunc.scss';
+
+.index {
+    position: relative;
+    width: 100%;
+    height: toremfunc.toRem(40);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .index_dot {
+        all: unset;
+        width: toremfunc.toRem(20); height: toremfunc.toRem(20);
+        border-radius: 50%;
+        border: 2px solid skyblue;
+        box-sizing: border-box;
+        margin: 0 toremfunc.toRem(8);
+        &:checked {
+            background-color: skyblue; 
+        }
+        
+    }
+}

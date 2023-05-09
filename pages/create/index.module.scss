@@ -1,0 +1,9 @@
+@use '@/utils/toremfunc.scss';
+
+.contents {
+	padding-top: toremfunc.toRem(toremfunc.$headerH);
+	width: 100%;
+	max-width: toremfunc.toRem(toremfunc.$page_content_maxwidth);
+	margin: 0 auto 0;
+	height: 150vh;
+}

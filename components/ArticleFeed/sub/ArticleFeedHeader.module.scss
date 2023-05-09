@@ -1,0 +1,39 @@
+@use '@/utils/toremfunc.scss';
+
+.header {
+    width: 100%;
+    height: toremfunc.toRem(40);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .user {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        font-family: '--main-font-kr', '--main-font'; 
+
+        .user_profileContainer {
+            height: 100%;
+            aspect-ratio: 1;
+        }
+
+        .username {
+            position: relative;
+            font-size: toremfunc.toRem(12);
+        }
+    }
+}
+
+.badge_container {
+    height: 100%;
+
+    .badge {
+        height: 100%;
+        img {
+            height: 100%;
+        }
+    }
+}

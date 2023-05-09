@@ -1,0 +1,68 @@
+@use '@/utils/toremfunc.scss';
+
+.disablingBackground {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(233, 233, 233, 0.7);
+    .sidebar {
+        position: relative;
+        width: toremfunc.toRem(300);
+        height: 100%;
+        box-sizing: border-box;
+        animation-duration: 0.5s;
+        animation-fill-mode: forwards;
+        animation-timing-function:  ease-in-out;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+
+        .sidebar--close {
+            width: toremfunc.toRem(30);
+            position: absolute;
+            right: toremfunc.toRem(10); top: toremfunc.toRem(10);
+        }
+
+        .sidebar--write {
+            width: fit-content;
+            aspect-ratio: initial;
+            align-self: center;
+            border-radius: toremfunc.toRem(7);
+            background-color: skyblue;
+            padding: toremfunc.toRem(5) toremfunc.toRem(14);
+
+            .write {
+                font-size: toremfunc.toRem(17);
+            }
+        }
+    }
+
+    .sidebar--appear {
+        animation-name: sidebar-appear;
+    }
+
+    .sidebar--disappear {
+        animation-name: sidebar-disappear;
+    }
+}
+
+@keyframes sidebar-appear {
+    from {
+        transform: translateX(-100%)
+    }
+    to {
+        transform: translateX(0)
+    }
+}
+
+@keyframes sidebar-disappear {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}

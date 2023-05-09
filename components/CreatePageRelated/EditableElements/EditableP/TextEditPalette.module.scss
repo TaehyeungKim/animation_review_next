@@ -1,0 +1,75 @@
+@use '@/utils/toremfunc.scss';
+
+
+@keyframes colorButtonAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    flex-flow: row wrap;
+    left: toremfunc.toRem(20);
+    right: toremfunc.toRem(20);
+    padding: toremfunc.toRem(5);
+    box-sizing: border-box;
+    align-items: center;
+    background-color: white;
+
+    .colors, .bold {
+        width: toremfunc.toRem(35);
+    }
+
+    .colorPalette {
+        position: absolute;
+        display: flex;
+        flex-flow: row wrap;    
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        left: 0;
+        background-color: white;
+        padding: inherit;
+        box-sizing: border-box;
+
+        .color_button {
+            position: relative;
+            width: toremfunc.toRem(20);
+            margin: 0 toremfunc.toRem(4);
+            border-radius: 50%;
+            overflow: hidden;
+
+
+            .color {
+                width: 100%; height: 100%;
+            }
+        }
+
+        .color_button--animation {
+            animation-name: colorButtonAppear;
+            animation-duration: 0.4s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: backwards;
+        }
+
+    }
+
+    .fontSizeSelect {
+        width: fit-content;
+        height: toremfunc.toRem(30);
+        outline: none;
+
+        .fontSizeOption {
+            width: 100%;
+            height: inherit;
+        }
+    }
+}
+

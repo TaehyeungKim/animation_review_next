@@ -1,0 +1,16 @@
+@use '@/utils/toremfunc.scss';
+
+.content {
+    width: 100%;
+    padding: toremfunc.toRem(10) toremfunc.toRem(20);
+    box-sizing: border-box;
+
+    .content_wrapper {
+        position: relative;
+        .content_paragraph {
+            line-height: 1.5;
+            overflow-wrap:break-word;
+            margin: toremfunc.toRem(10) 0;
+        }
+    }
+}

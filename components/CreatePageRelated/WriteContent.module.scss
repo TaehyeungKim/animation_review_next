@@ -1,0 +1,81 @@
+@use '@/utils/toremfunc.scss';
+
+.write {
+    position: relative;
+    width: 100%;
+    display: flex;
+    .write--content {
+        width: 70%;
+        //min-height: 150vh;
+        min-height: toremfunc.toRem(800);
+        position: relative;
+        margin: 0 auto 0;
+        padding: toremfunc.toRem(20);
+        box-sizing: border-box;
+        border: 2px solid #EBEBEB;
+        &:focus-within {
+            outline: none;
+        }
+    
+        .line{
+            line-height: fit-content;;
+            height: fit-content;
+            min-height: toremfunc.toRem(toremfunc.$content--font-Height);
+            position: relative;
+            padding: 0;
+            margin: toremfunc.toRem(6) 0;
+            word-break: break-all;
+            font-family: '--main-font-kr', '--main-font';
+            &:first-child::before {
+                content:"내용을 입력해주세요";
+                opacity: 0.3;
+            }
+            caret-color: skyblue;
+        }
+    
+        .line--noplaceholder {
+            &:first-child::before {
+                opacity: 0;
+                width: 0;
+                height: 0;
+                box-sizing: border-box;
+                overflow: hidden;
+                display: inline-block;
+            }
+        }
+        
+        .imageContainer {
+            width: 100%;
+            height: fit-content;
+            box-sizing: border-box;
+            border: none;
+            position: relative;
+            margin: toremfunc.toRem(15) 0;
+
+            ::selection {
+                color: none;
+                background: none;
+            }
+        
+            img {
+                width: 100%;
+            }
+        }
+        
+        .imageContainer--highlight {
+            &::after {
+                content:"";
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                border: 4px solid skyblue;
+                box-sizing: border-box;
+                top: 0;
+                left: 0;
+            }
+        }
+        
+    }
+
+}
+

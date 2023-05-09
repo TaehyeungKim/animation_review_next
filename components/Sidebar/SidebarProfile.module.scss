@@ -1,0 +1,51 @@
+@use '@/utils/toremfunc.scss';
+
+.badgeDisplay {
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: toremfunc.toRem(10);
+    box-sizing: border-box;
+    margin-top: toremfunc.toRem(10);
+
+    .badgeDisplay--container {
+        position: relative;
+        margin: 0 toremfunc.toRem(5);
+        width: toremfunc.toRem(25);
+        .badgeDisplay--badge{
+
+            width: 100%;
+            aspect-ratio: 1;
+        }
+
+        .badgeDisplay--caption {
+            display: block;
+            text-align: center;
+        }
+    }
+
+    
+}
+
+.profile {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-basis: toremfunc.toRem(200);
+    font-family: '--main-font-kr', '--main-font';
+
+    .profile--picture {
+        width: toremfunc.toRem(70);
+        aspect-ratio: 1;
+    }
+
+    .profile--name {
+        font-size: toremfunc.toRem(20);
+        margin-top: toremfunc.toRem(5);
+        font-weight: 600;
+    }
+}
