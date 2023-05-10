@@ -9,12 +9,12 @@ import PartitionIndex from './PartitionIndex';
 interface PartitionProps {
     title: string,
     data: Array<any>,
-    status: string,
-    error: unknown
+    status?: string,
+    error?: unknown
 }
 
 
-function Partition({title, data, status, error}:PartitionProps) {
+function Partition({title, data}:PartitionProps) {
 
     const [scrollIdx, setScrollIdx] = useState<number>(0);
     const [totalIdx, setTotalIdx] = useState<number>(0);
