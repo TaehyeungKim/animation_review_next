@@ -16,13 +16,10 @@ interface PostProps {
 function Post({data}:PostProps) {
     const commentData = [{id: 1}, {id: 2}, {id: 3}]
 
-    const paragraphInfoJsonArray = JSON.parse(data.content.paragraphContents);
+    const paragraphInfoJsonArray = JSON.parse(data.paragraphContents);
 
     useEffect(()=>{
 
-        
-
-        
         console.log(data)
 
         
@@ -30,7 +27,7 @@ function Post({data}:PostProps) {
 
     return (
         <div className = {styles.container} id={'postpageContainer'}>
-            <PostIntro photoURL={data.content.thumbnailImage} title={data.content.mainTitle}/>
+            <PostIntro photoURL={data.thumbnailImage} title={data.mainTitle}/>
             <PostContent paragraphInfoJsonArray={paragraphInfoJsonArray}/>
             <PostCommentBar/>
             <PostCommentList data={commentData}/>

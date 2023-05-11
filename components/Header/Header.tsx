@@ -10,6 +10,7 @@ import ButtonComponent from '../Global/ButtonComponent'
 import Sidebar from '../Sidebar/Sidebar'
 import { createPortal } from 'react-dom'
 import NetworkProgressBar from './NetworkProgressBar'
+import logo from '@/public/logo192.png'
 
 
 
@@ -29,7 +30,7 @@ function Header() {
             <div className = {styles.nav_container}>
 
                 <div className={styles.logo} onClick={()=>router.push('/main')}>
-                    <img src={"logo192.png"} alt="logo"/>
+                    <img src={'/logo192.png'} alt="logo"/>
                 </div>
                 <div className={styles.title} onClick={()=>router.push('/main')}>
                     <h3>Aniview</h3>

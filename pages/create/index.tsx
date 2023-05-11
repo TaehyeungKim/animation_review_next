@@ -8,12 +8,13 @@ import axios from 'axios'
 import {TextIndexMap} from '@/components/Global/MapTextNodeWithIndex'
 import NPObserver from '@/components/Global/NetworkProgressObserver';
 import dynamic from 'next/dynamic';
+import {useRouter} from 'next/router'
 
 function CreatePage() {
 
 	const WriteContentWithNoSSR = dynamic(()=>import('@/components/CreatePageRelated/WriteContent'))
 
-	const queryClient = useQueryClient()
+	const router = useRouter();
 
 	type MapData = {
 		paragraphTemplate: string,
@@ -24,10 +25,6 @@ function CreatePage() {
 		[key: string]:FormDataEntryValue
 	}
 
-
-	const sleep = () => {
-		return new Promise(resolve=>setTimeout(resolve, 3000))
-	}
 
 	const mutation = useMutation({
 		mutationFn: async (data: FormData) => {
@@ -45,27 +42,27 @@ function CreatePage() {
 
 
 			// -------------dev----------------
-			// return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', formDataToJson, {
-			// 	onUploadProgress: (progressEvent) => {
-			// 		const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
-			// 		NPObserver.updateNetworkPercentage(percentage);
-			// 	},
-			// })
+			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', formDataToJson, {
+				onUploadProgress: (progressEvent) => {
+					const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+					NPObserver.updateNetworkPercentage(percentage);
+				},
+			})
 
 			//-------------deploy-------------
-			return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
-				headers: {'Content-Type': 'multipart/form-data'},
-				onUploadProgress: (progressEvent) => {
-						const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
-						NPObserver.updateNetworkPercentage(percentage);
-					}
-			})
+			// return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
+			// 	headers: {'Content-Type': 'multipart/form-data'},
+			// 	onUploadProgress: (progressEvent) => {
+			// 			const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+			// 			NPObserver.updateNetworkPercentage(percentage);
+			// 		}
+			// })
 		},
 		mutationKey: 'create',
 		onError: (e)=>{console.log(e)},
-		// onMutate: (variables)=>{
-		// 	navigate('/main')
-		// },
+		onMutate: (variables)=>{
+			router.push('/main')
+		},
 		onSuccess: ()=>{
 			NPObserver.succeedNetwork();
 		}

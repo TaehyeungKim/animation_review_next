@@ -109,21 +109,19 @@ function Partition({title, data}:PartitionProps) {
     
 
     useEffect(()=>{
-        if(status === 'success') {
+        if(data) {
             const container = document.getElementById(`container_${title}`) as HTMLElement
             const partition = document.getElementById(`partition_${title}`) as HTMLElement           
             prevPartitionWidth.current = document.getElementById(`partition_${title}`)?.offsetWidth as number
             updateTotalIdx(container, partition, scrollDiff);
         }
-    },[status])
+    },[data])
 
     //adjusting on window resizing
-    useEffect(()=>{
-        if(status === 'success') {
-            window.addEventListener('resize', adjustEventHandler)
-            return(()=>{window.removeEventListener('resize', adjustEventHandler)})
-        }
-    },[status,scrollIdx])
+    useEffect(()=>{    
+        window.addEventListener('resize', adjustEventHandler)
+        return(()=>{window.removeEventListener('resize', adjustEventHandler)})
+    },[scrollIdx])
     
     return(
         <section className={styles.partition} id={`partition_${title}`}>

@@ -1,57 +1,42 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import Loading from '@/components/Loading/Loading';
 import styles from './index.module.scss';
-import {useRouter} from 'next/router';
 import dynamic from 'next/dynamic';
-import axios from 'axios'
+import { GetServerSideProps } from 'next';
 
 const PostWithNoSSR = dynamic(()=>import('@/components/PostPageRelated/Post'))
 
+interface PostDataObject {
+    [key: string]: string
+}
+
+interface PostData {
+    json: PostDataObject
+}
 
 
-function PostPage() {
 
-
-
-    const router = useRouter();
-    
-    const id = router.query.id;
+export const getServerSideProps: GetServerSideProps = async(context) => {
 
     //dev
-    // const url = `https://aniview-server-chiaf.run.goorm.site/reviewPosts/ + ${id}`
+    const url = `https://aniview-server-chiaf.run.goorm.site/reviewPosts/${context.query.id}`
     
     //deploy
-    const url = 'https://animation-view-fnlkc.run.goorm.site/post/'
+    // // const url = 'https://animation-view-fnlkc.run.goorm.site/post/';
+    const data = await fetch(url , {method: 'GET'});
+    const json = await data.json();
+
+    return {props: {json}}
+}
 
 
-    const loadPost = async(id:string) => {
-        try {
-            const contentResource = await fetch(url + '22', {
-            method: "GET",
-        })
-            const contentRes = await contentResource.json();
-            return {content: contentRes}
-
-        } catch(e) {
-            console.log(e);
-        }
-    }
-
-
-
-    const {status, data, error} = useQuery(`post_${id}`, ()=>loadPost(id as string))
-
-
-
-    if(status === 'loading') return (<Loading></Loading>)
+function PostPage({json}:PostData) {
 
     return(
         <>
-        {data ? 
+        {json ? 
         <div className = {styles.contents}>
-            {/* <Post data={data}/> */}
-            <PostWithNoSSR data={data}/>
+            <PostWithNoSSR data={json}/>
         </div>
         : null}
         

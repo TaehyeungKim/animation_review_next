@@ -29,6 +29,7 @@ function Sidebar({toggle}: SidebarProps) {
     const router = useRouter();
 
     const navigateToCreate = () => {
+        toggle();
         router.push('/create');
     }
 

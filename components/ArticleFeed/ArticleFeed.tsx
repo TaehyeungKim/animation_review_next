@@ -21,7 +21,7 @@ function ArticleFeed({data}: ArticleFeedProps) {
         } prefetch={false}>
         <article className={styles.article_feed}>
             <ArticleFeedHeader/>
-            <ArticleFeedImage url={data.url}/>
+            <ArticleFeedImage url={data.thumbnailImage}/>
             <ArticleFeedContent title={data.maintitle} like={50000} watch={120000} />
         </article>
         </Link>
