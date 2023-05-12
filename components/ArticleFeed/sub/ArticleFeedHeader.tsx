@@ -24,7 +24,7 @@ function ArticleFeedHeader() {
                 <ProfilePictureComponent className = {styles['user_profileContainer']}/>
                 <h4 className={styles.username}>taehyeungkim98</h4>
             </div>
-            <BadgeContainer badge = {[{src: "logo192.png"}]}/>
+            <BadgeContainer badge = {[{src: "/logo192.png"}]}/>
         </header>
     )
 }

@@ -14,8 +14,7 @@ function ArticleFeed({data}: ArticleFeedProps) {
     return(
         <Link href={
             {
-                pathname: '/post/[slug]',
-                query: {slug: data.id}
+                pathname: `/post/${encodeURIComponent(data.id)}`
             }
         
         } prefetch={false}>
