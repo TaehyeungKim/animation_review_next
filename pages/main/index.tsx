@@ -41,12 +41,12 @@ export async function getServerSideProps() {
     const query = new URLSearchParams(
         {'_start': `${0}`, '_limit': `${5}`}
     )
-    const res = await fetch(`https://aniview-server-chiaf.run.goorm.site/reviewPosts?`+ query, {
-        method: 'GET'
-    });
-    // const res = await fetch("https://animation-view-fnlkc.run.goorm.site/main", {
+    // const res = await fetch(`https://aniview-server-chiaf.run.goorm.site/reviewPosts?`+ query, {
     //     method: 'GET'
-    // })
+    // });
+    const res = await fetch("https://animation-view-fnlkc.run.goorm.site/main", {
+        method: 'GET'
+    })
     const data = await res.json();
    
     return { props: { data } };
@@ -63,7 +63,7 @@ interface DataArrayProps {
 
 function MainPage({data}: DataArrayProps) {
 
-    const titleArr = ['Best!', '추천 게시물', '가장 HOT'];
+    const titleArr = ['Best!'];
 
     return (
         <>
