@@ -9,12 +9,13 @@ import PartitionIndex from './PartitionIndex';
 interface PartitionProps {
     title: string,
     data: Array<any>,
+    partitionKey: number
     status?: string,
     error?: unknown
 }
 
 
-function Partition({title, data}:PartitionProps) {
+function Partition({title, data, partitionKey}:PartitionProps) {
 
     const [scrollIdx, setScrollIdx] = useState<number>(0);
     const [totalIdx, setTotalIdx] = useState<number>(0);
@@ -124,7 +125,7 @@ function Partition({title, data}:PartitionProps) {
     },[scrollIdx])
     
     return(
-        <section className={styles.partition} id={`partition_${title}`}>
+        <section className={styles.partition} id={`partition_${title}`} style={{'animationDelay': `${(0.2*partitionKey)}s`}}>
             <ButtonComponent className = {`${styles.article_scroll} ` + styles.left} id={`left_button_${title}`} event={[['click', leftScrollEventCaller]]}>
                 {leftArrow()}
             </ButtonComponent>

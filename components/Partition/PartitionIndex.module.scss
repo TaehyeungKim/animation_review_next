@@ -10,13 +10,15 @@
 
     .index_dot {
         all: unset;
-        width: toremfunc.toRem(20); height: toremfunc.toRem(20);
+        width: toremfunc.toRem(10); height: toremfunc.toRem(10);
         border-radius: 50%;
         border: 2px solid skyblue;
         box-sizing: border-box;
         margin: 0 toremfunc.toRem(8);
+        transition: width 0.3s linear, height 0.3s linear;
         &:checked {
             background-color: skyblue; 
+            width: toremfunc.toRem(20); height: toremfunc.toRem(20);
         }
         
     }

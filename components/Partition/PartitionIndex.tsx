@@ -19,8 +19,8 @@ function PartitionIndex({totalIdx, scrollIdx, title}: PartitionIndexProps) {
     return(
         <section className = {styles.index}>
             {(()=>{
-                let arr = []
-                for(let i=0; i <totalIdx + 1; i++) arr.push(<input className = {styles.index_dot} type="checkbox" readOnly key={i} id={`${title}_idx_${i}`}/>)
+                const arr = []
+                for(let i=0; i <totalIdx + 1; i++) arr.push(<input className = {styles.index_dot} type="checkbox" disabled key={i} id={`${title}_idx_${i}`}/>)
                 return arr})()}
         </section>
     )

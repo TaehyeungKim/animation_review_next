@@ -1,7 +1,8 @@
 
-import React from 'react'
+import React, {lazy,Suspense} from 'react'
 import styles from './index.module.scss'
 import Partition from '@/components/Partition/Partition'
+import Loading from '@/components/Loading/Loading'
 
 
 
@@ -39,14 +40,14 @@ export async function getServerSideProps() {
 
 
     const query = new URLSearchParams(
-        {'_start': `${0}`, '_limit': `${5}`}
+        {'_start': `${0}`, '_limit': `${10}`}
     )
-    // const res = await fetch(`https://aniview-server-chiaf.run.goorm.site/reviewPosts?`+ query, {
-    //     method: 'GET'
-    // });
-    const res = await fetch("https://animation-view-fnlkc.run.goorm.site/main", {
+    const res = await fetch(`https://aniview-server-chiaf.run.goorm.site/reviewPosts?`+ query, {
         method: 'GET'
-    })
+    });
+    // const res = await fetch("https://animation-view-fnlkc.run.goorm.site/main", {
+    //     method: 'GET'
+    // })
     const data = await res.json();
    
     return { props: { data } };
@@ -59,21 +60,33 @@ interface DataProps {
 interface DataArrayProps {
     data: Array<DataProps>
 }
+
+interface TitleObject {
+    id: number,
+    title: string
+}
    
 
 function MainPage({data}: DataArrayProps) {
 
-    const titleArr = ['Best!'];
+    const titleArr: TitleObject[] = [
+        {title: 'Best!', id: 0}, {title: "Best2", id: 1}, {title: "Best3", id: 2}];
 
     return (
         <>
         <div className={styles.contents}>
-            {titleArr.map((title: string, index: number)=>{
-                return (<Partition title={title} data={data} key={index}/>)
+            {titleArr.map((titleObj: TitleObject, index: number)=>{
+
+                return (
+                    <Partition title={titleObj.title} data={data} key={index} partitionKey={titleObj.id}/>
+                )
             })}
         </div>
         </>
     )
 }
+
+
+
 
 export default MainPage

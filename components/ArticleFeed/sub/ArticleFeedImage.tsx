@@ -10,10 +10,10 @@ interface ArticleFeedImageProps {
 function ArticleFeedImage({url}:ArticleFeedImageProps) {
 
     // --deploy
-    const imageUrl = "https://animation-view-fnlkc.run.goorm.site/images/" + url;
+    // const imageUrl = "https://animation-view-fnlkc.run.goorm.site/images/" + url;
     
     // dev
-    // const imageUrl = url
+    const imageUrl = url
 
 
 
