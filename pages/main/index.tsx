@@ -2,7 +2,6 @@
 import React, {lazy,Suspense} from 'react'
 import styles from './index.module.scss'
 import Partition from '@/components/Partition/Partition'
-import Loading from '@/components/Loading/Loading'
 
 
 
@@ -42,9 +41,12 @@ export async function getServerSideProps() {
     const query = new URLSearchParams(
         {'_start': `${0}`, '_limit': `${10}`}
     )
+    //--dev
     const res = await fetch(`https://aniview-server-chiaf.run.goorm.site/reviewPosts?`+ query, {
         method: 'GET'
     });
+
+    //--deploy
     // const res = await fetch("https://animation-view-fnlkc.run.goorm.site/main", {
     //     method: 'GET'
     // })

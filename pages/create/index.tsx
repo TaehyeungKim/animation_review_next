@@ -42,21 +42,21 @@ function CreatePage() {
 
 
 			// -------------dev----------------
-			return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', formDataToJson, {
-				onUploadProgress: (progressEvent) => {
-					const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
-					NPObserver.updateNetworkPercentage(percentage);
-				},
-			})
+			// return axios.post('https://aniview-server-chiaf.run.goorm.site/reviewPosts', formDataToJson, {
+			// 	onUploadProgress: (progressEvent) => {
+			// 		const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+			// 		NPObserver.updateNetworkPercentage(percentage);
+			// 	},
+			// })
 
 			//-------------deploy-------------
-			// return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
-			// 	headers: {'Content-Type': 'multipart/form-data'},
-			// 	onUploadProgress: (progressEvent) => {
-			// 			const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
-			// 			NPObserver.updateNetworkPercentage(percentage);
-			// 		}
-			// })
+			return axios.post("https://animation-view-fnlkc.run.goorm.site/create", data, {
+				headers: {'Content-Type': 'multipart/form-data'},
+				onUploadProgress: (progressEvent) => {
+						const percentage = Math.round((progressEvent.loaded / (progressEvent.total as number)) * 100)
+						NPObserver.updateNetworkPercentage(percentage);
+					}
+			})
 		},
 		mutationKey: 'create',
 		onError: (e)=>{console.log(e)},
@@ -92,8 +92,8 @@ function CreatePage() {
 
 		const formData = new FormData();
 
-		formData.append('maintitle', document.getElementById('mainTitle')?.textContent as string);
-		formData.append('subtitle', document.getElementById('subTitle')?.textContent as string);
+		formData.append('mainTitle', document.getElementById('mainTitle')?.textContent as string);
+		formData.append('subTitle', document.getElementById('subTitle')?.textContent as string);
 		formData.append('titleAlign', document.getElementById('thumbnailTitle')?.title as string);
 		formData.append('thumbnailImage', thumbnailImgFile);
 		formData.append('paragraphContents', JSON.stringify(paragraphTemplateMapArray));

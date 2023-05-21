@@ -1,5 +1,4 @@
 import React from 'react';
-import Loading from '@/components/Loading/Loading';
 import styles from './index.module.scss';
 import dynamic from 'next/dynamic';
 import { GetServerSideProps } from 'next';
@@ -19,10 +18,10 @@ interface PostData {
 export const getServerSideProps: GetServerSideProps = async(context) => {
 
     //dev
-    const url = `https://aniview-server-chiaf.run.goorm.site/reviewPosts/${context.query.id}`
+    // const url = `https://aniview-server-chiaf.run.goorm.site/reviewPosts/${context.query.id}`
     
     //deploy
-    // const url = 'https://animation-view-fnlkc.run.goorm.site/post/';
+    const url = 'https://animation-view-fnlkc.run.goorm.site/post/';
     const data = await fetch(url , {method: 'GET'});
     const json = await data.json();
 
