@@ -92,12 +92,21 @@ function CreatePage() {
 
 		const formData = new FormData();
 
+		const contentImageArray = [thumbnailImgFile];
+		document.querySelectorAll('.imageInp').forEach((node: Node)=>{
+			const inp = node as HTMLInputElement;
+			contentImageArray.push((inp.files as FileList)[0]);
+		})
+
 		formData.append('mainTitle', document.getElementById('mainTitle')?.textContent as string);
 		formData.append('subTitle', document.getElementById('subTitle')?.textContent as string);
 		formData.append('titleAlign', document.getElementById('thumbnailTitle')?.title as string);
-		formData.append('thumbnailImage', thumbnailImgFile);
+		// formData.append('thumbnailImage', thumbnailImgFile);
 		formData.append('paragraphContents', JSON.stringify(paragraphTemplateMapArray));
 		formData.append('userId', 'taehyeungkim98');
+		contentImageArray.forEach((file: File)=>{
+			formData.append('imageArray', file )
+		})
 		
 		mutation.mutate(formData)
 	}

@@ -5,7 +5,7 @@ import SidebarProfile from './SidebarProfile';
 import { close } from '@/icons/icons';
 import ButtonComponent from '@/components/Global/ButtonComponent';
 import {useRouter} from 'next/router'
-import Link from 'next/link'
+
 
 
 interface SidebarProps {
@@ -14,6 +14,7 @@ interface SidebarProps {
 
 
 function Sidebar({toggle}: SidebarProps) {
+
 
     let timer: NodeJS.Timeout
 

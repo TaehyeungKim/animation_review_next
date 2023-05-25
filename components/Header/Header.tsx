@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 //import { useNavigate } from 'react-router-dom'
 import { useRouter } from 'next/router'
@@ -11,6 +11,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import { createPortal } from 'react-dom'
 import NetworkProgressBar from './NetworkProgressBar'
 import logo from '@/public/logo192.png'
+import { UserContext } from '@/utils/context'
 
 
 
@@ -22,6 +23,8 @@ function Header() {
     const [sidebarVisible, setSidebarVisible] = useState<boolean>(false);
 
     const toggleSidebar = () => setSidebarVisible(!sidebarVisible)
+
+    const loggedUser = useContext(UserContext)
 
     
 
@@ -44,7 +47,7 @@ function Header() {
 
                 </div>
                 <div className={styles.username}>
-                    <h4>taehyeungkim98</h4>
+                    <h4>{loggedUser.id}</h4>
                 </div>
                 <ButtonComponent className={styles.icon} id={styles['icon-notification']}>
                     {notification()}

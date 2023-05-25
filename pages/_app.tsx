@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Suspense} from 'react'
+import React, {useState, useEffect} from 'react'
 import {QueryClient, QueryClientProvider} from 'react-query'
 import { AppProps } from "next/app";
 import Layout from '@/components/Layout';
@@ -7,13 +7,19 @@ import "./fonts/Font-Face.module.css";
 import '@/components/Loading/Loading'
 import Loading from '@/components/Loading/Loading';
 import { useRouter } from 'next/router';
-import { sleep } from '@/utils/utilfuncs';
+import { UserContext } from '@/utils/context';
 
 
 const queryClient = new QueryClient();
 
 
 export default function App({Component, pageProps}: AppProps) {
+
+    const defaultUser = {
+        id: "taehyeungkim98",
+        profileImage: '/default.png',
+        badge: [{id: 1, name: "Wow!"}, {id: 2, name: "Ay!"}, {id: 3, name: "Great!"}]
+    }
 
     const router = useRouter();
 
@@ -27,12 +33,9 @@ export default function App({Component, pageProps}: AppProps) {
     useEffect(()=>{
         const loadingOn = () => {
             updateLoading(true);
-            console.log('loading')
-            console.debug('stop')
         }
         const loadingOff = () =>{
             updateLoading(false);
-            console.log('render')
         }
         router.events.on('routeChangeStart', loadingOn);
         router.events.on('routeChangeComplete', loadingOff);
@@ -45,10 +48,12 @@ export default function App({Component, pageProps}: AppProps) {
     },[router])
 
      return (
+        <UserContext.Provider value={defaultUser}>
         <QueryClientProvider client={queryClient}>
         <Layout>
             {isLoading ? <Loading/> : <Component {...pageProps}/>}
         </Layout>
         </QueryClientProvider>
+        </UserContext.Provider>
      )
 }

@@ -18,11 +18,12 @@ interface PostData {
 export const getServerSideProps: GetServerSideProps = async(context) => {
 
     //dev
-    // const url = `https://aniview-server-chiaf.run.goorm.site/reviewPosts/${context.query.id}`
+    const url = `https://aniview-server-chiaf.run.goorm.site/reviewPosts/${context.query.id}`
     
     //deploy
-    const url = 'https://animation-view-fnlkc.run.goorm.site/post/';
-    const data = await fetch(url , {method: 'GET'});
+    // const url = `https://animation-view-fnlkc.run.goorm.site/post/${context.query.id}`;
+    const data = await fetch(url , {
+        method: 'GET'});
     const json = await data.json();
 
     return {props: {json}}

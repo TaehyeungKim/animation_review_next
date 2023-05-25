@@ -46,7 +46,7 @@ export async function getServerSideProps() {
         method: 'GET'
     });
 
-    //--deploy
+    // --deploy
     // const res = await fetch("https://animation-view-fnlkc.run.goorm.site/main", {
     //     method: 'GET'
     // })

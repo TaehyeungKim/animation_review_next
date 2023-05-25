@@ -16,6 +16,7 @@ function WriteContentAside({style, paragraphMaker}: WriteContentAsideProps) {
 
     const imageInp = useRef<HTMLInputElement>(null);
     const imageIdx = useRef<number>(0);
+    
 
     const insertNewImgInp = () => {
         const newInp = React.createElement('input', {
@@ -96,6 +97,7 @@ function WriteContentAside({style, paragraphMaker}: WriteContentAsideProps) {
             }]]}>{imageAdd()}</ButtonComponent>
             <input type='file' accept="image/*" hidden ref={imageInp} onChange={insertImageToContent} key={0} id={'0'} className={'imageInp'}/>
             {inpArray}
+            
         </aside>
     )
 }
